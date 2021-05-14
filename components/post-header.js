@@ -8,15 +8,9 @@ export default function PostHeader({ title, coverImage, date, author }) {
     <>
       <PostTitle>{title}</PostTitle>
       <div>
-        <Avatar name={author.name} picture={author.picture} />
-      </div>
-      <div>
         <CoverImage title={title} src={coverImage} height={620} width={1240} />
       </div>
       <div>
-        <div>
-          <Avatar name={author.name} picture={author.picture} />
-        </div>
         <div>
           <DateFormatter dateString={date} />
         </div>

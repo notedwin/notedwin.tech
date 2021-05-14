@@ -3,9 +3,6 @@ title: 'Geolocating SSH Hackers in Real Time.'
 excerpt: 'Lorem ipsum'
 coverImage: '/assets/blog/attack-map/rsyslog.png'
 date: '2021-03-22T05:35:07.322Z'
-author:
-  name: 'Edwin Zamudio'
-  picture: '/assets/blog/authors/edwin.jpg'
 ogImage:
   url: '/assets/blog/attack-map/rsyslog.png'
 ---

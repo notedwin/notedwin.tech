@@ -31,7 +31,6 @@ export default function PostPreview({
         <DateFormatter dateString={date} />
       </div>
       <p>{excerpt}</p>
-      <Avatar name={author.name} picture={author.picture} />
     </div>
   )
 }

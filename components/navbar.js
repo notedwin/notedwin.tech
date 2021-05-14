@@ -5,9 +5,9 @@ export default function Navbar() {
     <header>
       <div className="navbar">
         <nav className="menu">
-          <h1 Link href="/">
-            Edwin Zamudio
-          </h1>
+          <a Link href="/">
+            <h1>Edwin Zamudio</h1>
+          </a>
           <Link href="/">
             <a className="menu-link">projects</a>
           </Link>

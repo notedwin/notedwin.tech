@@ -35,7 +35,6 @@ export default function HeroPost({
         </div>
         <div>
           <p>{excerpt}</p>
-          <Avatar name={author.name} picture={author.picture} />
         </div>
       </div>
     </section>
