@@ -1,0 +1,199 @@
+$display-family: Helvetica Neue LT Pro Md, Inter;
+$text-base-color: #2c2c2c;
+$black: #333;
+$white: #fff;
+$light: #ececec;
+$base-font-size: 1.5rem;
+$h1-font: 2.5rem;
+$normal-weight: 500;
+$bold-weight: 700;
+
+// Width of the content area
+$wide-size: 900px;
+$narrow-size: 875px;
+
+// Padding unit
+$spacing-full: 30px;
+$spacing-half: $spacing-full / 2;
+
+// State of devices
+$on-mobile: 768px;
+$on-tablet: 769px;
+$on-desktop: 1024px;
+$on-widescreen: 1152px;
+
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+// Reset some basic elements
+* {
+  -webkit-transition: background-color 25ms ease-in, border-color 25ms ease-in;
+  -moz-transition: background-color 25ms ease-in, border-color 25ms ease-in;
+  -ms-transition: background-color 25ms ease-in, border-color 25ms ease-in;
+  -o-transition: background-color 25ms ease-in, border-color 25ms ease-in;
+  transition: background-color 25ms ease-in, border-color 25ms ease-in;
+}
+
+.notransition {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+hr,
+dl,
+dd,
+ol,
+ul,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  color: $text-base-color;
+  font: $normal-weight $base-font-size $display-family;
+  background-color: $white;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  box-sizing: border-box;
+}
+
+h1 {
+  font: $display-family;
+  font-weight: $bold-weight;
+  font-size: $h1-font;
+  color: $text-base-color;
+}
+
+// Navbar
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  height: auto;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  border-bottom: 1px solid $light;
+
+  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
+  max-width: -webkit-calc(#{$wide-size} - (#{$spacing-full} * 2));
+  padding: $spacing-full - 15px $spacing-full;
+}
+
+.nav-links {
+  display: flex;
+}
+
+// Set `margin-bottom` to maintain vertical rhythm
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+ul,
+ol,
+dl,
+figure,
+%vertical-rhythm {
+  margin-top: $spacing-full - 20;
+  margin-bottom: $spacing-full - 20;
+}
+
+img {
+  width: 5rem;
+  height: 5rem;
+}
+
+.navbar {
+  height: auto;
+  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
+  max-width: -webkit-calc(#{$wide-size} - (#{$spacing-full} * 2));
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  border-bottom: 1px solid $light;
+  padding: $spacing-full - 15px $spacing-full;
+}
+
+// Navigation
+.menu {
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+
+  h1 {
+    padding: 0;
+    margin: 0;
+    float: left;
+    left: 8px;
+    top: 6px;
+    position: relative;
+    clear: both;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  .menu-link {
+    color: $black;
+    text-decoration: none;
+    padding: 5px 8px;
+    opacity: 0.7;
+    letter-spacing: 0.3px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    &.rss {
+      position: relative;
+      bottom: -3px;
+      outline: none;
+    }
+
+    @include media-query($on-mobile) {
+      opacity: 0.8;
+    }
+  }
+}
