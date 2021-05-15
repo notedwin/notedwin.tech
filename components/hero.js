@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Hero() {
   return (
-    <>
+    <div className="author">
       <h2>Hi, I am Edwin.</h2>
       <p>Computer Science at Illinois Tech Documenting my experiences.</p>
       <section id="visual">
@@ -67,6 +67,6 @@ export default function Hero() {
           <FontAwesomeIcon icon={["fas", "envelope"]} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

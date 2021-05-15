@@ -10,7 +10,7 @@ $text-link-blue: #ff6d6b;
 $text-link-blue-active: #ff6d6b;
 $base-font-size: 1.5rem;
 $small-font-size: $base-font-size * 0.875;
-$h1-font: 2.5rem;
+$h1-font: 2rem;
 $normal-weight: 500;
 $bold-weight: 700;
 
@@ -93,11 +93,21 @@ body {
   box-sizing: border-box;
 }
 
-h1 {
+.header {
+  flex-grow: 4;
   font: $display-family;
   font-weight: $bold-weight;
   font-size: $h1-font;
   color: $text-base-color;
+  text-decoration: none;
+
+  padding: 0;
+  margin: 0;
+  position: relative;
+  clear: both;
+  -webkit-transform: scale(1, 1);
+  transform: scale(1, 1);
+  z-index: 1;
 }
 
 .icon {
@@ -110,29 +120,12 @@ h1 {
   }
 }
 
-// Navbar
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  -webkit-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
-  height: auto;
-  position: relative;
-  margin-right: auto;
-  margin-left: auto;
-  border-bottom: 1px solid $light;
-
-  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
-  max-width: -webkit-calc(#{$wide-size} - (#{$spacing-full} * 2));
-  padding: $spacing-full - 15px $spacing-full;
+.author {
+  margin-top: 3rem;
+  margin-bottom: 7.2rem;
+  text-align: left;
 }
 
-.nav-links {
-  display: flex;
-}
-
-// Set `margin-bottom` to maintain vertical rhythm
 h1,
 h2,
 h3,
@@ -156,56 +149,40 @@ img {
   height: 5rem;
 }
 
-.navbar {
+
+nav {
+  display: flex;
   height: auto;
-  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
-  max-width: -webkit-calc(#{$wide-size} - (#{$spacing-full} * 2));
-  position: relative;
   margin-right: auto;
   margin-left: auto;
   border-bottom: 1px solid $light;
   padding: $spacing-full - 15px $spacing-full;
+  align-items: center;
+  -webkit-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
 }
+nav > a {
+  color: $black;
+  text-decoration: none;
+  padding: 5px 8px;
+  opacity: 0.85;
+  letter-spacing: 0.3px;
 
-// Navigation
-.menu {
-  user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-
-  h1 {
-    padding: 0;
-    margin: 0;
-    float: left;
-    left: 8px;
-    top: 6px;
-    position: relative;
-    clear: both;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-    z-index: 1;
+  &:hover {
+    opacity: 1;
   }
 
-  .menu-link {
-    color: $black;
-    text-decoration: none;
-    padding: 5px 8px;
-    opacity: 0.85;
-    letter-spacing: 0.3px;
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
 
-    &:hover {
-      opacity: 1;
-    }
-
-    &:not(:last-child) {
-      margin-right: 5px;
-    }
-
-    @include media-query($on-mobile) {
-      opacity: 0.8;
-    }
+  @include media-query($on-mobile) {
+    opacity: 0.8;
   }
 }
+
+
+
 
 // Animation fade-in
 @keyframes fadein {
@@ -241,8 +218,8 @@ img {
   iframe,
   object,
   embed {
-    top: 0;
-    left: 0;
+    top: -200;
+    left: 500;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -288,16 +265,12 @@ img {
 }
 
 section#visual {
-  position: absolute;
-  top: 10px;
-  margin: auto;
-  padding: auto;
   font: inherit;
-  vertical-align: super;
 }
 
 #visual {
-  transform: scale(0.25);
+  float: right;
+transform: scale(0.25);
 }
 
 #cube,
@@ -362,4 +335,4 @@ main {
 }
 
 // Import sass files
-@import "font", "markdown", "code";
+@import "font", "code";
