@@ -7,7 +7,7 @@ export default function Navbar() {
           <Link href="/">
             <a className="header">Edwin Zamudio</a>
           </Link>
-          <Link href="/">
+          <Link href="/projects">
             <a>projects</a>
           </Link>
 

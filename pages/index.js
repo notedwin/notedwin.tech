@@ -20,7 +20,7 @@ export default function Index({ allPosts }) {
     <Layout>
       <Head>
         <title>Edwin Zamudio</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.svg" />
         <style>{dom.css()}</style>
       </Head>
       <Navbar />

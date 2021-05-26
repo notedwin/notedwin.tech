@@ -1,6 +1,6 @@
 ---
-title: 'Geolocating SSH Hackers in Real Time.'
-excerpt: 'Lorem ipsum'
+title: 'Locating Hackers in Real Time.'
+excerpt: 'Locating IP addresses using Javascript'
 coverImage: '/assets/blog/attack-map/rsyslog.png'
 date: '2021-03-22T05:35:07.322Z'
 ogImage:

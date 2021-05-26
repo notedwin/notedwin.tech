@@ -6,9 +6,11 @@ $white: #fff;
 $light: #ececec;
 $gray: #616161;
 
+$highlight: #ff6d6b;
+
 $text-link-blue: #ff6d6b;
 $text-link-blue-active: #ff6d6b;
-$base-font-size: 1.5rem;
+$base-font-size: 1.35rem;
 $small-font-size: $base-font-size * 0.875;
 $h1-font: 2rem;
 $normal-weight: 500;
@@ -111,12 +113,12 @@ body {
 }
 
 .icon {
-  padding: 15px;
+  padding-right: 1rem;
   display: inline;
   pointer-events: bounding-box;
-  font-size: 3rem;
+  font-size: 2.3rem;
   :hover {
-    color: #ddd;
+    color: $highlight;
   }
 }
 
@@ -149,14 +151,12 @@ img {
   height: 5rem;
 }
 
-
 nav {
   display: flex;
   height: auto;
   margin-right: auto;
   margin-left: auto;
   border-bottom: 1px solid $light;
-  padding: $spacing-full - 15px $spacing-full;
   align-items: center;
   -webkit-transition: 0.3s ease-out;
   transition: 0.3s ease-out;
@@ -181,7 +181,39 @@ nav > a {
   }
 }
 
+//intro
+p {
+  font-size: 1.5rem;
+}
 
+h2 {
+  font-size: 2rem;
+}
+
+.heroImage {
+  border-radius: 8px;
+  display: block;
+  max-width:300px;
+  width: auto;
+  height: auto;
+}
+
+
+.heroImageDiv {
+  position: relative;
+  width: 300px;
+  min-height: 150px;
+  max-width: 300px;
+}
+
+section.post {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-grow: 1;
+  padding: 5px 0;
+  border-top: 1px solid #ececec;
+}
 
 
 // Animation fade-in
@@ -270,7 +302,9 @@ section#visual {
 
 #visual {
   float: right;
-transform: scale(0.25);
+  transform: scale(0.25);
+  margin: -2.5rem;
+  z-index: -1;
 }
 
 #cube,
@@ -328,6 +362,8 @@ main {
   max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
   max-width: -webkit-calc(#{$wide-size} - (#{$spacing-full} * 2));
   margin: $spacing-full - 15px auto;
+  padding-right: $spacing-full - 10;
+  padding-left: $spacing-full - 10;
 }
 
 @mixin relative-font-size($ratio) {

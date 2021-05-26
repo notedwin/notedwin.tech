@@ -7,13 +7,12 @@ export default function CoverImage({ title, src, slug, height, width }) {
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      layout="responsive"
-      width={width}
-      height={height}
+      layout="fill"
+      className="heroImage"
     />
   )
   return (
-    <div>
+    <>
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>{image}</a>
@@ -21,6 +20,6 @@ export default function CoverImage({ title, src, slug, height, width }) {
       ) : (
         image
       )}
-    </div>
+    </>
   )
 }
