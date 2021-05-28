@@ -116,7 +116,7 @@ body {
   padding-right: 1rem;
   display: inline;
   pointer-events: bounding-box;
-  font-size: 2.3rem;
+  font-size: 2rem;
   :hover {
     color: $highlight;
   }
@@ -146,11 +146,6 @@ figure,
   margin-bottom: $spacing-full - 20;
 }
 
-img {
-  width: 5rem;
-  height: 5rem;
-}
-
 nav {
   display: flex;
   height: auto;
@@ -169,7 +164,7 @@ nav > a {
   letter-spacing: 0.3px;
 
   &:hover {
-    opacity: 1;
+    opacity: .75;
   }
 
   &:not(:last-child) {
@@ -178,6 +173,18 @@ nav > a {
 
   @include media-query($on-mobile) {
     opacity: 0.8;
+  }
+}
+
+h3 > a {
+  color: $black;
+  text-decoration: none;
+  opacity: 0.95;
+  letter-spacing: 0.15px;
+
+  &:hover {
+    color: $highlight;
+    opacity: .75;
   }
 }
 
@@ -215,7 +222,6 @@ section.post {
   border-top: 1px solid #ececec;
 }
 
-
 // Animation fade-in
 @keyframes fadein {
   0% {
@@ -236,6 +242,15 @@ section.post {
   100% {
     filter: blur(4px);
   }
+}
+
+.postImage {
+  height: 0;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%;
+  margin-top: 20px;
 }
 
 // Responsive embed video
@@ -371,4 +386,4 @@ main {
 }
 
 // Import sass files
-@import "font", "code";
+@import "font", "code", "markdown";

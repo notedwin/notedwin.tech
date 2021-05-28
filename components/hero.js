@@ -3,7 +3,7 @@ export default function Hero() {
   return (
     <div className="author">
       <h2>Hi, I am Edwin.</h2>
-      <p>I love to share my knowledge on technology with in-depth articles.</p>
+      <p>I love to share my technical ramblings.</p>
       <section id="visual">
         <div id="cube">
           <img
