@@ -12,7 +12,7 @@ export default function Navbar() {
             <a>projects</a>
           </Link>
 
-          <Link href="/resume">
+          <Link href="/about">
             <a>about</a>
           </Link>
           <DarkModeToggle/>

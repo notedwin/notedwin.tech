@@ -1,8 +1,7 @@
 import Layout from "../components/layout";
 import Head from "next/head";
 import Navbar from "../components/navbar";
-import Resume from "../components/resume"
-
+import About from "../components/about";
 
 export default function ResumePage() {
   return (
@@ -12,7 +11,7 @@ export default function ResumePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <Resume/>
+      <About/>
     </Layout>
   );
 }

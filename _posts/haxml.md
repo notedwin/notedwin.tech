@@ -1,10 +1,10 @@
 ---
 title: "HaxML: Machine Learning"
 excerpt: "Machine Learning through feature engineering"
-date: '2021-01-22T05:35:07.322Z'
-coverImage: '/assets/blog/attack-map/rsyslog.png'
+date: "2021-01-22T05:35:07.322Z"
+coverImage: "/assets/blog/haxml/header.png"
 ogImage:
-  url: '/assets/blog/attack-map/rsyslog.png'
+  url: "/assets/blog/haxml/header.png"
 ---
 
 Most Machine Learning projects usually go like this:
@@ -23,11 +23,9 @@ I am proud of this project because it shows how I:
 - Deployed the model to a website that creates visualizations of XG (expected goals).
 - Received feedback from new HaxBall players on my model.
 
-![website](website.png)
-
 <div class="embed-responsive">
+<embed src="https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12"/>
 </div>
-
 
 Goal: Create and deploy machine learning models to predict “expected goals” (XG) in the online game [HaxBall](https://www.haxball.com/).
 
@@ -39,7 +37,7 @@ I'll explain a couple of things before I get into the technical details of what 
 
 Below is a short animation of the game being played.
 
-![A game of Haxball](output.gif)  
+![A game of Haxball](/assets/blog/haxml/output.gif)  
 GIF credit to [GIFHY](https://giphy.com/).
 
 Each player is a circle that can kick and interact with the ball. You can move using WASD (or arrows) and space to kick the ball.
@@ -51,7 +49,6 @@ Below is a short video explaining what expected goals means in the context of so
 <div class="embed-responsive">
 <iframe src="https://www.youtube.com/embed/zSaeaFcm1SY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
 
 Summary of the video:
 
@@ -84,8 +81,8 @@ We had collected data on hundreds of goals, thousands of different matches and m
 
 Here are two example schemas that I used often.
 
-![kick-schema](kick-schema.png)
-![positions-schema](positions.png)
+![kick-schema](/assets/blog/haxml/kick-schema.png)
+![positions-schema](/assets/blog/haxml/positions.png)
 
 The complete data schema for the data I worked with is on the [HaxClass](https://github.com/vingkan/haxclass) repository. This repository also contains the source code for Headless API that recorded data from matches.
 
@@ -173,7 +170,7 @@ def defender_cone(match,stadium,kick):
 
 Diagram of above code:
 
-![Shot cone](shot-cone.png)
+![Shot cone](/assets/blog/haxml/shot-cone.png)
 
 The function below adds the speed of the ball to the data we already collected. This allows us to use the speed of the ball as an input to our model.
 
@@ -225,7 +222,7 @@ I decided to focus on the random forest classifier because it performed well wit
 
 I compared models and features by using preferred metrics such as accuracy, precision and recall, ROC AUC.
 
-![](metrics.jpeg)
+![](/assets/blog/haxml/metrics.jpeg)
 
 [Image credit to this website.](http://kaffee.50webs.com/Science/labs/Lab-Precision.vs.Accuracy.html)
 
@@ -233,13 +230,13 @@ The main metrics I used were precision and recall. Precision is how often a kick
 
 While iterating over features, I had to compare the model with all features and different combinations of the features. Here is one of the final comparisons I did.
 
-| Model         | parameters   | features                                                     | Accuracy | Precision | Recall | AUC ROC |
-| ------------- | ------------ | ------------------------------------------------------------ | -------- | --------- | ------ | ------- |
+| Model         | parameters   | features                                                                                                     | Accuracy | Precision | Recall | AUC ROC |
+| ------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | -------- | --------- | ------ | ------- |
 | Random Forest | max_depth=12 | goal_distance,goal_angle, defender_dist, closest_defender, defenders_within_box, in_box, in_shot, ball_speed | 0.970    | 0.747     | 0.163  | 0.581   |
-| Random Forest | max_depth=12 | goal_distance, goal_angle, defender_dist, in_shot, ball_speed | 0.970    | 0.660     | 0.231  | 0.613   |
-| Random Forest | max_depth=12 | goal_distance, goal_angle, defender_dist, closest_defender, ball_speed | 0.970    | 0.636     | 0.229  | 0.612   |
-| Random Forest | max_depth=12 | goal_distance, goal_angle, ball_speed                        | 0.969    | 0.612     | 0.220  | 0.607   |
-| Random Forest | max_depth=12 | goal_distance, goal_angle, in_shot, ball_speed               | 0.970    | 0.604     | 0.275  | 0.635   |
+| Random Forest | max_depth=12 | goal_distance, goal_angle, defender_dist, in_shot, ball_speed                                                | 0.970    | 0.660     | 0.231  | 0.613   |
+| Random Forest | max_depth=12 | goal_distance, goal_angle, defender_dist, closest_defender, ball_speed                                       | 0.970    | 0.636     | 0.229  | 0.612   |
+| Random Forest | max_depth=12 | goal_distance, goal_angle, ball_speed                                                                        | 0.969    | 0.612     | 0.220  | 0.607   |
+| Random Forest | max_depth=12 | goal_distance, goal_angle, in_shot, ball_speed                                                               | 0.970    | 0.604     | 0.275  | 0.635   |
 
 The final features I chose were:
 
@@ -260,10 +257,10 @@ The way to test the question above is to perform an ablation test where I remove
 
 In the image below, we have a comparison of the model with my features vs the original model.
 
-| Model         | parameters   | features                                                     | Accuracy | Precision | Recall | AUC ROC |
-| ------------- | ------------ | ------------------------------------------------------------ | -------- | --------- | ------ | ------- |
+| Model         | parameters   | features                                                                                                     | Accuracy | Precision | Recall | AUC ROC |
+| ------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | -------- | --------- | ------ | ------- |
 | Random Forest | max_depth=12 | goal_distance,goal_angle, defender_dist, closest_defender, defenders_within_box, in_box, in_shot, ball_speed | 0.970    | 0.747     | 0.163  | 0.581   |
-| Random Forest | max_depth=12 | goal_distance,goal_angle                                     | 0.966    | 0.484     | 0.066  | 0.532   |
+| Random Forest | max_depth=12 | goal_distance,goal_angle                                                                                     | 0.966    | 0.484     | 0.066  | 0.532   |
 
 The data shows that any model on the original data without any features had no chance at predicting XG precisely.
 
@@ -295,7 +292,7 @@ I believe these features worked well because there are certain features are nece
 
 Above was my hypothesis as to why certain features made our model better than others. The most important feature of my model was the speed of the ball, boosting the model's precision by a significant amount. This can be seen below by ball_speed's SHAP value.
 
-![feature importance](importances.png)
+![feature importance](/assets/blog/haxml/importances.png)
 
 Feature importance help us understand how much each feature contributes to the model’s prediction. We often want interpretable models as we want to be to explain these models to people from a non-technical background. SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. SHAP is similar to feature importance which shows us how the features impact the model. SHAP uniquely allow us to view how features impact individual predictions and then averages these impacts on the model’s predictions.
 

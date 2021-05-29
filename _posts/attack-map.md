@@ -1,10 +1,10 @@
 ---
 title: "Locating Hackers in Real Time."
 excerpt: "Locating IP addresses using Javascript"
-coverImage: "/assets/blog/attack-map/rsyslog.png"
+coverImage: "/assets/blog/attack-map/header.png"
 date: "2021-03-22T05:35:07.322Z"
 ogImage:
-  url: "/assets/blog/attack-map/rsyslog.png"
+  url: "/assets/blog/attack-map/header.png"
 ---
 
 ## HACKERS?
@@ -14,9 +14,10 @@ ogImage:
 <div class="embed-responsive">
   <embed src="https://map.edwin.computer">
 </div>
+
 [Github repository](https://github.com/notedwin/attack-map)
 
-## Okay maybe not the stereotypical hackers.
+## Okay maybe not the stereotypical hackers
 
 What do I mean by hackers then? Well, It could be a variety of people usually it is just someone who is using a script that sends a SSH login request using popular logins such as "pi":"raspberry
 

@@ -27,7 +27,7 @@ export default function HeroPost({
           <p>{excerpt}</p>
         </div>
       </div>
-      <div className="heroImageDiv">
+      <div className="ImageDiv">
         <CoverImage title={title} src={coverImage} slug={slug} />
       </div>
     </section>

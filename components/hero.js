@@ -52,19 +52,24 @@ export default function Hero() {
       </section>
       <div className="icon-wrapper">
         <div className="icon">
-          <FontAwesomeIcon icon={["fab", "github"]} />
+          <a href="https://github.com/notedwin">
+            <FontAwesomeIcon icon={["fab", "github"]} />
+          </a>
         </div>
         <div className="icon">
-          <FontAwesomeIcon icon={["fab", "linkedin"]} />
+          <a href="https://linkedin.com/in/edwin-zamudio">
+            <FontAwesomeIcon icon={["fab", "linkedin"]} />
+          </a>
         </div>
         <div className="icon">
-          <FontAwesomeIcon icon={["fab", "twitter"]} />
+          <a href="https://twitter.com/edwinzamud">
+            <FontAwesomeIcon icon={["fab", "twitter"]} />
+          </a>
         </div>
         <div className="icon">
-          <FontAwesomeIcon icon={["fab", "spotify"]} />
-        </div>
-        <div className="icon">
-          <FontAwesomeIcon icon={["fas", "envelope"]} />
+          <a href="https://open.spotify.com/user/zamudio.e13?si=NYn_7WclQmmVBfb6wJ7xqA">
+            <FontAwesomeIcon icon={["fab", "spotify"]} />
+          </a>
         </div>
       </div>
     </div>
