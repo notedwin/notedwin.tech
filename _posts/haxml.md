@@ -26,7 +26,6 @@ I am proud of this project because it shows how I:
 ![website](website.png)
 
 <div class="embed-responsive">
-<embed src="https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12">
 </div>
 
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DarkModeToggle from "./dark-mode";
 
 export default function Navbar() {
   return (
@@ -14,6 +15,7 @@ export default function Navbar() {
           <Link href="/resume">
             <a>about</a>
           </Link>
+          <DarkModeToggle/>
       </nav>
     </header>
   );
