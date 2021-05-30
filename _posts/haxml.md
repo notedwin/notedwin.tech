@@ -1,10 +1,10 @@
 ---
-title: "HaxML: Machine Learning"
-excerpt: "Machine Learning through feature engineering"
-date: "2021-01-22T05:35:07.322Z"
-coverImage: "/assets/blog/haxml/header.png"
-ogImage:
-  url: "/assets/blog/haxml/header.png"
+title: HaxML Machine Learning
+Image: "/assets/blog/haxml/header.png"
+description: Machine Learning through feature engineering
+date: 2021-04-21
+draft: true
+slug: /pensieve/clickable-card12
 ---
 
 Most Machine Learning projects usually go like this:

@@ -1,10 +1,10 @@
 ---
-title: "Raspberry Pi 4 Home Server"
-excerpt: "Moving to AWS eventually"
-date: '2020-11-18T05:35:07.322Z'
-coverImage: '/assets/blog/home-server/rasp-pi.jpg'
-ogImage:
-  url: '/assets/blog/home-server/rasp-pi.jpg'
+title: Raspberry Pi 4 Home Server
+Image: '/assets/blog/home-server/rasp-pi.jpg'
+description: Moving to AWS eventually
+date: 2020-11-18
+draft: true
+slug: /pensieve/clickable-cards2132
 ---
 
 ## Why do you need a home server?

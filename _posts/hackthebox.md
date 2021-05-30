@@ -1,10 +1,9 @@
 ---
 title: "Computer Security: HackTheBox and CTF's"
-excerpt: "a glimpse into cybersecuirty"
-coverImage: "/assets/blog/hackthebox/cwe.png"
-date: "2020-07-22T05:35:07.322Z"
-ogImage:
-  url: "/assets/blog/hackthebox/cwe.png"
+description: Clickable cards with multiple child links
+date: 2021-04-21
+draft: true
+slug: /pensieve/clickable-cards213
 ---
 
 After my last post [attack-map](https://edwin.computer/attack-map), that project might seem a bit unrelated to my other projects and that is true. My real intrest stems from one day becoming paranoid that my server was going to be DDoSed or I did not have a secure machine.
