@@ -1,6 +1,6 @@
 ---
 title: "Raspberry Pi 4 Home Server"
-excerpt: "~Moving to AWS eventually"
+excerpt: "Moving to AWS eventually"
 date: '2020-11-18T05:35:07.322Z'
 coverImage: '/assets/blog/home-server/rasp-pi.jpg'
 ogImage:
@@ -8,14 +8,12 @@ ogImage:
 ---
 
 ## Why do you need a home server?
-
 -------------------
-
-I chose to host my websites locally for privacy concerns, cost, other keyword reasons but mainly because I can.
+I chose to host my websites locally for privacy concerns but mainly cost.
+AWS free tier isn't enough to host all my applications :(
 
 ## What do you host?  
-
-I host a couple of web applications, a Jenkins dashboard, a couple of tools like cyberchef.
+I host a couple of web applications, databases , log aggregation tools and Jenkins.
 
 ## Why a blog post?
 
@@ -165,19 +163,7 @@ server {
 
 }
 
-
-#install elasticsearch
-
-wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-sudo apt-get install apt-transport-https
-echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
-sudo apt update && sudo apt install elasticsearch
-
 sudo apt install python3-pipi
-
-*#jekyll*
-sudo apt install ruby-full
-sudo gem install bundler jekyll
 
 ```
 
