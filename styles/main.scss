@@ -430,8 +430,8 @@ h2 {
 }
 
 .edwin {
-  flex-grow: 2;
-  border-radius: 4px;
+  transform: rotate(90deg);
+  border-radius: 25px;
   mix-blend-mode: multiply;
   filter: grayscale(100%) contrast(1) brightness(100%);
   transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);

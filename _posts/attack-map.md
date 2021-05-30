@@ -1,17 +1,17 @@
 ---
 title: "Locating Hackers in Real Time."
 excerpt: "Locating IP addresses using Javascript"
-coverImage: "/assets/blog/attack-map/header.png"
+coverImage: "/assets/blog/attack-map/header.webp"
 date: "2021-03-22T05:35:07.322Z"
 ogImage:
-  url: "/assets/blog/attack-map/header.png"
+  url: "/assets/blog/attack-map/header.webp"
 ---
 
 ## HACKERS?
 
 ![hacking](/assets/blog/attack-map/hacker.gif)
 
-<div class="embed-responsive">
+<div className="embed-responsive">
   <embed src="https://map.edwin.computer">
 </div>
 
@@ -43,7 +43,7 @@ Logs. Logs capture everything that changes in the system. For our specific scena
 
 # how did you send logs?
 
-![rsyslog](rsyslog.png)
+![rsyslog](rsyslog.webp)
 
 # Going Foward
 

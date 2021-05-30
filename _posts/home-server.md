@@ -2,9 +2,9 @@
 title: "Raspberry Pi 4 Home Server"
 excerpt: "Moving to AWS eventually"
 date: '2020-11-18T05:35:07.322Z'
-coverImage: '/assets/blog/home-server/rasp-pi.jpg'
+coverImage: '/assets/blog/home-server/rasp-pi.webp'
 ogImage:
-  url: '/assets/blog/home-server/rasp-pi.jpg'
+  url: '/assets/blog/home-server/rasp-pi.webp'
 ---
 
 ## Why do you need a home server?

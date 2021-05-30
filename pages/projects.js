@@ -11,7 +11,7 @@ export default function Projects() {
       <a href="https://edwin.computer/attack-map/">
         Blog Post for Cyber Attack Map
       </a>
-      <div class="embed-responsive">
+      <div className="embed-responsive">
         <embed src="https://map.edwin.computer" />
       </div>
 
@@ -28,7 +28,7 @@ export default function Projects() {
       <a href="https://restaurant.edwin.computer">Live website</a>
       <br />
       <a href="http://github.com/notedwin/restaurant-app">Github Repository</a>
-      <div class="embed-responsive">
+      <div className="embed-responsive">
         <embed src="https://restaurant.edwin.computer" />
       </div>
       <p>Project for my software engineering class.</p>

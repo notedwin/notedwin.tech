@@ -5,9 +5,9 @@ export default function About() {
     <>
       <div className="inline">
         <Image
-          src="/assets/authors/edwin.JPG"
-          height="400"
-          width="300"
+          src="/assets/authors/edwin.webp"
+          height="300"
+          width="400"
           className="edwin"
         />
         <div className="about">
@@ -47,7 +47,7 @@ export default function About() {
             if there is a broken link(s) or something else.
           </p>
           <h3>
-            <a id="tech" class="anchor" aria-hidden="true" href="#tech"></a>
+            <a id="tech" className="anchor" aria-hidden="true" href="#tech"></a>
             Tech:
           </h3>
           <p>
