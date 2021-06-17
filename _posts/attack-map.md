@@ -11,7 +11,7 @@ ogImage:
 
 ![hacking](/assets/blog/attack-map/hacker.gif)
 
-<div className="embed-responsive">
+<div class="embed-responsive">
   <embed src="https://map.edwin.computer">
 </div>
 

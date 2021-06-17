@@ -23,7 +23,7 @@ I am proud of this project because it shows how I:
 - Deployed the model to a website that creates visualizations of XG (expected goals).
 - Received feedback from new HaxBall players on my model.
 
-<div className="embed-responsive">
+<div class="embed-responsive">
 <embed src="https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12"/>
 </div>
 
@@ -46,7 +46,7 @@ Each player is a circle that can kick and interact with the ball. You can move u
 
 Below is a short video explaining what expected goals means in the context of soccer.
 
-<div className="embed-responsive">
+<div class="embed-responsive">
 <iframe src="https://www.youtube.com/embed/zSaeaFcm1SY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
@@ -81,8 +81,8 @@ We had collected data on hundreds of goals, thousands of different matches and m
 
 Here are two example schemas that I used often.
 
-![kick-schema](/assets/blog/haxml/kick-schema.webp)
-![positions-schema](/assets/blog/haxml/positions.webp)
+![kick-schema](/assets/blog/haxml/kick-schema.png)
+![positions-schema](/assets/blog/haxml/positions.png)
 
 The complete data schema for the data I worked with is on the [HaxClass](https://github.com/vingkan/haxclass) repository. This repository also contains the source code for Headless API that recorded data from matches.
 
@@ -170,7 +170,7 @@ def defender_cone(match,stadium,kick):
 
 Diagram of above code:
 
-![Shot cone](/assets/blog/haxml/shot-cone.webp)
+![Shot cone](/assets/blog/haxml/shot-cone.png)
 
 The function below adds the speed of the ball to the data we already collected. This allows us to use the speed of the ball as an input to our model.
 
@@ -222,7 +222,7 @@ I decided to focus on the random forest classifier because it performed well wit
 
 I compared models and features by using preferred metrics such as accuracy, precision and recall, ROC AUC.
 
-![](/assets/blog/haxml/metrics.webp)
+![](/assets/blog/haxml/metrics.png)
 
 [Image credit to this website.](http://kaffee.50webs.com/Science/labs/Lab-Precision.vs.Accuracy.html)
 
@@ -292,7 +292,7 @@ I believe these features worked well because there are certain features are nece
 
 Above was my hypothesis as to why certain features made our model better than others. The most important feature of my model was the speed of the ball, boosting the model's precision by a significant amount. This can be seen below by ball_speed's SHAP value.
 
-![feature importance](/assets/blog/haxml/importances.webp)
+![feature importance](/assets/blog/haxml/importances.png)
 
 Feature importance help us understand how much each feature contributes to the model’s prediction. We often want interpretable models as we want to be to explain these models to people from a non-technical background. SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. SHAP is similar to feature importance which shows us how the features impact the model. SHAP uniquely allow us to view how features impact individual predictions and then averages these impacts on the model’s predictions.
 

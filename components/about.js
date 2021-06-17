@@ -4,12 +4,7 @@ export default function About() {
   return (
     <>
       <div className="inline">
-        <Image
-          src="/assets/authors/edwin.webp"
-          height="300"
-          width="400"
-          className="edwin"
-        />
+        <h1>About</h1>
         <div className="about">
           <a href="/assets/Edwin-Zamudio-Resume.pdf">
             Download a PDF of my resume.

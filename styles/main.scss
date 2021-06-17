@@ -46,11 +46,9 @@ $on-widescreen: 1152px;
   }
 }
 
-
 @mixin relative-font-size($ratio) {
   font-size: $base-font-size * $ratio;
 }
-
 
 // Reset some basic elements
 * {
@@ -342,7 +340,7 @@ body {
   transform: scale(1, 1);
   z-index: 1;
 
-  @include relative-font-size(1.5);
+  @include relative-font-size(1.2);
 }
 
 .icon {
@@ -360,7 +358,7 @@ body {
 
 .author {
   margin-top: 3rem;
-  margin-bottom: 7.2rem;
+  margin-bottom: 5rem;
   text-align: left;
 }
 
@@ -408,6 +406,7 @@ nav > a {
   }
 }
 
+//post name
 h3 > a {
   color: $black;
   text-decoration: none;
@@ -426,7 +425,7 @@ p {
 }
 
 h2 {
-  font-size: 2rem;
+  @include relative-font-size(1.45);
 }
 
 .edwin {
@@ -445,13 +444,12 @@ h2 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  p{
+  p {
     @include relative-font-size(1);
   }
-  
 }
 
-.about{
+.about {
   width: 100%;
   min-width: 35%;
 }
