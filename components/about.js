@@ -6,33 +6,24 @@ export default function About() {
       <div className="inline">
         <h1>About</h1>
         <div className="about">
+          <p>Hello!</p>
+          <p>
+            I am a student studying Computer Science at
+            <a href="https://www.iit.edu"> Illinois Tech</a> pursuing a bachelors of science in Computer Science. I am an aspiring Back-end Software Engineer with interests in cloud-computing and security.
+          </p>
+          <p>
+          I am currently working as a Software Engineering Intern at Cox Automotive under Engineering Enablement team building upon their AWS data aggregation tooling. 
+          </p>
+          <p>
+            I have previously worked as Software developer for Illinois Tech's Idea Shop, Software Engineer for HaxML, an online sports Analytics platform.
+          </p>
+          <p>
+            I am actively seeking full-time software engineering position to
+            start after December 2021.
+          </p>
           <a href="/assets/Edwin-Zamudio-Resume.pdf">
             Download a PDF of my resume.
           </a>
-          <p>Howdy!</p>
-          <p>
-            I am a senior studying Computer Science at
-            <a href="https://www.iit.edu"> Illinois Tech</a>.
-          </p>
-          <p>
-            I am actively seeking an full-time software engineering position to
-            start after December 2021.
-          </p>
-          <p>
-            During the school semesters, I keep myself busy by working on
-            multiple production Flask applications for Illinois Tech's Idea Shop
-            which helps manage students at our campus maker space. If I am not
-            working at the Idea Shop, I am working on personal projects or
-            attending hackathons.
-          </p>
-          <p>
-            I’m interested in improving the efficiency, scalability and security
-            of back-end applications and infrastructure.
-          </p>
-          <p>
-            I have multiple years of programming experience in Python and
-            JavaScript. I love working with Python and Linux.
-          </p>
           <p>
             You can
             <a href="http://github.com/notedwin/edwin.computer/issues/new">

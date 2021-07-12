@@ -2,49 +2,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Hero() {
   return (
     <div className="author">
-      <h2>Hi, I am Edwin.</h2>
-      <p>I love to share my technical ramblings.</p>
+      <h2>Hi, I am Edwin Zamudio.</h2>
+      <p>Computer Science student <br/> @ Illinois Tech.</p>
       <section id="visual">
         <div id="cube">
           <img
             className="face-0"
             alt="Cube Face Top"
-            src="/assets/img/1.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />
           <img
             className="face-1"
             alt="Cube Face Front"
-            src="/assets/img/2.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />
           <img
             className="face-2"
             alt="Cube Face Right"
-            src="/assets/img/1.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />
           <img
             className="face-3"
             alt="Cube Face Back"
-            src="/assets/img/1.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />
           <img
             className="face-4"
             alt="Cube Face Left"
-            src="/assets/img/1.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />
           <img
             className="face-5"
             alt="Cube Face Bottom"
-            src="/assets/img/2.webp"
+            src="/assets/img/4.png"
             width="768"
             height="768"
           />

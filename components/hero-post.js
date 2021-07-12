@@ -12,24 +12,18 @@ export default function HeroPost({
 }) {
   return (
     <section className="post">
-      <div>
-        <div>
-          <h3>
-            <Link as={`/posts/${slug}`} href="/posts/[slug]">
-              <a>{title}</a>
-            </Link>
-          </h3>
-          <div>
-            <DateFormatter dateString={date} />
-          </div>
-        </div>
-        <div>
-          <p>{excerpt}</p>
-        </div>
-      </div>
-      <div className="ImageDiv">
-        <CoverImage title={title} src={coverImage} slug={slug} />
+      <div className="inline-post">
+        <h3>
+          <Link as={`/posts/${slug}`} href="/posts/[slug]">
+            <a>{title}</a>
+          </Link>
+        </h3>
+        <DateFormatter dateString={date} />
       </div>
     </section>
   );
 }
+
+// <div className="ImageDiv">
+//<CoverImage title={title} src={coverImage} slug={slug} />
+//</div>
