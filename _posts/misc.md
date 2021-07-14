@@ -1,7 +1,7 @@
 ---
-title: "Catch-All: DeDrm, Fullstack, Figma, Security"
+title: "Catch-All"
 excerpt: "Something Chill"
-date: "2021-07-11T05:35:07.322Z"
+date: "2020-07-11T05:35:07.322Z"
 coverImage: "/assets/blog/home-server/rasp-pi.webp"
 ogImage:
   url: "/assets/blog/home-server/rasp-pi.webp"

@@ -23,6 +23,7 @@
    -moz-hyphens: none;
    -ms-hyphens: none;
    hyphens: none;
+   @include relative-font-size(.75)
  }
  
  /* Code blocks */

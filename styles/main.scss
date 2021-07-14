@@ -1,21 +1,17 @@
 $display-family: Helvetica Neue LT Pro Md, Inter;
 $mono-family: Consolas, monospace;
 $base-line-height: 1.35;
-$light-text: #333;
+
+$light-text: #222;
 $light: #f3f2ee; //background
 $border: #aaaaaa;
-
 $highlight: #4b776d;
 
 //dark
-
 //should be same or dark white should be ligher
 $dark-text: #eaeaea;
-
 $dark-highlight: #b1d8d0;
-
 $dark-black: #1e1f21;
-
 $dark-light: #444;
 $dark-gray: #767f87;
 
@@ -26,7 +22,7 @@ $normal-weight: 500;
 $bold-weight: 700;
 
 // Width of the content area
-$narrow-size: 950px;
+$narrow-size: 1000px;
 
 // Padding unit
 $spacing-full: 30px;
@@ -34,9 +30,7 @@ $spacing-half: $spacing-full / 2;
 
 // State of devices
 $on-mobile: 768px;
-$on-tablet: 769px;
 $on-desktop: 1024px;
-$on-widescreen: 1152px;
 
 @mixin media-query($device) {
   @media screen and (max-width: $device) {
@@ -45,6 +39,9 @@ $on-widescreen: 1152px;
 }
 
 @mixin relative-font-size($ratio) {
+  @include media-query($on-mobile) {
+    font-size: $base-font-size * $ratio * .8;
+  }
   font-size: $base-font-size * $ratio;
 }
 
@@ -219,10 +216,6 @@ h6 {
   & + ol {
     margin-top: 10px;
   }
-
-  @include media-query($on-mobile) {
-    scroll-margin-top: 65px;
-  }
 }
 
 // Headings with link
@@ -332,10 +325,14 @@ body {
     color: $light-text;
   }
 
-  @include relative-font-size(1.2);
+  @include relative-font-size(1.5);
 }
 
 .author {
+  @include media-query($on-mobile){
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
   margin-top: 3rem;
   margin-bottom: 5rem;
   text-align: left;
@@ -356,27 +353,29 @@ nav {
   height: auto;
   border-bottom: 1px solid $border;
   position: relative;
-  padding: $spacing-half 0;
+  padding: .5rem 0;
+  @include media-query($on-mobile){
+    justify-content: space-evenly;
+  }
   @extend %clearfix;
 }
 
 nav > a {
   color: $light-text;
   text-decoration: none;
-  padding: 5px 8px;
+  padding: .5rem .8rem;
   opacity: 0.85;
   letter-spacing: 0.3px;
-
+  @include relative-font-size(1.3);
   &:hover {
     opacity: 0.75;
+  }
+  @include media-query($on-mobile){
+    padding: .25rem;
   }
 
   &:not(:last-child) {
     margin-right: 5px;
-  }
-
-  @include media-query($on-mobile) {
-    opacity: 0.8;
   }
 }
 
@@ -391,11 +390,11 @@ h3 > a {
     color: $highlight;
     opacity: 0.75;
   }
-  @include relative-font-size(1.05)
+  @include relative-font-size(1.10)
 }
 
 h2 {
-  @include relative-font-size(1.2);
+  @include relative-font-size(1.5);
 }
 
 .edwin {
@@ -406,16 +405,6 @@ h2 {
   transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   :hover {
     filter: none;
-  }
-}
-
-.inline {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  p {
-    @include relative-font-size(1);
   }
 }
 
@@ -453,8 +442,6 @@ section.post {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  flex-grow: 1;
-  padding: 5px 0;
   border-top: 1px solid $border;
 }
 

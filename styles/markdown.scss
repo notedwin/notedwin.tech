@@ -1,11 +1,12 @@
 .postTitle {
   margin-top: 2rem;
   line-height: 1.2;
-  @include relative-font-size(1.2)
+  @include relative-font-size(1.5)
 }
 
 // Post content
 article {
+  @include relative-font-size(1.1);
   iframe {
     text-align: center;
   }
@@ -31,7 +32,6 @@ article {
       position: relative;
       bottom: 5px;
       vertical-align: baseline;
-      @include relative-font-size(1.2)
     }
 
     &:hover {
@@ -48,7 +48,6 @@ article {
     opacity: .75;
     padding-top: $spacing-full - 15;
     padding-bottom: $spacing-full - 15;
-    @include relative-font-size(1);
   }
 
   ul.task-list {
@@ -102,29 +101,21 @@ article {
   }
 
   h1 {
-    @include relative-font-size(1.35);
+    @include relative-font-size(1.5);
   }
 
   h2 {
-    @include relative-font-size(1.25);
+    @include relative-font-size(1.4);
   }
 
   h3 {
-    @include relative-font-size(1);
+    @include relative-font-size(1.35);
     border-bottom: 1px solid $light;
     padding-bottom: 4px;
   }
 
   h4 {
-    @include relative-font-size(1);
-  }
-
-  h5 {
-    @include relative-font-size(.90);
-  }
-
-  h6 {
-    @include relative-font-size(0.85);
+    @include relative-font-size(1.25);
   }
 }
 

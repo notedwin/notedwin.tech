@@ -5,7 +5,7 @@ export default function Projects() {
   return (
     <Layout>
       <Navbar />
-      <section /*class="basic-grid"*/>
+      <article /*class="basic-grid"*/>
         <div>
           <h2>Cyberattack Map</h2>
           <a href="https://github.com/notedwin/attack-map">Github repository</a>
@@ -38,7 +38,7 @@ export default function Projects() {
           </div>
           <p>Project for my software engineering class.</p>
         </div>
-      </section>
+      </article>
     </Layout>
   );
 }

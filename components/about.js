@@ -2,8 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <>
-      <div className="inline">
+    <article>
         <h1>About</h1>
         <div className="about">
           <p>Hello!</p>
@@ -47,7 +46,6 @@ export default function About() {
           <p>I5-6600k with GTX970 Desktop.</p>
           <p>IPhone 4s</p>
         </div>
-      </div>
-    </>
+    </article>
   );
 }
