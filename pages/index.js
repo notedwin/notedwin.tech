@@ -19,7 +19,7 @@ export default function Index({ allPosts }) {
   return (
     <Layout>
       <Head>
-        <title>Edwin Zamudio</title>
+        <title>Edwin's Blog</title>
         <link rel="icon" href="/logo.svg" />
         <style>{dom.css()}</style>
       </Head>

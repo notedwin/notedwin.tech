@@ -1,5 +1,6 @@
 import Layout from "../components/layout";
 import Navbar from "../components/navbar";
+import Link from "next/link"
 
 export default function Projects() {
   return (
@@ -10,9 +11,9 @@ export default function Projects() {
           <h2>Cyberattack Map</h2>
           <a href="https://github.com/notedwin/attack-map">Github repository</a>
           <br />
-          <a href="https://edwin.computer/attack-map/">
+          <Link href="/posts/attack-map/">
             Blog Post for Cyber Attack Map
-          </a>
+          </Link>
           <div className="embed-responsive">
             <iframe src="https://map.edwin.computer" />
           </div>

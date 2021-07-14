@@ -1,4 +1,4 @@
-$display-family: Helvetica Neue LT Pro Md, Inter;
+$display-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Inter,Open Sans,sans-serif;
 $mono-family: Consolas, monospace;
 $base-line-height: 1.35;
 
@@ -500,6 +500,10 @@ mark,
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.namelink{
+  text-decoration: underline dashed;
 }
 
 // Import sass files
