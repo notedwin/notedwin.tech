@@ -12,7 +12,7 @@ ogImage:
 ![hacking](/assets/blog/attack-map/hacker.gif)
 
 <div class="embed-responsive">
-  <embed src="https://map.edwin.computer">
+  <embed src="https://map.notedwin.tech">
 </div>
 
 [Github repository](https://github.com/notedwin/attack-map)

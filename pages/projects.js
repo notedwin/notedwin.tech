@@ -15,7 +15,7 @@ export default function Projects() {
             Blog Post for Cyber Attack Map
           </Link>
           <div className="embed-responsive">
-            <iframe src="https://map.edwin.computer" />
+            <iframe src="https://map.notedwin.tech" />
           </div>
 
           <p>
@@ -29,13 +29,13 @@ export default function Projects() {
         </div>
         <div>
           <h2>Restaurant Application</h2>
-          <a href="https://restaurant.edwin.computer">Live website</a>
+          <a href="https://restaurant.notedwin.tech">Live website</a>
           <br />
           <a href="http://github.com/notedwin/restaurant-app">
             Github Repository
           </a>
           <div className="embed-responsive">
-            <iframe width="100%" height="300" src="https://restaurant.edwin.computer" />
+            <iframe width="100%" height="300" src="https://restaurant.notedwin.tech" />
           </div>
           <p>Project for my software engineering class.</p>
         </div>

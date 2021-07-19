@@ -25,7 +25,7 @@ export default function About() {
           </a>
           <p>
             You can
-            <a href="http://github.com/notedwin/edwin.computer/issues/new">
+            <a href="http://github.com/notedwin/notedwin.tech/issues/new">
               {" "}
               report{" "}
             </a>

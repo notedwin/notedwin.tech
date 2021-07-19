@@ -156,8 +156,8 @@ server {
     }
 
 
-    ssl_certificate /etc/letsencrypt/live/aws.jenkins.edwin.computer/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/aws.jenkins.edwin.computer/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/aws.jenkins.notedwin.tech/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/aws.jenkins.notedwin.tech/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 

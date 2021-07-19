@@ -3,7 +3,7 @@ module.exports = {
         title: 'Edwin Zamudio',
         description:
           'Edwin Zamudio is a software engineer.',
-        siteUrl: 'https://edwin.computer', // No trailing slash allowed!
+        siteUrl: 'https://notedwin.tech', // No trailing slash allowed!
       },
       
   }

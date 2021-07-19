@@ -393,6 +393,10 @@ h3 > a {
   @include relative-font-size(1.10)
 }
 
+time{
+  @include relative-font-size(1);
+}
+
 h2 {
   @include relative-font-size(1.5);
 }

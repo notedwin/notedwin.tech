@@ -1,6 +1,6 @@
 # Edwin.computer
 
-[![Build Status](https://jenkins.edwin.computer/job/dev.edwin.computer/badge/icon)](https://jenkins.edwin.computer/job/dev.edwin.computer/)
+[![Build Status](https://jenkins.notedwin.tech/job/dev.edwin.computer/badge/icon)](https://jenkins.notedwin.tech/job/dev.edwin.computer/)
 
 This is the repository for my personal website.
 

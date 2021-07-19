@@ -6,7 +6,6 @@ export default function Meta() {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <meta name="description" content="Edwin Zamudio's Personal Website"/>
-        <meta charset="utf-8"/>
         
         <meta name="apple-mobile-web-app-status-bar-style" content="#222"/>
         <meta name="msapplication-TileColor" content="#222"/>
