@@ -20,9 +20,6 @@ export default function About() {
             I am actively seeking full-time software engineering position to
             start after December 2021.
           </p>
-          <a href="/assets/Edwin-Zamudio-Resume.pdf">
-            Download a PDF of my resume.
-          </a>
           <p>
             You can
             <a href="http://github.com/notedwin/notedwin.tech/issues/new">

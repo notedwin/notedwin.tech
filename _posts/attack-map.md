@@ -56,3 +56,23 @@ This makes it easier to be secure while doing this project due the fact that non
 Also, I can later add a real honey pot on this server.
 I had issues with my CI/CD, I forgot to shutdown the node instance everytime I built the node app which meant I had port 3000 is in use errors but jenkins didn't consider that an error(LOL).
 I am not as good in Javascript as I am in Python or Java.
+
+
+
+## Resources
+
+[ssh log to influx](https://github.com/acouvreur/ssh-log-to-influx)
+
+[Locating SSH Hackers in Real Time](https://devconnected.com/geolocating-ssh-hackers-in-real-time/)
+
+[Kapersky Map](https://cybermap.kaspersky.com/)
+
+[Globe.gl](https://github.com/vasturiano/globe.gl)
+
+[Github Globe](https://github.blog/2020-12-21-how-we-built-the-github-globe/)
+
+[Globe](https://www.timcchang.com/posts/threejs-globe)
+
+[Cowre](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)
+
+[Node.js Exception Handling](https://stackoverflow.com/questions/7310521/node-js-best-practice-exception-handling)

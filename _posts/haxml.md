@@ -222,7 +222,7 @@ I decided to focus on the random forest classifier because it performed well wit
 
 I compared models and features by using preferred metrics such as accuracy, precision and recall, ROC AUC.
 
-![](/assets/blog/haxml/metrics.png)
+![](/assets/blog/haxml/metrics.jpeg)
 
 [Image credit to this website.](http://kaffee.50webs.com/Science/labs/Lab-Precision.vs.Accuracy.html)
 
