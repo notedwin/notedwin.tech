@@ -5,6 +5,5 @@ module.exports = {
           'Edwin Zamudio is a software engineer.',
         siteUrl: 'https://notedwin.tech', // No trailing slash allowed!
       },
-      
   }
   

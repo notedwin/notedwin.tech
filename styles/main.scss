@@ -1,3 +1,4 @@
+@use 'sass:math';
 $display-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Inter,Open Sans,sans-serif;
 $mono-family: Consolas, monospace;
 $base-line-height: 1.35;
@@ -9,7 +10,7 @@ $highlight: #4b776d;
 
 //dark
 //should be same or dark white should be ligher
-$dark-text: #eaeaea;
+$dark-text: #eeeeee;
 $dark-highlight: #b1d8d0;
 $dark-black: #1e1f21;
 $dark-light: #444;
@@ -26,7 +27,7 @@ $narrow-size: 1000px;
 
 // Padding unit
 $spacing-full: 30px;
-$spacing-half: $spacing-full / 2;
+$spacing-half: math.div($spacing-full, 2);
 
 // State of devices
 $on-mobile: 768px;
