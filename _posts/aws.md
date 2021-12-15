@@ -12,7 +12,11 @@ ogImage:
 >
 > me: again? come on man
 
-Self-hosting applications is painful. Errors come in many forms but all result in you having to do a couple of hours of debugging. One week it could be that Comcast decided to change your public IP, the next you forget to update your SSL certs, *one week my router actually stopped forwarding traffic*. Running anything an ARM architecture is not forgiving, it will probably get better in the future since we are seeing chips like the M1 chips but debugging architecture level errors and compiling code from source is TEDIOUS.
+Self-hosting applications is painful. Errors come in many forms but all result in the same things, 2 hours of debugging a problem that will reoccur.
+
+Usually I had problems with my router but every time I thought my DNS entries were not correct, or my SSL certs were expired or public IP address changed. However, most were solved with a reboot of my system and router.
+
+I relied on an old C project called Rsyslog to send logs to one of my applications. Rsyslog was not forgiving, I had to compile the code from source since some packages that were community maintained were not included in the standard package. However simple this sounds, there was relatively no documentation on this.
 
 However, self-hosting these applications was not a total loss, I learned about Nginx, networking, Jenkins, Linux by continuously ramming my head into their documentation. All of these things I had 0 experience with prior to self hosting and we absolutely essential to understanding Amazon Web Services.
 
@@ -20,19 +24,9 @@ While hosting a server on AWS has you looking at all 200+ services like what the
 
 ## Terraforming
 
-I used Terraform at work and thought it would be a good fit since most of my websites are static content or only get data once such as on load.
+I used Terraform at work and thought it would be a good fit. Terraform would allow me to imperatively define infrastructure while also documenting it for later purposes.
 
-I had used it at work and thought it was really neat, imperatively defined servers whats not cool about that?
-
-I first had to start at the DNS level. This is where I had the most errors.
-
-Comcast isn't known for loving people that self host.
-
-I get a new public IP every couple of months but man is it annoying to debugg sometimes?
-
-you are like nothing has changed whta broke?
-
-so i went with using cloudflare as my primary dns server, mainly for other benefits such as automatic TLS/SSL certs, DDOS protection and other neat things.
+Starting at the DNS level, I imported my domain to cloudflare so I could take advantage of their terraform and overall great ecosystem such as automatic TLS/SSL certs, DDOS protection and other neat things. This process was quick and summarized by the code below.
 
 ```ruby
 # simple way to update all my subdomains when my public_ip changes
@@ -47,19 +41,13 @@ resource "cloudflare_record" "domain" {
 }
 ```
 
+Next I had to configure AWS Lambda and elasticache(Redis) in their own private subnet if I wanted to allow lambda to interact with redis.
 
+However, my initial way of setting up AWS lead to me having hourly NAT gateway charges, which totalled 35 dollars for a month just for securing my appications in a VPC. An alternative I found was running your own NAT gateway in an EC2 instance and saving 30 dollars a month!
+
+![infra](/assets/blog/aws/infra.png)
 
 **To Be continued**
-
-
-
-Some pain points about AWS:
-
-AWS free tier charges you for NAT gateway usage. There are ways around this such as running a NAT gateway on a micro ec2 instance. However, there are no up to date AMI's which means it something I had to do from scratch.
-
-Nat gateways are used if you want a VPC to have internet connection.
-
-- A lambda and elasticache(redis)
 
 [Code is on Github](https://github.com/notedwin/infra)
 
