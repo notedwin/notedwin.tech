@@ -137,6 +137,16 @@ Too many.
 
 
 
+### Compiling Rsyslog from Source
+
+Rsyslog has community manitained modules which don't come with rsyslog that is installed on systems by default. 
+
+I had to download the git source and the dependencies, 
+
+however for some distributions you have the maintainers of rsyslog has an opensuse repo with modules for all the different distibutions
+
+
+
 #### Resources
 
 - [ssh log to influx](https://github.com/acouvreur/ssh-log-to-influx)

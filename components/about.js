@@ -7,18 +7,14 @@ export default function About() {
         <div className="about">
           <p>Hello!</p>
           <p>
-            I am a student studying Computer Science at
-            <a href="https://www.iit.edu"> Illinois Tech</a> pursuing a bachelors of science in Computer Science. I am an aspiring Back-end Software Engineer with interests in cloud-computing and security.
+            I'm Edwin, a Software Engineer based in the Chicago. I'm
+            currently working at Deloitte as a Soutions Engineer.
           </p>
           <p>
-          I am currently working as a Software Engineering Intern at Cox Automotive under Engineering Enablement team building upon their AWS data aggregation tooling. 
+            I graduated from the <a href="https://www.iit.edu">Illinois Institute of Technology</a> with a Bachelors degree in Computer Science.
           </p>
           <p>
-            I have previously worked as Software developer for Illinois Tech's Idea Shop, Software Engineer for HaxML, an online sports Analytics platform.
-          </p>
-          <p>
-            I am actively seeking full-time software engineering position to
-            start after December 2021.
+          I previously worked at Cox Automotive, Engineering Enablement as a Software Engineer where I worked on creating insights into cost and security for engineering teams using Python, Terraform, and AWS. Other jobs include being a software developer for Illinois Tech's Idea Shop, and a software engineer for HaxML, an online sports Analytics platform.
           </p>
           <p>
             You can

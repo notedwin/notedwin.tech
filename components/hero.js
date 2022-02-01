@@ -5,7 +5,30 @@ export default function Hero() {
   return (
     <div className="author">
       <h2>Hi, I am <Link href="/about" passHref><a className="namelink">Edwin Zamudio</a></Link>.</h2>
-      <p>Computer Science student <br/> @ Illinois Tech.</p>
+      <p>Solutions Engineering Analyst <br/> @ Deloitte Consulting.</p>
+      <div className="icon-wrapper">
+        <div className="icon">
+          <a href="https://github.com/notedwin">
+            <FontAwesomeIcon icon={["fab", "github"]} />
+          </a>
+        </div>
+        <div className="icon">
+          <a href="https://linkedin.com/in/edwin-zamudio">
+            <FontAwesomeIcon icon={["fab", "linkedin"]} />
+          </a>
+        </div>
+        <div className="icon">
+          <a href="https://twitter.com/edwinzamud">
+            <FontAwesomeIcon icon={["fab", "twitter"]} />
+          </a>
+        </div>
+        <div className="icon">
+          <a href="https://open.spotify.com/user/zamudio.e13">
+            <FontAwesomeIcon icon={["fab", "spotify"]} />
+          </a>
+        </div>
+      </div>
+      
       <section id="visual">
         <div id="cube">
           <img
@@ -52,28 +75,6 @@ export default function Hero() {
           />
         </div>
       </section>
-      <div className="icon-wrapper">
-        <div className="icon">
-          <a href="https://github.com/notedwin">
-            <FontAwesomeIcon icon={["fab", "github"]} />
-          </a>
-        </div>
-        <div className="icon">
-          <a href="https://linkedin.com/in/edwin-zamudio">
-            <FontAwesomeIcon icon={["fab", "linkedin"]} />
-          </a>
-        </div>
-        <div className="icon">
-          <a href="https://twitter.com/edwinzamud">
-            <FontAwesomeIcon icon={["fab", "twitter"]} />
-          </a>
-        </div>
-        <div className="icon">
-          <a href="https://open.spotify.com/user/zamudio.e13?si=NYn_7WclQmmVBfb6wJ7xqA">
-            <FontAwesomeIcon icon={["fab", "spotify"]} />
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

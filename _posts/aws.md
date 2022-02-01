@@ -51,3 +51,6 @@ However, my initial way of setting up AWS lead to me having hourly NAT gateway c
 
 [Code is on Github](https://github.com/notedwin/infra)
 
+Resources:
+
+[AWS Whitepaper on Serverless](https://docs.aws.amazon.com/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/single-page-application.html)

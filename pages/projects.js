@@ -8,6 +8,8 @@ export default function Projects() {
       <Navbar />
       <article /*class="basic-grid"*/>
         <div>
+          <h1>Most of my projects are on <a href="https://github.com/notedwin">Github</a></h1>
+          <a>page last updated: 3/20/21</a>
           <h2>Cyberattack Map</h2>
           <a href="https://github.com/notedwin/attack-map">Github repository</a>
           <br />
