@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -27,6 +28,19 @@ export default function Hero() {
             <FontAwesomeIcon icon={["fab", "spotify"]} />
           </a>
         </div>
+        <div className="icon">
+          <a href="https://www.are.na/edwin-zamudio">
+            <FontAwesomeIcon icon={["fas", "star"]} />
+          </a>
+        {/* import svg and make it an icon */}
+        <div className="icon">
+          <a href="https://www.instagram.com/edwinzamud/">
+            <Image src="/webring.svg" width={40} height={40} />
+          </a>
+        </div>
+        </div>
+
+        
       </div>
       
       <section id="visual">
