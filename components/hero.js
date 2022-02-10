@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <div className="author">
       <h2>Hi, I am <Link href="/about" passHref><a className="namelink">Edwin Zamudio</a></Link>.</h2>
-      <p>Solutions Engineering Analyst <br/> @ Deloitte Consulting.</p>
+      <p>Analyst @ Deloitte Consulting.</p>
       <div className="icon-wrapper">
         <div className="icon">
           <a href="https://github.com/notedwin">
@@ -32,12 +32,12 @@ export default function Hero() {
           <a href="https://www.are.na/edwin-zamudio">
             <FontAwesomeIcon icon={["fas", "star"]} />
           </a>
-        {/* import svg and make it an icon */}
+        {/* import svg and make it an icon
         <div className="icon">
           <a href="https://www.instagram.com/edwinzamud/">
             <Image src="/webring.svg" width={40} height={40} />
           </a>
-        </div>
+        </div> */}
         </div>
 
         
