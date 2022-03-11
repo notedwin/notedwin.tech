@@ -29,7 +29,7 @@ export default function Hero() {
           </a>
         </div>
         <div className="icon">
-          <a href="https://www.are.na/edwin-zamudio">
+          <a href="https://www.are.na/notedwin">
             <FontAwesomeIcon icon={["fas", "star"]} />
           </a>
         {/* import svg and make it an icon

@@ -20,7 +20,6 @@ Cyber security is at an all time importance. We have critical vunerabilities com
 [Github repository](https://github.com/notedwin/attack-map)
 
 
-
 ### Backstory
 
 One day I realized I had exposed my SSH port to the internet. Luckily, nobody had managed to guess my password but I still wondered how many people had tried and were trying.

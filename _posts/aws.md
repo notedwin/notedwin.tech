@@ -8,15 +8,17 @@ ogImage:
 
 ---
 
-> wait my website isn't working again?
+> wait why is my website not working again?
 
 ## Self-Hosting
 
-Self hosting is a great way to get started and learn more about certain technologies
+Self hosting is a great way to get started and learn more about certain technologies, protocols, etc.
 
-While self-hosting all my web applications for about 2 years. I learned about Nginx, Redis, and Jenkins, Linux, computer networking, and more. All by working the problems I was facing and learning how to solve them.
+While hosting my web applications on a raspberry pi for about 2 years. I learned about Nginx, Redis, and Jenkins, Linux, computer networking, and more specific tools. 
 
-This experience was essential to understand how to deploy applications to AWS since there are over 200+ services that can be used to host applications.
+I learned these tools by working for free as a production engineer that refactored code, changed tooling and managed the hardware all in one. 
+
+This experience was essential to understanding why Amazon Web Services needs 200+ services and what their specific use cases are!
 
 ### Learn the inner workings of C and C++ even if you are paid to be a Python Developer
 
@@ -25,31 +27,27 @@ This experience was essential to understand how to deploy applications to AWS si
 However beneficial self hosting can be, there are a few problems with it.
 Disclaimer: This is all on a raspberry pi, so it is not a full-featured server which might get around some of these problems.
 
-- Your power or internet might go out and your website is down.
-- Your public IP might change and you have to manually update your DNS.
-- Some dependencies might only work on certain computing architectures and you have to manually compile them
+- Your power or internet might go out and your website is down. 
+- Your public IP might change and you have to manually update your DNS if you do not have a script monitoring this.
+- Old dependencies might only work on certain computing architectures and you have to manually compile them, and learn how to compile C and fix dependencies issues in C. 
 
-2 of these problems are simple to fix, but they are a pain to find what the exact problem is without good monitoring and logging (which I don't have).
+2 of these problems are simple to fix, but they are a pain to find what the exact problem is without good monitoring and logging (which was something I overlooked).
 
-The third problem is my favorite example of a time-consuming problem.
-My attack map project is one of the applications I hosted locally.
-I wanted to send logs via HTTP so I could later move the project to AWS.
+The last problem on that list is my favorite because of how time consuming the problem was. When I initially created my [Attack Map project](/posts/attack-map), I wanted to send logs via HTTP.
+I found that the standard way on linux to send logs was using rsyslog. I was able to find documentation on how to send logs via HTTP, however I kept getting missing module errors. I was confused and kept trying different combinations of arguments, but nothing.
+I gave up and settled for sending them via TCP, since the producer (rsyslog) and consumer application (python script) were going to be on the same device. 
 
-However, the only way I could send logs via HTTP was with an old project called Rsyslog.
-Rsyslog being a C project, the assumption is that you know the language can compile it manually and you can use it.
+I tried to fix this problem, every couple of weeks but then eventually, I decided to compile rsyslog from source, and when reading the instructions for compilation I found out that the module I was using has to be enabled when compiling rsyslog. 
 
-I did not know I had to compile the project to get certain feature which was not outlined in the documentation but I have to read through many forum posts.
+At that point I had spent around 30 hours on this error, and I never wanted to work with Linux dependencies or packages again.
 
 A simple fix that took me a couple of months to wrap my head around. 
-I initally gave up and used TCP instead of HTTP to send the logs since I just wanted to have a working example.
 
 ## Terraform and AWS
 
-Ok thats enough of the self-hosted stuff, lets move on to the AWS stuff.
+After the bliss of figuring that error out, I could start migrating to AWS.
 
-I wanted to migrate all my website and application to AWS, but I decided to start with one application and then migrate it to AWS.
-
-I chose my attack map project to migrate. These are the steps I took to migrate it to AWS:
+These are the steps I took to migrate the attack map project to AWS:
 
 There are some best practices from my previous job at Cox Automotive that I learned and wanted to apply in this project.
 - I created an S3 bucket for deployment packages and terrform state files.
@@ -78,29 +76,17 @@ resource "cloudflare_record" "domain" {
 
 Once, I was able to create the ACM certificate then I can use it to attach subdomians to public IPs.
 
-### API Gateway, Elasticache and Lambda
-Once, I had the domains set up I could work on getting the API gateway and lambda working in together.
+### Simple Single page application
+The frontend for my attack map project is HTML. I was able to use CloudFront to serve this static content, while also using Cloudflare caching.
 
-I worked on getting API gateway to send a HTTP response to the lambda function and then the lambda function sends back a response to the end user.
+For this single page application I wanted the an embedded script to run within the HTML to pull data from an API and send back the recent hackers from the past 24 hours.
 
-Once, this was working I had to add Elasticache(Redis) to work with AWS lambda.
+The best way I found to do this was to have an API gateway forward requests to a Lambda, this lambda then passes back an HTTP response with the nessecary body. 
 
-Since AWS has huge data centers, there is no way to these services to interact without either a public ip or a private subnet.
-The private subnet is the better option for security, as it allows for these services to talk to each other without being open to the internet.
+The backend was initally in javascript, but now it is in rust, since I wanted to learn more about Rust and the state of rust tooling for AWS. Currently, the process of deploying rust onto a lambda is a bit difficult.
+More on that in a seperate post!
 
-### Cloudfront
-
-I have static HTML that doesn't change often, so I decided to use a cloudfront distribution to serve the static content while also using cloudflare caching.
-
-No reason in wasting resources on something that doesn't change often.
-
-The HTML comes with a small script file that pulls data from a API gateway endpoint that triggers the lambda function and send back the recent hackers from the past 24 hours.
-
-However, I suffer from SLOW cold starts in python and javascript, so I am currently working on migrating the lambda to rust.
-
-
-
-# Ok, everything is working now!
+## Ok, everything is working now!
 
 WAIT! WHY IS MY AWS BILL 20 USD? 
 ![cost](/assets/blog/aws/cost1.png)
@@ -122,26 +108,11 @@ resource "aws_instance" "nat" {
 }
 ```
 
+## Update 3.11.22
+![infra](/assets/blog/aws/rip.png)
 
-## Deploying
-
-Deploying the application once the terraa
-```bash
-# I kept my secrets in a file and then just used the var-file to pass it to terraform.
-
-Terraform init
-Terraform plan
-Terraform apply
-
-# For debugging
-Terraform state list
-
-```
-
-*This post is still a work in progress.*
-
-
-[Code is on Github](https://github.com/notedwin/infra)
+This project cost me around 100 dollars to run, and alot of time so I will be stopping development for now!
+[The Code is on Github](https://github.com/notedwin/infra)
 
 Resources:
 
