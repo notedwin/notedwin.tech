@@ -17,8 +17,10 @@ export default function Projects() {
             Blog Post for Cyber Attack Map
           </Link>
           <div className="embed-responsive">
-            <iframe src="https://map.notedwin.tech" />
+            <iframe src="http://map.notedwin.tech" />
           </div>
+          
+
 
           <p>
             I wanted to generate a world map that showed all the people who were

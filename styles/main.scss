@@ -21,7 +21,6 @@ $small-font-size: $base-font-size * 0.875;
 $h1-font: 2rem;
 $normal-weight: 500;
 $bold-weight: 700;
-
 // Width of the content area
 $narrow-size: 1000px;
 
@@ -121,6 +120,7 @@ hr {
 
 // Image
 img {
+  border-radius: 1rem;
   max-width: 100%;
   vertical-align: middle;
   -webkit-user-drag: none;
@@ -326,18 +326,14 @@ body {
     color: $light-text;
   }
 
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
   @include relative-font-size(1.5);
 }
 
-.author {
-  @include media-query($on-mobile){
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-  margin-top: 3rem;
-  margin-bottom: 5rem;
-  text-align: left;
-}
 
 a {
   color: inherit;
@@ -503,12 +499,52 @@ mark,
 
 .basic-grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  padding-top: 1rem;
+  max-width: 85%;
+  margin: 0 auto;
+  
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: minmax(150px, auto);
+}
+
+.a {
+  grid-row: span 2;
+}
+
+.b {
+  grid-row-end: span 2;
 }
 
 .namelink{
   text-decoration: underline dashed;
+}
+
+.btn{
+  background-color: $highlight;
+  color: $light-text;
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  :hover {
+    background-color: $light;
+    color: $highlight;
+  }
+}
+
+
+.box {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $dark-gray;
+
+  color: $dark-text;
+  font-size: $base-font-size;
+  font-weight: $bold-weight;
+  text-align: left;
+  @extend %clearfix;
 }
 
 // Import sass files

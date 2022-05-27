@@ -9,7 +9,7 @@ export default function Navbar() {
             <a>home</a>
           </Link>
 
-          <Link href="/projects">
+          <Link href="https://github.com/notedwin">
             <a>projects</a>
           </Link>
 
