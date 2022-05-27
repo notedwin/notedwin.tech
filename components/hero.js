@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -7,12 +6,13 @@ export default function Hero() {
     <div className="header">
       <h1>
         Hi, I am{" "}
-        <Link href="/about" passHref>
-          <a className="namelink">Edwin Zamudio</a>
-        </Link>
+
+        <a className="namelink">Edwin Zamudio</a>
+        
         .
       </h1>
-      <p>Data Engineer @ Deloitte Consulting.</p>
+      
+      <p>Data Engineer @ Deloitte.</p>
       <section id="visual">
         <div id="cube">
           <img

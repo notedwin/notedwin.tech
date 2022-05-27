@@ -2,9 +2,7 @@
 title: "Migrating to AWS"
 excerpt: "Self-hosted > Private Cloud"
 date: '2021-11-19T05:35:07.322Z'
-coverImage: '/assets/blog/home-server/rasp-pi.webp'
-ogImage:
-  url: '/assets/blog/home-server/rasp-pi.webp'
+image: '/assets/blog/aws/infra.png'
 
 ---
 

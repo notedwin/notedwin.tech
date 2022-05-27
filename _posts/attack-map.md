@@ -1,10 +1,8 @@
 ---
 title: "Locating Hackers in Real Time."
 excerpt: "Locating IP addresses using Javascript"
-coverImage: "/assets/blog/attack-map/header.webp"
+image: "/assets/blog/attack-map/hacker.gif"
 date: "2021-03-22T05:35:07.322Z"
-ogImage:
-  url: "/assets/blog/attack-map/header.webp"
 ---
 
 ![hacking](/assets/blog/attack-map/hacker.gif)

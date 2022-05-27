@@ -200,6 +200,14 @@ body.dark-mode {
       }
     }
   }
+  .box {
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 1px solid #333;
+    background-color: #333;
+    color: $dark-text;
+    @extend %clearfix;
+  }
 }
 
 mark,

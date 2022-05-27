@@ -1,22 +1,19 @@
 import Link from "next/link";
 import DarkModeToggle from "./dark-mode";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
+  const router = useRouter();
+
   return (
     <header>
       <nav>
+      <DarkModeToggle />
+        {router.pathname !== "/" && (
           <Link href="/">
-            <a>home</a>
+            <a>Back</a>
           </Link>
-
-          <Link href="https://github.com/notedwin">
-            <a>projects</a>
-          </Link>
-
-          <Link href="/about">
-            <a>about</a>
-          </Link>
-          <DarkModeToggle/>
+        )}
       </nav>
     </header>
   );

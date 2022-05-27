@@ -2,9 +2,7 @@
 title: "Raspberry Pi 4 Home Server"
 excerpt: "Moving to AWS eventually"
 date: '2020-11-18T05:35:07.322Z'
-coverImage: '/assets/blog/home-server/rasp-pi.webp'
-ogImage:
-  url: '/assets/blog/home-server/rasp-pi.webp'
+image: '/assets/blog/home-server/rasp-pi.jpg'
 ---
 
 **Update 11/28/21: **I started migration to Amazon Web Service using Terraform, read about it [here](https://main.notedwin.tech/posts/aws)
