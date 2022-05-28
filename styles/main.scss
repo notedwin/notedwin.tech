@@ -16,7 +16,7 @@ $dark-black: #1e1f21;
 $dark-light: #444;
 $dark-gray: #767f87;
 
-$base-font-size: 1.35rem;
+$base-font-size: 1.2rem;
 $small-font-size: $base-font-size * 0.875;
 $h1-font: 2rem;
 $normal-weight: 500;
@@ -55,32 +55,13 @@ $on-desktop: 1024px;
   transition: background-color 25ms ease-in, border-color 25ms ease-in;
 }
 
-.notransition {
-  -webkit-transition: none;
-  -moz-transition: none;
-  -ms-transition: none;
-  -o-transition: none;
-  transition: none;
-}
-
-html {
-  overflow-x: hidden;
-  width: 100%;
-}
-
 body,
 h1,
 h2,
 h3,
-h4,
-h5,
-h6,
 p,
 blockquote,
 pre,
-hr,
-dl,
-dd,
 ol,
 ul,
 figure {
@@ -112,13 +93,6 @@ b {
   color: $light-text;
 }
 
-// horizontal rule
-hr {
-  border-bottom: 0;
-  border-style: solid;
-  border-color: $border;
-}
-
 // Image
 img {
   border-radius: 1rem;
@@ -126,23 +100,6 @@ img {
   vertical-align: middle;
   -webkit-user-drag: none;
   margin: 0 auto;
-  text-align: center;
-}
-
-// Figure
-figure {
-  position: relative;
-}
-
-// Image inside Figure tag
-figure > img {
-  display: block;
-  position: relative;
-}
-
-// Image caption
-figcaption {
-  font-size: 13px;
   text-align: center;
 }
 
@@ -220,40 +177,18 @@ h6 {
   }
 }
 
-// Headings with link
-h1 > a,
-h2 > a,
-h3 > a,
-h4 > a,
-h5 > a,
-h6 > a {
-  text-decoration: none;
-  border: none;
 
-  &:hover {
-    text-decoration: none;
-    border: none;
-  }
+.table-wrapper {
+  overflow-x: scroll;
 }
 
-// Del
-del {
-  color: inherit;
-}
-
-// Em
-em {
-  color: inherit;
-}
 
 // Blockquotes
 blockquote {
-  color: $border;
+  color: $light-text;
   font-style: italic;
   text-align: center;
   opacity: 0.9;
-  border-top: 1px solid $border;
-  border-bottom: 1px solid $border;
   padding: 10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -263,21 +198,6 @@ blockquote {
     margin-bottom: 0;
     margin-top: 0;
   }
-}
-
-// Underline
-u {
-  text-decoration-color: #d2c7c7;
-}
-
-// Superscript
-sup {
-  border-radius: 10%;
-  top: -3px;
-  left: 2px;
-  font-size: small;
-  position: relative;
-  margin-right: 2px;
 }
 
 article{
@@ -296,11 +216,6 @@ body {
   color: $light-text;
   font: $normal-weight #{$base-font-size}/#{$base-line-height} $display-family;
   background-color: $light;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -webkit-font-feature-settings: "kern" 1;
-  -moz-font-feature-settings: "kern" 1;
-  -o-font-feature-settings: "kern" 1;
   font-feature-settings: "kern" 1;
   font-kerning: normal;
   box-sizing: border-box;
@@ -349,7 +264,6 @@ a {
 
 nav {
   display: flex;
-  // put elements on end of flexbox
   justify-content: space-between;
 
   height: auto;
@@ -380,50 +294,27 @@ nav > a {
 }
 
 //post name
-h3 > a {
+.post-title {
   color: $light-text;
   text-decoration: none;
   opacity: 0.95;
   letter-spacing: 0.15px;
 
   &:hover {
-    color: $highlight;
+    color: $dark-highlight;
     opacity: 0.75;
   }
   @include relative-font-size(1.10)
-}
-
-time{
-  @include relative-font-size(1);
 }
 
 h2 {
   @include relative-font-size(1.5);
 }
 
-.inline-post {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-.ImageDiv {
-  position: relative;
-  width: 150px;
-  min-height: 150px;
-  min-width: 150px;
-  max-width: 150px;
-  max-height: 150px;
-}
-
 section.post {
+  // stack elemtns on top of each other
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  border-top: 1px solid $border;
+  flex-direction: column;
 }
 
 // Table
@@ -451,13 +342,6 @@ table {
   }
 }
 
-// Clearfix
-%clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 // When mouse block a text set this color
 mark,
 ::selection {
@@ -465,67 +349,28 @@ mark,
   color: $light;
 }
 
-// Github Gist clear border
-.gist {
-  table {
-    border: 0;
-
-    tr,
-    td {
-      border: 0;
-    }
-  }
-}
-
 .basic-grid {
   display: grid;
   padding-top: 1rem;
   max-width: 85%;
   margin: 0 auto;
+
+  // center items in grid
+  justify-items: center;
+  align-items: center;
   
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-auto-rows: minmax(150px, auto);
 }
 
-.a {
-  grid-row: span 2;
-}
-
-.b {
-  grid-row-end: span 2;
+.box {
+  padding: 1rem;
+  border-radius: 2rem;
 }
 
 .namelink{
   text-decoration: underline dashed;
 }
 
-.btn{
-  // center
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: $light-text;
-  border: none;
-  padding: .5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  :hover {
-    background-color: $light;
-    color: $highlight;
-  }
-}
-
-
-.box {
-  padding: 1rem;
-  border-radius: 2rem;
-  background-color: #ddd;
-  color: $light-text;
-}
-
-
-// Import sass files
 @import "font", "code", "markdown", "dark", "misc";

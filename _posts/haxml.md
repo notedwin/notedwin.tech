@@ -209,6 +209,8 @@ After I had created some features, I had to figure out what kind of model to use
 
 I decided to focus on the random forest classifier because it performed well with minimal parameter tuning. Below you can see the different models on the final feature set.
 
+<div class="table-wrapper" markdown="block">
+
 | Model               | Parameters                                      | Accuracy | Precision | Recall | AUC ROC |
 | ------------------- | ----------------------------------------------- | -------- | --------- | ------ | ------- |
 | Random Forest       | max_depth=12                                    | 0.970    | 0.747     | 0.163  | 0.581   |
@@ -217,6 +219,8 @@ I decided to focus on the random forest classifier because it performed well wit
 | K Neighbors         | n_neighbors=7                                   | 0.965    | 0.466     | 0.196  | 0.594   |
 | Ada Boost           | n_estimators=100                                | 0.966    | 0.463     | 0.145  | 0.570   |
 | Logistic Regression | random_state=0                                  | 0.965    | 0.428     | 0.079  | 0.538   |
+
+</div>
 
 I compared models and features by using preferred metrics such as accuracy, precision and recall, ROC AUC.
 
