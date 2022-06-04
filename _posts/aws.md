@@ -106,6 +106,12 @@ resource "aws_instance" "nat" {
 }
 ```
 
+I had issues with Next.js with their image loading and optimization, so I had to host my blog on vercel.
+It is free and easy to use so I had no problem with it.
+
+
+```ruby
+
 ## Update 3.11.22
 ![infra](/assets/blog/aws/rip.png)
 

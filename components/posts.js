@@ -6,25 +6,20 @@ export default function Posts({ posts }) {
   return (
     <>
       {posts.map((post) => (
-        <Link as={`/${post.slug}`} href="/[slug]">
-          <div className="box">
-          <div>
-            <Link as={`/${post.slug}`} href="/[slug]">
-                <h3 className="post-title">{post.title}</h3>
-            </Link>
+        <section className="post">
+          <div className="inline-post">
+            <div>
+              <h3>
+                <Link as={`/posts/${post.slug}`} href="/posts/[slug]">
+                  <a>{post.title}</a>
+                </Link>
+              </h3>
+              <p>{post.excerpt}</p>
+            </div>
+
+            <DateFormatter dateString={post.date} />
           </div>
-          <div style={{ position: "relative", minHeight: "200px" }}>
-            <Image
-              className="img"
-              src={post.image}
-              layout="fill"
-              alt="post.title"
-              objectFit="cover"
-            />
-          </div>
-          <p>{post.excerpt}</p>
-          </div>
-        </Link>
+        </section>
       ))}
     </>
   );

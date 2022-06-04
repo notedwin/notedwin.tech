@@ -26,8 +26,54 @@ export default function home({ allPosts }) {
           <style>{dom.css()}</style>
         </Head>
         <Navbar />
-        <div className="basic-grid">
-          <Hero />
+        <section id="visual">
+        <div id="cube">
+          <img
+            className="face-0"
+            alt="Cube Face Top"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+          <img
+            className="face-1"
+            alt="Cube Face Front"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+          <img
+            className="face-2"
+            alt="Cube Face Right"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+          <img
+            className="face-3"
+            alt="Cube Face Back"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+          <img
+            className="face-4"
+            alt="Cube Face Left"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+          <img
+            className="face-5"
+            alt="Cube Face Bottom"
+            src="/assets/img/4.png"
+            width="768"
+            height="768"
+          />
+        </div>
+      </section>
+        <Hero />
+        <div>
           <>{allPosts.length > 0 && <Posts posts={allPosts} />}</>
         </div>
       </main>

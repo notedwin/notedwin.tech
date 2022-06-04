@@ -1,11 +1,23 @@
 ---
 title: "Attack Map"
-excerpt: "SSH failed login attempts mapped using Rust and Redis."
+excerpt: "Failed SSH login attempts using Rust and Redis."
 image: "/assets/blog/attack-map/map2.png"
 date: "2022-03-22T05:35:07.322Z"
 ---
 
 ![hacking](/assets/blog/attack-map/hacker.gif)
+
+The problem of running applications off your own hardware is that you the typically problems of running an applicaion in production such as security, scalability, and availability.
+
+Unlike a typical application, you can't pay someone to manage it, well you could run it on AWS but you would still pay more.
+For some thing of this Scale you probably don't want to  pay more than a couple dollars.
+
+Oh bow you have to manage the infastructure too?
+Welcome to your second job.
+
+One of those points being security.
+There might not be a loss of revenue or customers
+
 
 Cyber security is at an all time importance. We have critical vunerabilities coming up every week. Mitigation and preventation are the known solutions, but data in form of logs are often forgotten about.
 
@@ -124,6 +136,9 @@ sudo awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr
   - we try caching IP's using Redis so we don't spam the API
 - Only when a user requests the page, do we make a redis query on the failed SSH login's within the past 24 hours.
 - With this data we use [Datamaps]() to map the data on a world map.
+
+
+Som
 
 ### What kind of issues did you run into?
 
