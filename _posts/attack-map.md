@@ -7,19 +7,23 @@ date: "2022-03-22T05:35:07.322Z"
 
 ![hacking](/assets/blog/attack-map/hacker.gif)
 
-The problem of running applications off your own hardware is that you the typically problems of running an applicaion in production such as security, scalability, and availability.
+The problem of running applications off your own hardware is that you have typical set of problems of that come with running an application production such as security, scalability, and availability.
 
-Unlike a typical application, you can't pay someone to manage it, well you could run it on AWS but you would still pay more.
-For some thing of this Scale you probably don't want to  pay more than a couple dollars.
+Unlike a typical workplace, you can't pay someone to fix issues your application has.
+> Realistically, you COULD pay someone but finding someone that wants to fix your bad code is probably impossible.
 
-Oh bow you have to manage the infastructure too?
-Welcome to your second job.
+Most programming languages have safety features that prevent you from writing code that has security vunerabilities.
+However, there aren't many ways to avoid the security vulnerabilities in infastructure, unless you understand how the infastructure works.
 
-One of those points being security.
-There might not be a loss of revenue or customers
+This leads me to the backstory of this project.
 
+### Backstory
 
-Cyber security is at an all time importance. We have critical vunerabilities coming up every week. Mitigation and preventation are the known solutions, but data in form of logs are often forgotten about.
+When I was running my personal website of my raspberry pi, I was getting a spammed with HTTP requests. I realized that if my port 80 was being attacked directly, people could do that to any of my other ports that were accessible via the internet.
+
+One of those ports was 22, which is used for SSH so I could remote login into my server when I wasn't home. I searched the internet to find ways to look into login attempts and if any were successful.
+
+Luckily, nobody had managed to guess my password, but then I wondered how many spam brute force attacks, I would get a day.
 
 ## Live Application
 
@@ -30,9 +34,7 @@ Cyber security is at an all time importance. We have critical vunerabilities com
 [Github repository](https://github.com/notedwin/attack-map)
 
 
-### Backstory
 
-One day I realized I had exposed my SSH port to the internet. Luckily, nobody had managed to guess my password but I still wondered how many people had tried and were trying.
 
 **Hold on, what is SSH?**
 

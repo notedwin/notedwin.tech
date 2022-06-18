@@ -6,7 +6,7 @@
 
 // Post content
 article {
-  @include relative-font-size(1.1);
+  @include relative-font-size(.90);
   iframe {
     text-align: center;
   }

@@ -8,15 +8,11 @@ export default function Posts({ posts }) {
       {posts.map((post) => (
         <section className="post">
           <div className="inline-post">
-            <div>
-              <h3>
-                <Link as={`/posts/${post.slug}`} href="/posts/[slug]">
-                  <a>{post.title}</a>
-                </Link>
-              </h3>
-              <p>{post.excerpt}</p>
-            </div>
-
+            <h3>
+              <Link as={`/${post.slug}`} href="/[slug]">
+                <a>{post.title}</a>
+              </Link>
+            </h3>
             <DateFormatter dateString={post.date} />
           </div>
         </section>

@@ -16,7 +16,7 @@ $dark-black: #1e1f21;
 $dark-light: #444;
 $dark-gray: #767f87;
 
-$base-font-size: 1.3rem;
+$base-font-size: 1.35rem;
 $small-font-size: $base-font-size * 0.875;
 $h1-font: 2rem;
 $normal-weight: 500;
@@ -30,7 +30,7 @@ $spacing-full: 30px;
 $spacing-half: math.div($spacing-full, 2);
 
 // State of devices
-$on-mobile: 768px;
+$on-mobile: 600px;
 $on-desktop: 1024px;
 
 @mixin media-query($device) {
@@ -100,7 +100,7 @@ img {
   max-width: 100%;
   vertical-align: middle;
   -webkit-user-drag: none;
-  margin: 0;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -304,16 +304,41 @@ nav>a {
   }
 
   @include relative-font-size(1.10)
+
+}
+
+time{
+  @include relative-font-size(1);
 }
 
 h2 {
   @include relative-font-size(1.5);
 }
 
-section.post {
-  // stack elemtns on top of each other
+
+.inline-post {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  margin-top: .5rem;
+
+  @include media-query($on-mobile) {
+    // center and in 1 row
+    flex-direction: column;
+    align-self: flex-start;
+    margin-bottom: .5rem;
+  }
+}
+
+
+
+section.post {
+display: flex;
+align-items: stretch;
+justify-content: space-between;
+border-top: 1px solid $border;
 }
 
 // Table
@@ -355,30 +380,17 @@ mark,
 .header {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   text-align: left;
-}
 
-.inline-post {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-section.post {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  border-top: 1px solid $border;
-  margin-bottom: 1rem;
-
-  @include media-query($on-mobile) {
-    align-items: center;
+  @include media-query($on-mobile){
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
   }
 }
+
+
 
 h3>a {
   color: $light-text;

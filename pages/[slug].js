@@ -32,7 +32,7 @@ export default function Post({ post}) {
                 </Head>
                 <h1 className="postTitle">{post.title}</h1>
                 <DateFormatter dateString={post.date} />
-                <PostBody content={post.content} />
+                <PostBody className="blog" content={post.content} />
               </article>
             </>
           )}
