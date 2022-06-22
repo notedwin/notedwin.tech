@@ -110,13 +110,22 @@ I had issues with Next.js with their image loading and optimization, so I had to
 It is free and easy to use so I had no problem with it.
 
 
-```ruby
-
 ## Update 3.11.22
 ![infra](/assets/blog/aws/rip.png)
 
 This project cost me around 100 dollars to run, and alot of time so I will be stopping development for now!
 [The Code is on Github](https://github.com/notedwin/infra)
+
+## Update 6.11.22
+I mentioned I shutdown all the services running on AWS since the cost was getting ridiculous.
+
+Managing infastructure with terraform was comfy, but I was not going to pay $30 a month to run redis and some compute.
+
+I was running one of my lambda functions insecurly since the lambda could be triggered by going to the url, thus adding a charge to my account. 
+[Read more about Securing Lambda Functions](https://www.wiz.io/blog/securing-aws-lambda-function-urls/)
+
+Ok, rant over
+
 
 Resources:
 

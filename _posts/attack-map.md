@@ -2,38 +2,33 @@
 title: "Attack Map"
 excerpt: "Failed SSH login attempts using Rust and Redis."
 image: "/assets/blog/attack-map/map2.png"
-date: "2022-03-22T05:35:07.322Z"
+date: "2022-06-22T05:35:07.322Z"
 ---
 
-![hacking](/assets/blog/attack-map/hacker.gif)
+> What I thought I looked like using a hexeditor to after making my subways surfer score 2^31
 
-The problem of running applications off your own hardware is that you have typical set of problems of that come with running an application production such as security, scalability, and availability.
+![hacking](/assets/blog/attack-map/hacker.gif)
+[Live App](https://map.notedwin.tech)
+[Github repository](https://github.com/notedwin/attack-map)
+
+Running applications on your own hardware comes with problems such as security, scalability, and availability.
+
+You don't want to have a website that only works 3 days out of the month or one that makes your linux server vunerable to common and/or to be used as in a botnet.
 
 Unlike a typical workplace, you can't pay someone to fix issues your application has.
-> Realistically, you COULD pay someone but finding someone that wants to fix your bad code is probably impossible.
+> Realistically, you COULD pay someone but finding someone who wants to fix your bad code is unlikely.
+
 
 Most programming languages have safety features that prevent you from writing code that has security vunerabilities.
 However, there aren't many ways to avoid the security vulnerabilities in infastructure, unless you understand how the infastructure works.
 
 This leads me to the backstory of this project.
 
-### Backstory
-
 When I was running my personal website of my raspberry pi, I was getting a spammed with HTTP requests. I realized that if my port 80 was being attacked directly, people could do that to any of my other ports that were accessible via the internet.
 
 One of those ports was 22, which is used for SSH so I could remote login into my server when I wasn't home. I searched the internet to find ways to look into login attempts and if any were successful.
 
 Luckily, nobody had managed to guess my password, but then I wondered how many spam brute force attacks, I would get a day.
-
-## Live Application
-
-<div class="embed-responsive">
-  <embed src="https://map.notedwin.tech">
-</div>
-
-[Github repository](https://github.com/notedwin/attack-map)
-
-
 
 
 **Hold on, what is SSH?**
@@ -46,18 +41,16 @@ If you open up a port and allow remote access, you could have someone trying to 
 
 ***I really don't recommend doing this as it is very easy for you to accidently create a login that is vunerable if you use ***
 
-**Ok, back to gathering data on hackers**
+### Gathering data
 
-All SSH logs are in /var/log/auth.log, filtering this data was relatively easy.
+All SSH logs are in /var/log/auth.log, filtering this data was relatively easy. This shows us all the failed SSH attempts.
 
 ```bash
-tail -Fn0 /var/log/auth.log | grep --line-buffered "Failed password for" | grep --line-buffered -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | nc 10.0.0.89 1999
-
-nc -l -p 1999 | tee -a ssh.out
+tail -Fn0 /var/log/auth.log | grep --line-buffered "Failed password for" | grep --line-buffered -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
 
 ```
 
-That was nice, but now I wanted a way to visualize these IP addresses
+Cool, lets visualize these IP addresses.
 
 ```python
 import re
@@ -69,7 +62,7 @@ import geopandas as gpd
 from geopandas import GeoDataFrame
 from pandas import json_normalize 
 
-ipdata = ipdata.IPData('')
+ipdata = ipdata.IPData('random-api-key')
 
 
 arr = []
@@ -96,11 +89,9 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 gdf.plot(ax=world.plot(figsize=(10, 6)), marker='o', color='red', markersize=15);
 ```
 
-![p](.assets/blog/attack-map/py.png)
+![p](assets/blog/attack-map/py.png)
 
-Nice, now lets make this an application by sending logs via HTTP to an application.
-
-All Failed SSH attemped get sent to the application to get parsed and visualized.
+Great, now let's make this a bit more automated by sending logs via HTTP to an application.
 
 ```bash
 template(name="json" type="list"){
@@ -121,26 +112,69 @@ if $programname == 'sshd' then {
 }
 ```
 
+**wait sending logs over HTTP seems like alot of overhead for reading a file**
 
+Let's read the metadata of the log file and read the file if it change in size, parse the lines that match our regex and profit.
 
-```bash
-# what about nginx logs?
-sudo awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr
+```rust
+const API: &str = "http://ip-api.com/json/";
+static ref RE: Regex = Regex::new(r"(\w{0,9}\s+\d{1,2} \d{2}:\d{2}:\d{2})( localhost sshd\[\d*]: Failed password for invalid user )(\w{0,12})( from )(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*").unwrap();
+
+pub async fn parse_log_line(line: &str) -> Result<(), Box<dyn std::error::Error>> {
+    warn!("Line: {}", line);
+    let mut log = RE.capture_locations();
+    if let Some(_) = RE.captures_read(&mut log, line){
+        let (u_start,u_end) = log.get(3).unwrap();
+        let user = &line[u_start..u_end];
+
+        let (i_start,i_end) = log.get(5).unwrap();
+        let ip = &line[i_start..i_end];
+
+        let (t_start,t_end) = log.get(1).unwrap();
+        let time = &line[t_start..t_end];
+
+        let timestamp = NaiveDateTime::parse_from_str(
+            format!("{}{}", time, " 2022").as_str(),
+            "%b %e %T %Y",
+        )
+        .unwrap()
+        .timestamp();
+
+        populate_redis(user, ip, timestamp).await?;
+   }
+   Ok(())
+}
+
 ```
 
-### Application Flow and Stack
+We have data in our Redis DB now, lets get that information out and visualize it.
 
-- Someone tries logging in via SSH
-- Syslog noticed a failed attempt in logs
-- Syslog sends a message to my nodejs listening server
-- the nodejs listening server then extracts the IP address 
-- nodejs makes a 3rd party API call to get IP location data
-  - we try caching IP's using Redis so we don't spam the API
-- Only when a user requests the page, do we make a redis query on the failed SSH login's within the past 24 hours.
-- With this data we use [Datamaps]() to map the data on a world map.
+```rust
+pub fn pull_hackers() -> Vec<Hacker> {
+    let mut con = REDIS_CLIENT.get_connection().unwrap();
+    let now: isize = Local::now().timestamp() as isize;
+    // 5 hours ago in seconds
+    let five_hours_ago: isize = now - (5 * 60 * 60);
 
-
-Som
+    let result: Vec<Hacker> = redis::cmd("zrangebyscore")
+        .arg("hackers")
+        .arg(five_hours_ago)
+        .arg(now)
+        .query::<Vec<String>>(&mut con)
+        .unwrap()
+        .iter()
+        .map(|hacker| {
+            //info!("hacker: {}", hacker);
+            let hacker_json: String = con.get(hacker).unwrap();
+            let mut hacker_struct: Hacker = serde_json::from_str(&hacker_json).unwrap();
+            let time = NaiveDateTime::from_timestamp(hacker.parse::<i64>().unwrap(), 0);
+            hacker_struct.time = time.format("%H:%M:%S").to_string();
+            hacker_struct
+        })
+        .collect();
+    result
+}
+```
 
 ### What kind of issues did you run into?
 
@@ -148,18 +182,14 @@ Too many.
 
 - Rsyslog doesn't come with community maintained modules, I had to compile them from source.
 - I set up my CI/CD pipeline wrong, I forgot to close the previous instance and running into port already in use errors
+- Cross-compiling from ARM to ARM. Wait wut? I mean M1 -> ARM7. There were some compiling issues with some rust dependendency needing a different c compiler.
 
 
+#### Bonus: Compiling Rsyslog from Source
 
-### Compiling Rsyslog from Source
+Rsyslog has community manitained modules which do not come compiled with the rsyslog installed on systems by default. 
 
-Rsyslog has community manitained modules which don't come with rsyslog that is installed on systems by default. 
-
-I had to download the git source and the dependencies, 
-
-however for some distributions you have the maintainers of rsyslog has an opensuse repo with modules for all the different distibutions
-
-
+I had to download the git source and compile from source. 
 
 #### Resources
 
@@ -168,6 +198,9 @@ however for some distributions you have the maintainers of rsyslog has an opensu
 - [Kapersky Map](https://cybermap.kaspersky.com/)
 - [Globe.gl](https://github.com/vasturiano/globe.gl)
 - [Globe](https://www.timcchang.com/posts/threejs-globe)
-- [Cowre](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)
+- [Cowrie](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)
 - [cloudfront-CORS](https://advancedweb.hu/how-cloudfront-solves-cors-problems/)
 - [SPA Whitepapers AWS](https://docs.aws.amazon.com/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/single-page-application.html)
+[Parsing logs 230x faster with Rust](https://andre.arko.net/2018/10/25/parsing-logs-230x-faster-with-rust/)
+[erraform-rust-aws-lambda](https://github.com/anuraags/terraform-rust-aws-lambda/blob/master/lambda/aws.Dockerfile)
+[https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e)
