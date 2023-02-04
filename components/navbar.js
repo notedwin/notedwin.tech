@@ -8,11 +8,26 @@ export default function Navbar() {
   return (
     <header>
       <nav>
-      <DarkModeToggle />
         {router.pathname !== "/" && (
-          <Link href="/">
-            <a>Back</a>
-          </Link>
+          <>
+            <Link href="/">
+              <a>Home</a>
+            </Link>
+            <div>
+              <Link href="/about">
+                <a>About</a>
+              </Link>
+              <DarkModeToggle />
+            </div>
+          </>
+        )}
+        {router.pathname === "/" && (
+          <>
+            <Link href="/about">
+              <a>About</a>
+            </Link>
+            <DarkModeToggle />
+          </>
         )}
       </nav>
     </header>

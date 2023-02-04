@@ -9,8 +9,9 @@ import Navbar from "../components/navbar";
 
 import DateFormatter from "../components/date-formatter";
 import Meta from "../components/meta";
+import Script from "next/script";
 
-export default function Post({ post}) {
+export default function Post({ post }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -21,17 +22,26 @@ export default function Post({ post}) {
       <main>
         <Navbar />
         <>
+          <Script>
+            {`window.addEventListener('scroll', () => {
+    document.body.style.setProperty('--scroll',window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
+  }, false);`}
+          </Script>
+
           {router.isFallback ? (
             <H1>Loading... </H1>
           ) : (
             <>
+              <div className="progress" />
               <article>
                 <Head>
                   <title>{post.title}</title>
                   <meta property="og:image" content={post.image} />
                 </Head>
+                <div className="post-date">
+                  <DateFormatter dateString={post.date} />
+                </div>
                 <h1 className="postTitle">{post.title}</h1>
-                <DateFormatter dateString={post.date} />
                 <PostBody className="blog" content={post.content} />
               </article>
             </>
@@ -76,4 +86,4 @@ export async function getStaticPaths() {
     }),
     fallback: false,
   };
-} 
+}

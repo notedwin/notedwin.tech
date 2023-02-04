@@ -1,11 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 export default function Hero() {
   return (
     <>
       <div className="header">
         <h2>
-          Hi, I am <a className="namelink">Edwin Zamudio</a>.
+          Hi, I am{" "}
+          <Link href="/about" passHref>
+            <a className="namelink">Edwin Zamudio</a>
+          </Link>
         </h2>
 
         <p>Data Engineer @ Deloitte.</p>
