@@ -1,16 +1,14 @@
-# Edwin.computer
-
-[![Build Status](https://jenkins.notedwin.tech/job/dev.edwin.computer/badge/icon)](https://jenkins.notedwin.tech/job/dev.edwin.computer/)
+# notedwin
 
 This is the repository for my personal website.
 
-This Blog is meant to document some of the things I do related to tech for myself to look back on
+I maintain my posts as markdown files in the _posts directory.
 
-Local Development server:
-
+To develop locally, run:
 ```bash
 npm run dev
 ```
+
 
 ## License
 
