@@ -7,28 +7,38 @@ date: "2020-08-21T05:35:07.322Z"
 
 > Why remove DRM? Aren't you stealing money from someone/ Isn't that Illegal? **No, It isn't**
 
-# What is DRM?
-DRM is a digital rights management system that prevents unauthorized access to digital content. -- [Wikipedia](https://en.wikipedia.org/wiki/Digital_rights_management)
+### Table of Contents
 
+### What is DRM?
+DRM is a digital rights management system that prevents unauthorized access to digital content.[1](https://en.wikipedia.org/wiki/Digital_rights_management)
 
-## what is Adobe Digital Editions?
+### what is Adobe Digital Editions?
 
-Adobe Digital Editions is a software package that allows you to read and write digital books.
+Adobe Digital Editions is a software package that allows you to read ebook in different formats such as .acsm, .epub, .pdf and etc.
 
-## Why are you removing it?
+### What are you removing DRM from?
 
-Technical Writing class required a book from independent publisher. The publisher sold a PDF version of the book for cheaper than the hard cover book. As a college student, saving 15 dollars is always a good idea.
+I had a course in university that required a book from an independent publisher. The publisher sold a adobe digital editions version of the book for cheaper than the physical book. As a college student, saving 15 dollars is always a good idea. Also, I didn't want to carry a book around everyday.
 
-However, what I didn't realize was that most adobe products don't run well on Linux.
-More specifically I did not want to use a 10 year old version of digital editions to read a book everyday.
-I figured there must be a way to convert the file to a pdf.
+### Why remove DRM?
+
+What I didn't realize was that the book was DRM protected. I could only read the book on adobe digital editions and only on one computer.
+
+This sucked and was limiting since I wanted to read the book on my Linux machine. I could have used a windows virtual machine but I didn't want to do that. I did not want to use a 10 year old version of digital editions to read a book everyday. I figured there must be a way to convert the file to a pdf.
+
+### Enter DeDRM
+
 After a couple of hours of research, I found a tool to remove DRM from books called DeDRM.
 
-I found a tool to remove DRM from books called DeDRM.
 The tool is written in Python2 and relies on Adobe digital editions 2.0.
 
-Using the adobe digital editions file (.ACSM), DeDRM generates the adobe keys. These adobe keys are nessecary to help decrypt the file.
+Using the adobe digital editions file (.acsm), DeDRM generates the adobe keys. These adobe keys are necessary to help decrypt the file.
 
 BAM! you now have a an adobe digital editions book in pdf format.
 
-[dedrm](https://github.com/apprenticeharper/DeDRM_tools)
+I don't know too much about the process but it did work. I was able to read the book on my Linux machine.
+So I wanted to share this.
+
+[DeDrm](https://github.com/apprenticeharper/DeDRM_tools)
+<br>
+[Forked DeDrm](https://github.com/nodrm/DeDRM_tools)

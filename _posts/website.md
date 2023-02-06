@@ -5,35 +5,26 @@ date: "2020-10-19T05:35:07.322Z"
 image: '/assets/blog/aws/infra.png'
 
 ---
+> Picture of my first website.
 
->TLDR: You can't learn to code without making mistakes.
-**Update 11/28/21: **I started migration to Amazon Web Service using Terraform, read about it [here](https://main.notedwin.tech/posts/aws)
+**Update 11/28/21:** I started migration to Amazon Web Service using Terraform, read about it [here](https://notedwin.com/posts/aws)
+### Table of Contents
 
-Hi there, I started this website with the goal of learning web development.
 
-I initially tried to make a website using HTML and CSS, but I quickly realized that was not the best way to do it.
+Hey, I started making personal websites back in 2019. I first started by making a website using HTML and CSS. I quickly realized that was not the best way to do it. I then used a static site generator called [Jekyll](https://jekyllrb.com/) to generate my website. A static site generator is a tool that generates plain HTML files from a markdown file.
 
-I used static site generator called [Jekyll](https://jekyllrb.com/) to generate my website.
+That website worked great, however I copied a template and I did not fully understand how it worked. I copied the website in [Next.js](https://nextjs.org/) deployed on [Vercel](https://vercel.com/). 
 
-A static site generator is a tool that generates plain HTML files from a markdown file.
+My first domain was free from [Github Student Developer Pack](https://education.github.com/pack). 
 
-This website worked great, but I wanted to make it more dynamic, so I decided to use [next.js](https://nextjs.org/) deployed on [Vercel](https://vercel.com/).] 
-My domain is a free domain from github student developer pack.
 
 ### Before Vercel
-Vercel gives you an easy way to deploy an application. 
-This may be nice if you want to focus on the front-end but I typically enjoy removing certain abstractions.
 
-I used to run all my applications off of a raspberry PI.
-I still use it for my attack map project but I refrain from thowing things on there as it get hard to manage.
+I used to run all my applications off of a Raspberry Pi. Although I still use it for certain projects, I refrain from using it for other applications as it gets hard to manage. I used to run Jenkins to continously deploy the code I commited to Github. I used nginx as my webserver. 
+ 
+ I learned about the deploy process of web application such as how to use DNS, get SSL certifications, and automate deployments. Although I had some automation for installing things, setting everything up took a lot of time.
 
-I used to run Jenkins, Nginx, redis, MySql, etc. I had alot of unnessecary applications.
-
-I learned how to use DNS, get SSL cert's, automate deployments.
-There was so much I learned from trying to have an application be easy to update and have good availability. 
-
-I did have some automation for installing things, but setting up everything took alot of time.
-
+> bash script below:
 ```bash
 # I assume you dont want your raspberry pi needing a monitor to use, use it in headless mode
 sudo systemctl enable ssh
@@ -76,11 +67,11 @@ sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 #mongodb
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-
 ```
 
-### why did I want to learn web development?
-I had a hard time creating an ecommerce store for a class, so I decided to learn how to build a website. I used Django and made such a bad website, but hey, making mistakes is part of learning.
+## Why I Wanted to Learn Web Development
+
+I wanted to learn web development because I had a hard time creating an e-commerce store for a class. I used Django and made a bad website, but making mistakes is part of the learning process.
 
 ### Inspiration:
 - [Welcome! | Haki Benita](https://hakibenita.com/)
@@ -94,3 +85,7 @@ I had a hard time creating an ecommerce store for a class, so I decided to learn
 - [corey.tech](https://corey.tech/aws-cost/)
 - [Tal Hoffman](https://www.talhoffman.com/)
 - [The Tech Stack of a One-Man SaaS](https://panelbear.com/blog/tech-stack/)
+
+
+### Rehype-Remark
+- [rehype-remark](https://github.com/mattcroat/joy-of-code/blob/main/src/lib/api/markdown.ts)

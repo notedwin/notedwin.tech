@@ -1,62 +1,57 @@
 ---
-title: "Migrating to AWS"
+title: "AWS: Terraform, SPAs, and more"
 excerpt: "Self-hosted > Private Cloud"
 date: '2021-11-19T05:35:07.322Z'
 image: '/assets/blog/aws/infra.png'
 
 ---
 
-> wait why is my website not working again?
-
-## Self-Hosting
-
-Self hosting is a great way to get started and learn more about certain technologies, protocols, etc.
-
-While hosting my web applications on a raspberry pi for about 2 years. I learned about Nginx, Redis, and Jenkins, Linux, computer networking, and more specific tools. 
-
-I learned these tools by working for free as a production engineer that refactored code, changed tooling and managed the hardware all in one. 
-
-This experience was essential to understanding why Amazon Web Services needs 200+ services and what their specific use cases are!
-
-### Learn the inner workings of C and C++ even if you are paid to be a Python Developer
+> Learn the inner workings of C and C++ even if you are paid to be a Python Developer
 
 ![meme](/assets/blog/aws/alpine.JPG)
 
-However beneficial self hosting can be, there are a few problems with it.
-Disclaimer: This is all on a raspberry pi, so it is not a full-featured server which might get around some of these problems.
+### Table of Contents
 
-- Your power or internet might go out and your website is down. 
-- Your public IP might change and you have to manually update your DNS if you do not have a script monitoring this.
-- Old dependencies might only work on certain computing architectures and you have to manually compile them, and learn how to compile C and fix dependencies issues in C. 
 
-2 of these problems are simple to fix, but they are a pain to find what the exact problem is without good monitoring and logging (which was something I overlooked).
+## Self-Hosting
 
-The last problem on that list is my favorite because of how time consuming the problem was. When I initially created my [Attack Map project](/posts/attack-map), I wanted to send logs via HTTP.
-I found that the standard way on linux to send logs was using rsyslog. I was able to find documentation on how to send logs via HTTP, however I kept getting missing module errors. I was confused and kept trying different combinations of arguments, but nothing.
+Are you tired of relying on 3rd party providers to host you applications who can pull the plug on your application at any time? Then self-hosting is for you!
+
+Not only do you gain full control over your website, but it is also a great wat to dive into technology such as Linux, bash scripting, web servers, etc.
+
+After 2 years of self hosting a low traffic website on a raspberry Pi. I can confidently say I know a little more about web severs, automation and Linux. Maybe not enough to scale a 3-5 user application! (sarcasm, my website can probably handle 10,000 concurrent users but I don't think I will ever see that)
+
+The skills I learned helped me understand the abstractions behind amazon web services and why they have 200+ services and what their use cases are.
+
+### Drawbacks to self hosting
+
+Self hosting does come with many challenges. Most of the challenges are related to how much time you are willing to spend on an arbitrary problem. For example I ran into many issues related to running a web server off an ARM architecture computer as opposed to the more common x86, which lead to compiling alot of dependencies. Sometimes your public IP address might changes because internet providers hate static IP's leading you to lose 3 hours of studying before a midterm.
+
+These issues although solvable require a great amount of time and knowledge to debug so it is not feasible for everyone. 
+
+### The reason for the meme above!
+
+One of my favorite issues I ran into was when I initially created my [Attack Map project](/posts/attack-map), I wanted to send logs via HTTP.
+I found that the standard way on linux to send logs was using rsyslog. I was able to find documentation on how to send logs via HTTP, however I kept getting missing module errors. I was confused and kept trying different combinations of arguments, but nothing worked.
 I gave up and settled for sending them via TCP, since the producer (rsyslog) and consumer application (python script) were going to be on the same device. 
 
 I tried to fix this problem, every couple of weeks but then eventually, I decided to compile rsyslog from source, and when reading the instructions for compilation I found out that the module I was using has to be enabled when compiling rsyslog. 
 
 At that point I had spent around 30 hours on this error, and I never wanted to work with Linux dependencies or packages again.
 
-A simple fix that took me a couple of months to wrap my head around. 
-
+A simple fix that took me a couple of months to wrap my head around. However, I was definitely moving to AWS.
 ## Terraform and AWS
 
-After the bliss of figuring that error out, I could start migrating to AWS.
+With the knowledge I learned around AWS at Cox Automotive, I decided I wanted to migrate my Attack Map application to AWS lambda. I wanted to practice using Terraform for the deployment of this app. I followed common patterns such as using an S3 bucket for deployment packages and terraform state files. I seperated the terraform files into individual services. I ensure all services had the minimum permission needed.
 
-These are the steps I took to migrate the attack map project to AWS:
-
-There are some best practices from my previous job at Cox Automotive that I learned and wanted to apply in this project.
-- I created an S3 bucket for deployment packages and terrform state files.
-- I seperated the terraform into files and what service the code was for.
-- Use variable for things that change like the domain name, and subdomains.
-- Minimum permissions for all services.
+Much of the code from the application, I was able to port easily. I had to change the way the backend sent data to the front end since before they were running on the same server but now I had to get data via HTTP.
 
 Here is a infastructure diagram of the attack-map in AWS.
 ![infra](/assets/blog/aws/infra.png)
 
-I first wanted to add cloudflare to the website since I could take advantage of their terraform and overall great ecosystem such as automatic TLS/SSL certs, DDOS protection and other neat things. This process was quick and summarized by the code below.
+With the code ported and the infrastructure set up, I had a working application I could test on the AWS console. However, I wanted to show this as a web application so I had to add things such as Cloudflare caching and DNS, ACM and Cloudfront.
+
+I used Cloudflare since they also had a terraform package where I could link domains to ACM in AWS with minimal effort.
 
 ```ruby
 
@@ -72,17 +67,20 @@ resource "cloudflare_record" "domain" {
 }
 ```
 
-Once, I was able to create the ACM certificate then I can use it to attach subdomians to public IPs.
+Once I setup cloudflare, I need to get an ACM certificate for the domain name. This domain would point to the front end of the application which was served as static content on cloudfront.
 
-### Simple Single page application
+The flow of the application looks like this:
+
+
+<!-- TODO: add diagram here -->
+
+
+### Single page application
 The frontend for my attack map project is HTML. I was able to use CloudFront to serve this static content, while also using Cloudflare caching.
 
 For this single page application I wanted the an embedded script to run within the HTML to pull data from an API and send back the recent hackers from the past 24 hours.
 
-The best way I found to do this was to have an API gateway forward requests to a Lambda, this lambda then passes back an HTTP response with the nessecary body. 
-
-The backend was initally in javascript, but now it is in rust, since I wanted to learn more about Rust and the state of rust tooling for AWS. Currently, the process of deploying rust onto a lambda is a bit difficult.
-More on that in a seperate post!
+The best way I found to do this was to have an API gateway forward requests to a Lambda, this lambda then passes back an HTTP response with the nessecary body. The frontend then parses the body and displays the data.
 
 ## Ok, everything is working now!
 

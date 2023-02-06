@@ -5,15 +5,28 @@ image: "/assets/blog/attack-map/map2.png"
 date: "2022-06-22T05:35:07.322Z"
 ---
 
-> What I thought I looked like using a hexeditor to after making my subways surfer score 2^31
+> What I thought I looked like using a hex editor after making my subways surfer score 2^31
+<!-- Put hacking gif next to true story -->
+<div class="inline-post">
+    <img src="/assets/blog/attack-map/hacker.gif" alt="hacking" style="width: 50%;"/>
+    <img src="/assets/blog/attack-map/IMG_3133.png" alt="true story" style="width: 50%;"/>
+</div>
 
-![hacking](/assets/blog/attack-map/hacker.gif)
-[Live App](https://map.notedwin.tech)
+[Live App](https://map.notedwin.com)
 [Github repository](https://github.com/notedwin/attack-map)
 
+### Table of contents
+
+
+# Intro
 Running applications on your own hardware comes with problems such as security, scalability, and availability.
 
-You don't want to have a website that only works 3 days out of the month or one that makes your linux server vunerable to common and/or to be used as in a botnet.
+
+You don't want to have a website that only works 3 days out of the month or one that makes your linux server vulnerable to common vulnerabilities and/or to be used as in a botnet.
+
+Once step to avoid these issues is to monitor your applications and infrastructure.
+
+That was the goal of this project, to learn how linux monitoring works and create a simple tool to see what issues are faced when processing logs.
 
 Unlike a typical workplace, you can't pay someone to fix issues your application has.
 > Realistically, you COULD pay someone but finding someone who wants to fix your bad code is unlikely.
@@ -41,7 +54,7 @@ If you open up a port and allow remote access, you could have someone trying to 
 
 ***I really don't recommend doing this as it is very easy for you to accidently create a login that is vunerable if you use ***
 
-### Gathering data
+# Gathering data
 
 All SSH logs are in /var/log/auth.log, filtering this data was relatively easy. This shows us all the failed SSH attempts.
 
