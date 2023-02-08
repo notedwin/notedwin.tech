@@ -6,21 +6,16 @@ date: "2022-06-22T05:35:07.322Z"
 ---
 
 > What I thought I looked like using a hex editor after making my subways surfer score 2^31
-<!-- Put hacking gif next to true story -->
-<div class="inline-post">
-    <img src="/assets/blog/attack-map/hacker.gif" alt="hacking" style="width: 50%;"/>
-    <img src="/assets/blog/attack-map/IMG_3133.png" alt="true story" style="width: 50%;"/>
-</div>
+![bruh](/assets/blog/attack-map/hacker.gif)
 
 [Live App](https://map.notedwin.com)
 [Github repository](https://github.com/notedwin/attack-map)
 
 ### Table of contents
 
-
 # Intro
-Running applications on your own hardware comes with problems such as security, scalability, and availability.
 
+Running applications on your own hardware comes with problems such as security, scalability, and availability.
 
 You don't want to have a website that only works 3 days out of the month or one that makes your linux server vulnerable to common vulnerabilities and/or to be used as in a botnet.
 
@@ -29,8 +24,8 @@ Once step to avoid these issues is to monitor your applications and infrastructu
 That was the goal of this project, to learn how linux monitoring works and create a simple tool to see what issues are faced when processing logs.
 
 Unlike a typical workplace, you can't pay someone to fix issues your application has.
-> Realistically, you COULD pay someone but finding someone who wants to fix your bad code is unlikely.
 
+> Realistically, you COULD pay someone but finding someone who wants to fix your bad code is unlikely.
 
 Most programming languages have safety features that prevent you from writing code that has security vunerabilities.
 However, there aren't many ways to avoid the security vulnerabilities in infastructure, unless you understand how the infastructure works.
@@ -43,7 +38,6 @@ One of those ports was 22, which is used for SSH so I could remote login into my
 
 Luckily, nobody had managed to guess my password, but then I wondered how many spam brute force attacks, I would get a day.
 
-
 **Hold on, what is SSH?**
 
 SSH stands for secure shell which is often used to allow computers to talk to each other. SSH is used to access remote machines and administration tasks.
@@ -52,7 +46,7 @@ Most devices are not vulnerable to SSH attacks, due to having firewall setting t
 
 If you open up a port and allow remote access, you could have someone trying to SSH (brute force) attack your machine. Opening up your port on your machine is not enough for hackers to attack you, you also need to enable port fowarding to the specific machine you want remote access to through your ISP.
 
-***I really don't recommend doing this as it is very easy for you to accidently create a login that is vunerable if you use ***
+**_I really don't recommend doing this as it is very easy for you to accidently create a login that is vunerable if you use _**
 
 # Gathering data
 
@@ -73,7 +67,7 @@ from shapely.geometry import Point
 import pandas as pd
 import geopandas as gpd
 from geopandas import GeoDataFrame
-from pandas import json_normalize 
+from pandas import json_normalize
 
 ipdata = ipdata.IPData('random-api-key')
 
@@ -95,7 +89,7 @@ df1 = df[['latitude','longitude']]
 df1.head
 
 geometry = [Point(xy) for xy in zip(df1['longitude'],df1['latitude'])]
-gdf = GeoDataFrame(df1, geometry=geometry)   
+gdf = GeoDataFrame(df1, geometry=geometry)
 
 #this is a simple map that goes with geopandas
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
@@ -117,11 +111,11 @@ if $programname == 'sshd' then {
         type="omhttp"
         server="127.0.0.1"
         serverport="6001"
-        template="json"                                                        
-        errorfile="/tmp/edwin.log"                        
-        useHttps="off"               
-        )             
-   }                                             
+        template="json"
+        errorfile="/tmp/edwin.log"
+        useHttps="off"
+        )
+   }
 }
 ```
 
@@ -191,18 +185,17 @@ pub fn pull_hackers() -> Vec<Hacker> {
 
 ### What kind of issues did you run into?
 
-Too many. 
+Too many.
 
 - Rsyslog doesn't come with community maintained modules, I had to compile them from source.
 - I set up my CI/CD pipeline wrong, I forgot to close the previous instance and running into port already in use errors
 - Cross-compiling from ARM to ARM. Wait wut? I mean M1 -> ARM7. There were some compiling issues with some rust dependendency needing a different c compiler.
 
-
 #### Bonus: Compiling Rsyslog from Source
 
-Rsyslog has community manitained modules which do not come compiled with the rsyslog installed on systems by default. 
+Rsyslog has community manitained modules which do not come compiled with the rsyslog installed on systems by default.
 
-I had to download the git source and compile from source. 
+I had to download the git source and compile from source.
 
 #### Resources
 
@@ -214,6 +207,6 @@ I had to download the git source and compile from source.
 - [Cowrie](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)
 - [cloudfront-CORS](https://advancedweb.hu/how-cloudfront-solves-cors-problems/)
 - [SPA Whitepapers AWS](https://docs.aws.amazon.com/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/single-page-application.html)
-[Parsing logs 230x faster with Rust](https://andre.arko.net/2018/10/25/parsing-logs-230x-faster-with-rust/)
-[erraform-rust-aws-lambda](https://github.com/anuraags/terraform-rust-aws-lambda/blob/master/lambda/aws.Dockerfile)
-[https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e)
+  [Parsing logs 230x faster with Rust](https://andre.arko.net/2018/10/25/parsing-logs-230x-faster-with-rust/)
+  [erraform-rust-aws-lambda](https://github.com/anuraags/terraform-rust-aws-lambda/blob/master/lambda/aws.Dockerfile)
+  [https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e)

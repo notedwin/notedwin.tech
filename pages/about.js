@@ -16,7 +16,7 @@ export default function ResumePage() {
         <div className="about">
           <p>Hey there!</p>
           <p>
-            I'm Edwin, a Software Engineer based in the Chicago. I'm currently
+            I'm Edwin, a Software Engineer based in Chicago. I'm currently
             working at Deloitte as a Data Engineer. I'm interested in building efficient backend systems, and data pipelines.
           </p>
           In my free time, I enjoy playing soccer, biking and learning new things, like building small data systems like <a href="https://map.notedwin.com"> this </a>.
