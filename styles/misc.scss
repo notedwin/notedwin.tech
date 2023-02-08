@@ -66,6 +66,7 @@ section#visual {
 #cube img {
   position: absolute;
   height: var(--face-size);
+  border-radius: 0;
 }
 
 #cube .face-1 {
@@ -144,10 +145,12 @@ section#visual {
   cursor: pointer;
   transform: scale(0.6);
 }
+
 .dark-mode-toggle input {
   display: none;
 }
-.dark-mode-toggle input + div {
+
+.dark-mode-toggle input+div {
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -155,8 +158,15 @@ section#visual {
   box-shadow: inset 16px -16px 0 0 #fff;
   transform: scale(1) rotate(-2deg);
   transition: box-shadow 0.5s ease 0s, transform 0.4s ease 0.1s;
+
+  &:hover {
+    box-shadow: inset 32px -32px 0 0 $dark-highlight;
+    transform: scale(0.85) rotate(0deg);
+    transition: transform 0.3s ease 0.1s, box-shadow 0.2s ease 0s;
+  }
 }
-.dark-mode-toggle input + div:before {
+
+.dark-mode-toggle input+div:before {
   content: "";
   width: inherit;
   height: inherit;
@@ -166,7 +176,8 @@ section#visual {
   top: 0;
   transition: background 0.3s ease;
 }
-.dark-mode-toggle input + div:after {
+
+.dark-mode-toggle input+div:after {
   content: "";
   width: 8px;
   height: 8px;
@@ -182,16 +193,45 @@ section#visual {
   transition: all 0.3s ease;
 }
 
-.dark-mode-toggle input:checked + div {
+.dark-mode-toggle input:checked+div {
   box-shadow: inset 32px -32px 0 0 #fff;
   transform: scale(0.5) rotate(0deg);
   transition: transform 0.3s ease 0.1s, box-shadow 0.2s ease 0s;
 }
-.dark-mode-toggle input:checked + :before {
+
+.dark-mode-toggle input:checked+ :before {
   background: $dark-light;
   transition: background 0.3s ease 0.1s;
 }
-.dark-mode-toggle input:checked + :after {
+
+.dark-mode-toggle input:checked+ :after {
   transform: scale(1.5);
   transition: transform 0.5s ease 0.15s;
+}
+
+.progress {
+  height: 3px;
+  width: 0%;
+  background-color: $dark-highlight;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  animation: progress 1s linear;
+}
+
+@keyframes progress {
+  to {
+    width: 100%;
+  }
+}
+
+:root * {
+  /* Pause the animation */
+  animation-play-state: paused;
+  /* Bind the animation to scroll */
+  animation-delay: calc(var(--scroll) * -1s);
+  /* These last 2 properites clean up overshoot weirdness */
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
 }

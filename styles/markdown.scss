@@ -23,6 +23,35 @@ article {
     }
   }
 
+  details {
+    summary {
+      padding: .5rem;
+      cursor: pointer;
+    }
+
+    border: 1px solid $light-text;
+    background-color: $light;
+    box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
+
+    margin-bottom: 1rem;
+  }
+
+  .page-link {
+    color: $light-text;
+    text-decoration: underline;
+  }
+
+  ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+  }
+
+  li {
+    &::before {
+      content: "";
+    }
+  }
+
   a {
     color: $highlight;
     text-decoration: none;
@@ -45,9 +74,10 @@ article {
 
   p {
     margin: 0;
-    opacity: .75;
-    padding-top: $spacing-full - 15;
-    padding-bottom: $spacing-full - 15;
+    padding-top: $spacing-full - 20;
+    padding-bottom: $spacing-full - 25;
+    // line length of 80 characters
+    max-width: 80ch;
   }
 
   ul.task-list {
@@ -75,8 +105,9 @@ article {
   h6 {
     color: $light-text;
     font-weight: $bold-weight;
-    margin-top: $spacing-full;
+    margin-top: 1.2rem;
     margin-bottom: 0;
+    border-bottom: 1px solid $border;
 
     &:hover {
       .anchor-head {
@@ -110,8 +141,6 @@ article {
 
   h3 {
     @include relative-font-size(1.35);
-    border-bottom: 1px solid $light;
-    padding-bottom: 4px;
   }
 
   h4 {

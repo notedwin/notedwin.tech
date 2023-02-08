@@ -1,8 +1,26 @@
 body.dark-mode {
+  .post-date {
+    color: $dark-text;
+  }
+
   article {
     a {
       color: $dark-highlight;
     }
+
+    details {
+
+      border: 1px solid $dark-gray;
+      background-color: $dark-black;
+      // white box shadow
+      box-shadow: 4px 4px 3px rgba(255, 255, 255, 0.10);
+    }
+
+    .page-link {
+      color: $dark-text;
+    }
+
+
 
     a:hover,
     a:active,
@@ -26,6 +44,17 @@ body.dark-mode {
   h5,
   h6 {
     color: $dark-text;
+  }
+
+  article {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      border-bottom: 1px solid $dark-light;
+    }
   }
 
   // Table
@@ -78,6 +107,7 @@ body.dark-mode {
       color: $dark-highlight;
     }
   }
+
   a {
     color: inherit;
 
@@ -89,6 +119,7 @@ body.dark-mode {
       outline-color: rgba(255, 82, 119, 0.6);
     }
   }
+
   // List
   li {
     &:before {
