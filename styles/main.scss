@@ -207,6 +207,7 @@ blockquote {
 
 article {
   max-width: calc(#{$narrow-size} - (#{$spacing-full} * 2));
+  padding-bottom: 5rem;
 }
 
 body {

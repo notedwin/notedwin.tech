@@ -35,6 +35,6 @@
     "sass": "^1.32.13",
     "showdown": "^2.0.0-alpha",
     "unified": "^10.1.2",
-    "use-dark-mode": "^2.3.1"
+    "@fisch0920/use-dark-mode": "^2.4.0"
   }
 }

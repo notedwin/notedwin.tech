@@ -1,5 +1,5 @@
 ---
-title: "Attack Map"
+title: "Attack Map: SSH Logs"
 excerpt: "Failed SSH login attempts using Rust and Redis."
 image: "/assets/blog/attack-map/map2.png"
 date: "2022-06-22T05:35:07.322Z"
@@ -9,76 +9,58 @@ date: "2022-06-22T05:35:07.322Z"
 ![bruh](/assets/blog/attack-map/hacker.gif)
 
 [Live App](https://map.notedwin.com)
+
 [Github repository](https://github.com/notedwin/attack-map)
 
 ### Table of contents
 
 # Intro
+Hey! I have worked on the attack map project for 2 years now! How time flies! Before I retire the project, I wanted to get all my thoughts out and share my experiences!
 
-Running applications on your own hardware comes with problems such as security, scalability, and availability.
+Map: [map.notedwin.com](http://map.notedwin.com)
 
-You don't want to have a website that only works 3 days out of the month or one that makes your linux server vulnerable to common vulnerabilities and/or to be used as in a botnet.
+### Preface
+When self-hosting a web service, you don’t want your server to be used in a botnet farm, as it will decrease your home bandwidth and your ISP wont be too happy.
 
-Once step to avoid these issues is to monitor your applications and infrastructure.
+Two effective solutions to avoid becoming a victim are stopping vulnerabilities by securing your application and adding monitoring to detect when you have an intruder.
 
-That was the goal of this project, to learn how linux monitoring works and create a simple tool to see what issues are faced when processing logs.
+#### Securing your application
+Most programming languages have safety features that prevent you from shooting yourself in the foot
 
-Unlike a typical workplace, you can't pay someone to fix issues your application has.
+wait that’s not true at all:
+[SQL_Injection](https://owasp.org/www-community/attacks/SQL_Injection)
 
-> Realistically, you COULD pay someone but finding someone who wants to fix your bad code is unlikely.
+It looks like you need a Ph.D. in Computer security to avoid getting hacked using this method.
 
-Most programming languages have safety features that prevent you from writing code that has security vunerabilities.
-However, there aren't many ways to avoid the security vulnerabilities in infastructure, unless you understand how the infastructure works.
+#### Monitoring
+To improve our ability to detect when our server is being used in a botnet, let’s add monitoring.
 
-This leads me to the backstory of this project.
+Some questions that come up before we can get started:
+-   What should we monitor?
+-   Where can we find this data?
 
-When I was running my personal website of my raspberry pi, I was getting a spammed with HTTP requests. I realized that if my port 80 was being attacked directly, people could do that to any of my other ports that were accessible via the internet.
+My primary concern was brute force SSH attempts. By exposing my SSH port, I could make changes to my server remotely, but this also invites malicious activity.
 
-One of those ports was 22, which is used for SSH so I could remote login into my server when I wasn't home. I searched the internet to find ways to look into login attempts and if any were successful.
+> what is SSH? Secure shell is used to access remote machines and administration tasks.
 
-Luckily, nobody had managed to guess my password, but then I wondered how many spam brute force attacks, I would get a day.
+#### Implementation details
 
-**Hold on, what is SSH?**
-
-SSH stands for secure shell which is often used to allow computers to talk to each other. SSH is used to access remote machines and administration tasks.
-
-Most devices are not vulnerable to SSH attacks, due to having firewall setting that disable communication through port 22 (common SSH port) and having to enable networking for SSH to work manually.
-
-If you open up a port and allow remote access, you could have someone trying to SSH (brute force) attack your machine. Opening up your port on your machine is not enough for hackers to attack you, you also need to enable port fowarding to the specific machine you want remote access to through your ISP.
-
-**_I really don't recommend doing this as it is very easy for you to accidently create a login that is vunerable if you use _**
-
-# Gathering data
-
-All SSH logs are in /var/log/auth.log, filtering this data was relatively easy. This shows us all the failed SSH attempts.
+To start, I first found where the SSH attempts were recorded to. I filtered this data down using grep to get a stream of IP addresses attempting to login.
 
 ```bash
 tail -Fn0 /var/log/auth.log | grep --line-buffered "Failed password for" | grep --line-buffered -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
-
 ```
 
-Cool, lets visualize these IP addresses.
+That looks good, Let’s visualize all these IP address:
 
 ```python
-import re
-from ipdata import ipdata
-from pprint import pprint
-from shapely.geometry import Point
-import pandas as pd
-import geopandas as gpd
-from geopandas import GeoDataFrame
-from pandas import json_normalize
-
+import*
 ipdata = ipdata.IPData('random-api-key')
-
-
 arr = []
 
 for line in lines:
     match = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', line).group()
     arr.append(match)
-#add count of times person tried to connect
-arr = list(set(arr))
 
 response = []
 for a in arr:
@@ -89,16 +71,17 @@ df1 = df[['latitude','longitude']]
 df1.head
 
 geometry = [Point(xy) for xy in zip(df1['longitude'],df1['latitude'])]
-gdf = GeoDataFrame(df1, geometry=geometry)
+gdf = GeoDataFrame(df1, geometry=geometry)   
 
 #this is a simple map that goes with geopandas
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 gdf.plot(ax=world.plot(figsize=(10, 6)), marker='o', color='red', markersize=15);
 ```
 
-![p](assets/blog/attack-map/py.png)
 
-Great, now let's make this a bit more automated by sending logs via HTTP to an application.
+![inital-map](assets/blog/attack-map/py.png)
+
+That looks great, however let’s automate this process by using Rsyslog and a custom log processing service to store attempts in a database.
 
 ```bash
 template(name="json" type="list"){
@@ -111,17 +94,39 @@ if $programname == 'sshd' then {
         type="omhttp"
         server="127.0.0.1"
         serverport="6001"
-        template="json"
-        errorfile="/tmp/edwin.log"
-        useHttps="off"
-        )
-   }
+        template="json"                                                        
+        errorfile="/tmp/edwin.log"                        
+        useHttps="off"               
+        )             
+   }                                             
 }
 ```
 
-**wait sending logs over HTTP seems like alot of overhead for reading a file**
+```python
+import *
 
-Let's read the metadata of the log file and read the file if it change in size, parse the lines that match our regex and profit.
+API = "http://ip-api.com/json/"
+
+def pull_hackers():
+	# return array of hackers 5 days in past
+
+def parseData(data):
+    # parse in http request data
+
+def populate_redis(user, ip):
+    # read in parsed data to redis
+
+def handler(event, context):
+    print(event)
+    method = event["requestContext"]["http"]["method"]
+    if method == "GET":
+        # return data
+
+    elif method == "POST":
+         # try to parse data into DB
+```
+
+Great now we have all the data and can visualize it. Wait, HTTP is alot of overhead, our logs are on the same system can we do this better?
 
 ```rust
 const API: &str = "http://ip-api.com/json/";
@@ -154,8 +159,6 @@ pub async fn parse_log_line(line: &str) -> Result<(), Box<dyn std::error::Error>
 
 ```
 
-We have data in our Redis DB now, lets get that information out and visualize it.
-
 ```rust
 pub fn pull_hackers() -> Vec<Hacker> {
     let mut con = REDIS_CLIENT.get_connection().unwrap();
@@ -183,23 +186,20 @@ pub fn pull_hackers() -> Vec<Hacker> {
 }
 ```
 
-### What kind of issues did you run into?
+## Final Thoughts:
+Initally, my goal was to store failed logins. However, I realized a more useful purpose would be to build an intrusion detection system using successful logins!
 
-Too many.
+I did learn learn more about linux and how logs are stored.
 
-- Rsyslog doesn't come with community maintained modules, I had to compile them from source.
-- I set up my CI/CD pipeline wrong, I forgot to close the previous instance and running into port already in use errors
-- Cross-compiling from ARM to ARM. Wait wut? I mean M1 -> ARM7. There were some compiling issues with some rust dependendency needing a different c compiler.
-
-#### Bonus: Compiling Rsyslog from Source
-
-Rsyslog has community manitained modules which do not come compiled with the rsyslog installed on systems by default.
-
-I had to download the git source and compile from source.
+### What kind of issues did I run into?
+-   Ubuntu’s preinstalled rsyslog lacked modules, so I had to compile them from source.
+-   My deployment script didn’t even work and it opened the application on new ports each time.
+-   Cross-compiling from ARM M1 to ARM7 triggered a compilation error due to a Rust dependency that required a different C compiler.
 
 #### Resources
 
 - [ssh log to influx](https://github.com/acouvreur/ssh-log-to-influx)
+- [pewpew](https://github.com/hrbrmstr/pewpew)
 - [Locating SSH Hackers in Real Time](https://devconnected.com/geolocating-ssh-hackers-in-real-time/)
 - [Kapersky Map](https://cybermap.kaspersky.com/)
 - [Globe.gl](https://github.com/vasturiano/globe.gl)
@@ -207,6 +207,6 @@ I had to download the git source and compile from source.
 - [Cowrie](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)
 - [cloudfront-CORS](https://advancedweb.hu/how-cloudfront-solves-cors-problems/)
 - [SPA Whitepapers AWS](https://docs.aws.amazon.com/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/single-page-application.html)
-  [Parsing logs 230x faster with Rust](https://andre.arko.net/2018/10/25/parsing-logs-230x-faster-with-rust/)
-  [erraform-rust-aws-lambda](https://github.com/anuraags/terraform-rust-aws-lambda/blob/master/lambda/aws.Dockerfile)
-  [https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e)
+- [Parsing logs 230x faster with Rust](https://andre.arko.net/2018/10/25/parsing-logs-230x-faster-with-rust/)
+- [terraform-rust-aws-lambda](https://github.com/anuraags/terraform-rust-aws-lambda/blob/master/lambda/aws.Dockerfile)
+- [gist](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e)

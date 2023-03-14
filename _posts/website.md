@@ -6,6 +6,8 @@ image: '/assets/blog/aws/infra.png'
 
 ---
 > Picture of my first website.
+![bruh](/assets/blog/home-server/old_web.png)
+
 
 **Update 11/28/21:** I started migration to Amazon Web Service using Terraform, read about it [here](https://notedwin.com/posts/aws)
 ### Table of Contents
