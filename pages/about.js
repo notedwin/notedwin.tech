@@ -27,6 +27,22 @@ export default function ResumePage() {
             for Illinois Tech's Idea Shop, and a software engineer for HaxML, an
             online sports Analytics platform.
           </p>
+          <p>Technical Areas of Interests</p>
+          <ul>
+            <li>Backend Systems</li>
+            <li>Data Pipelines</li>
+            <li>Cloud Computing</li>
+            <li>Machine Learning</li>
+            <li>Software Engineering</li>
+          </ul>
+
+          <p>Technical Skills</p>
+          <ul>
+            <li>Python</li>
+            <li>Rust</li>
+            <li>Amazon Web Services</li>
+            <li>SQL</li>
+          </ul>
           <p>
             You can
             <a href="http://github.com/notedwin/notedwin.tech/issues/new"> report </a>

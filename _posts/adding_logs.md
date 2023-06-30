@@ -1,5 +1,5 @@
 ---
-title: "Attack MAP: NGINX Logs"
+title: "Attack Map: Nginx Logs"
 excerpt: ""
 date: '2022-10-17T05:35:07.322Z'
 image: '/assets/blog/aws/infra.png'

@@ -1,5 +1,5 @@
 ---
-title: "AWS: Terraform, SPAs, and more"
+title: "AWS: Terraform, SPAs, and More"
 excerpt: "Self-hosted > Private Cloud"
 date: '2021-11-19T05:35:07.322Z'
 image: '/assets/blog/aws/infra.png'
