@@ -1,5 +1,5 @@
 ---
-title: "Attack Map: SSH Logs"
+title: "Attack Map: SSH Log Parser"
 excerpt: "Failed SSH login attempts using Rust and Redis."
 image: "/assets/blog/attack-map/map2.png"
 date: "2022-06-22T05:35:07.322Z"

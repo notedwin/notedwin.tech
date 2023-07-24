@@ -1,5 +1,5 @@
 ---
-title: "AWS: Terraform, SPAs, and More"
+title: "Deploying on AWS w/ Terraform"
 excerpt: "Self-hosted > Private Cloud"
 date: '2021-11-19T05:35:07.322Z'
 image: '/assets/blog/aws/infra.png'

@@ -9,15 +9,19 @@ image: '/assets/blog/aws/infra.png'
 ![bruh](/assets/blog/home-server/old_web.png)
 
 
-**Update 11/28/21:** I started migration to Amazon Web Service using Terraform, read about it [here](https://notedwin.com/posts/aws)
+> Update 07/13/2023: I do a combination of self-hosting on an old PC + Vercel for this blog!
+> Update 11/28/21:** I recently began migrating to Amazon Web Service using Terraform, You can read about the process [here](https://notedwin.com/posts/aws)
 ### Table of Contents
 
 
-Hey, I started making personal websites back in 2019. I first started by making a website using HTML and CSS. I quickly realized that was not the best way to do it. I then used a static site generator called [Jekyll](https://jekyllrb.com/) to generate my website. A static site generator is a tool that generates plain HTML files from a markdown file.
+Hey there! 
 
-That website worked great, however I copied a template and I did not fully understand how it worked. I copied the website in [Next.js](https://nextjs.org/) deployed on [Vercel](https://vercel.com/). 
+Back in 2019, I wanted to learn how to make a personal website. I didn't have any experience with web development, so I started by making a website using HTML and CSS, but soon I realized that was not the best way to do it. I then used a static site generator called [Jekyll](https://jekyllrb.com/) to generate my website. A static site generator is a tool that generates plain HTML files from a markdown file.
 
-My first domain was free from [Github Student Developer Pack](https://education.github.com/pack). 
+The first website I built using Jekyll was functional, but I had copied a template and without fully understanding how it worked. Later on, I decided to recreate the website in [using Next.js](https://nextjs.org/) deployed and host it on [Vercel](https://vercel.com/).
+
+
+My first domain,https://edwin.computer, was free from [Github Student Developer Pack](https://education.github.com/pack). 
 
 
 ### Before Vercel

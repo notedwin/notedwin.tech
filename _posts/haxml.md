@@ -1,5 +1,5 @@
 ---
-title: "HaxML: Machine Learning"
+title: "⭐️HaxML: Machine Learning"
 excerpt: "Machine Learning through feature engineering"
 date: "2021-01-22T05:35:07.322Z"
 image: "/assets/blog/haxml/website.png"
