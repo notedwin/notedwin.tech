@@ -1,0 +1,46 @@
+---
+title: "Laptop Setup"
+excerpt: ""
+date: "2023-10-10T12:35:07.322Z"
+image: /assets/blog/aws/infra.png
+---
+
+## Tools I use daily
+
+- [Raycast](https://raycast.com): improved spotlight search for mac, with many plugins
+- [Rectangle](https://rectangleapp.com/): Mac window manager (Raycast also has this functionality)
+- [Obsidian](https://obsidian.md/): For Managing my notes
+- [Lunar](https://lunar.fyi/): Controlling Monitor without using Buttons
+- [iTerm2](https://iterm2.com/): Terminal Emulator (has native tmux support)
+
+My dotfiles are available on [github](https://github.com/notedwin/dotfiles)
+
+## Things I find myself using frequently
+
+- `pbcopy, pbpaste` - interact with system clipboard
+- Copy the contents from a file on a remote server:
+  `ssh notedwin@192.168.0.108 "cat /etc/rsyslog.conf" | pbcopy`
+- You can use Touch ID to authenticate `sudo` on macOS. Check out this [Stack Exchange post](https://apple.stackexchange.com/questions/259093/can-touch-id-on-mac-authenticate-sudo-in-terminal/355880) for more details.
+- How to add vscode to path environment variables so you can open a folder in vscode using code . in the terminal [Add vscode to Path](https://stackoverflow.com/questions/30065227/run-open-vscode-from-mac-terminal)
+- [Commit only part of a file's changes in Git - Stack Overflow](https://stackoverflow.com/questions/1085162/commit-only-part-of-a-files-changes-in-git)
+
+I started using [Atuin](https://github.com/atuinsh/atuin) to manage shell history between multiple devices
+
+atuin setup to have shell history across devices:
+
+```bash
+atuin setup docker image and database
+change /Users/edwinzamudio/.config/atuin/config.toml to self hosted server
+atuin register -u notedwin -e zamudio.e13@gmail.com
+
+bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+atuin register -u <USERNAME> -e <EMAIL> or atuin login
+atuin import auto
+
+atuin sync
+
+echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
+
+# importing history from files
+atuin import auto
+```

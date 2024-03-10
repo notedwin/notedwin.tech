@@ -1,17 +1,25 @@
 ---
 title: "iOS Data Access"
 excerpt: ""
-date: '2023-05-25T05:35:07.322Z'
-image: '/assets/blog/aws/infra.png'
+date: "2023-05-25T05:35:07.322Z"
+image: "/assets/blog/aws/infra.png"
 ---
 
-> TLDR: This presentation sums up my findings: 
-> [https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf](https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf)
+# Update: 2024-02-10
 
+I have 2 small library to extract health and screen time data.
+[health-data](https://github.com/notedwin/manzana-health)
+[screen-tyme](https://github.com/notedwin/screen_thyme)
+
+screen time is a complicated mess because of how apple locks down parts of the operating system with SIP.
+https://gist.github.com/0xdevalias/38cfc92278f85ae89a46f0c156208fd5
+
+> TLDR: This presentation sums up my findings:
+> [https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf](https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf)
 
 I use my smartphone every day, and I can guess that you also use your smartphone every day. The importance of digital health and privacy cannot be overstated. Our smartphones have become an important part of our lives. However, spending all your time doom scrolling on social media or playing video games is probably not the most productive way to spend your time.
 
-The best way to maintain a healthy balance is to become aware of your usage and make conscious decisions. 
+The best way to maintain a healthy balance is to become aware of your usage and make conscious decisions.
 
 My goal with this blog post is to show you the ways I set up personal health dashboards to make better decisions about my screen time and overall health.
 
@@ -27,6 +35,7 @@ There is a SQLite database called KnowledgeC.db, that stores various types of da
 ```
 
 I did some data analysis with Python and Pandas to find out what tables I want to export to Postgres. There are 2 reasons for exporting the data:
+
 - Apple only stores screen time data for the past 2 weeks, I want to view long-term trends.
 - The whole database is comprised of 20+ tables which have data updated every second for things like iCloud syncing which are not relevant to my use case.
 
@@ -36,12 +45,11 @@ Here is a picture of my Grafana dashboard that shows me how much time I spend on
 
 ## Accessing Health Data
 
-The screen time data was easily accessible after disabling SIP. However, health data was a beast to understand. 
+The screen time data was easily accessible after disabling SIP. However, health data was a difficult to understand as there is no official documentation on how to access the data.
 
 ![Health Dashboard](/assets/blog/health.png)
 
 The only suggested way to get health data from iOS is only possible through the Health app, which requires manual export and provides data in XML format that is not easily parsed. There is a bunch of third-party applications but they all have poor ratings
-
 
 The only other way to get the health data is by manually backing up the phone and extracting the data from the backup. The backup is also encrypted, so you need to know the password to decrypt it.
 
@@ -50,6 +58,7 @@ To decrypt the backup, you can use this great tool:[https://github.com/jsharkey1
 For a longer post on this topic, check out: [How to Decrypt an Encrypted Apple iTunes iPhone Backup](https://stackoverflow.com/questions/1498342/how-to-decrypt-an-encrypted-apple-itunes-iphone-backup)
 
 Below is some example code that I used to decrypt the backup:
+
 ```python
 from iphone_backup_decrypt import EncryptedBackup, RelativePath, RelativePathsLike
 from dotenv import load_dotenv, find_dotenv
@@ -62,29 +71,27 @@ backup_path = os.getenv("APPLE_BACKUP")
 
 backup = EncryptedBackup(backup_directory=backup_path, passphrase=passphrase)
 
-backup.extract_file(relative_path=RelativePath.HEALTH_SECURE, 
+backup.extract_file(relative_path=RelativePath.HEALTH_SECURE,
                     output_filename="./output/health_secure.sqlite")
 
-backup.extract_file(relative_path=RelativePath.HEALTH, 
+backup.extract_file(relative_path=RelativePath.HEALTH,
                     output_filename="./output/health.sqlite")
 ```
 
 The blogposts mention some tables but after doing some analysis it looks like the table schema has changed in the latest iOS version. So sadly, that is the end of my research for now as I spent a couple of days trying to do something that apple health app already does.
 
-
 ## Conclusion
+
 After all this research and little output I felt a bit discouraged and like these guys with no replies: [Best Way to Export Health/Workout Data](https://www.reddit.com/r/AppleWatch/comments/ysq39o/best_way_to_export_healthworkout_data_for/) and this [guy](https://developer.apple.com/forums/thread/725411).
 
-For now, The health app and small screen time data pipeline using Dagster and Grafana will do! 
-
+For now, The health app and small screen time data pipeline using Dagster and Grafana will do!
 
 ## Resources:
 
 - [Spelunking macOS Screen Time App Usage with R](https://rud.is/b/2019/10/28/spelunking-macos-screentime-app-usage-with-r/)
 - [Using the KnowledgeCDB Database on macOS and iOS to Determine Precise User and Application Usage](https://www.mac4n6.com/blog/2018/8/5/knowledge-is-power-using-the-knowledgecdb-database-on-macos-and-ios-to-determine-precise-user-and-application-usage)
 - [Reverse Engineering the iOS Backup](https://www.richinfante.com/2017/3/16/reverse-engineering-the-ios-backup)
-
-
+- [Investigating Apple watch data](https://dfir.pubpub.org/pub/xqvcn3hj/release/1)
 
 stop reading
 

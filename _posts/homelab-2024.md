@@ -1,0 +1,127 @@
+---
+title: HomeLab 2024
+excerpt: ""
+date: "2024-03-09T12:35:07.322Z"
+image: /assets/blog/aws/infra.png
+---
+
+## What does my homelab look like in 2024?
+
+I have been running my own linux server to self host some applications for the past 5 years.
+
+I have learned about linux, packages, networking, and modern linux tools.
+
+I have also learned that that the issue is always DNS :troll:
+
+Some things I self host:
+
+- Adguard - Adblock
+- Caddy - web server
+- Motioneye
+- OpenWRT router
+- Personal analytics ETL using Dagster, Postgres, Grafana
+- Tailscale
+- Filestash, Portainer, homepage, etc
+
+This probably isn't up to date but I have a [repo](https://github.com/notedwin/ansible-compose) that I use to manage my homelab.
+
+## Why do I self host?
+
+I have been self hosting for about 5 years now. I like being able to own and manage my services. It doesn't take too much work.
+
+Running a server does come with not only managing performance but mainly security you don't want people breaking into your hoem network due to a faulty config and being able to see you butt naked.
+
+One of my first projects was trying to understand what types of attacks I could expect on my server.
+
+## What projects do I run on my server?
+
+My server is a mini pc from 2013. It has 8GB of ram and a 500GB SSD. It is running Ubuntu 20.04.
+
+## Tailscale
+
+I use tailscale to connect to my server from anywhere. It is a VPN that is easy to setup and use. It is also free for personal use and up to 50(!!) devices.
+Could also selfhost headscale but i don't care for selfhosting everything.
+
+## OpenWRT
+
+I had no interest in running OpenWRT, as the one I purchased for my appartment did not support OpenWRT. After a visit to a thrift store, I found a AC1900 router for 10 dollars!
+
+This router didn't explicitly support OpenWRT, but I thought the model number was close enough to another supported router and they used the same chipset.
+
+LINKSYS EA7400 v2 shared the same CPU and wireless chips as LINKSYS EA7450
+
+I didn't want to open the router to find out the chipset, so I remembered a useful trick—using the FCC ID to uncover CPU and wireless chip!
+The FCC ID is usually printed on the back of the device, and you can use it to find the internal photos and other information about the device that the manufacturer has to submit to the FCC.
+
+The only reason for running OpenWRT is I can force all DNS requests to go through my Adguard server, for those pesky smart devices that don't allow you to change DNS or have hardcoded DNS.
+
+Smart Devices ignore DNS server set by router[1]. With an OpenWRT server, I can intercept and redirect traffic using openwrt.
+https://labzilla.io/blog/force-dns-pihole
+
+I also was interested in running eBPF on my router to intercept my own traffic and see what eBPF is all about.
+However, OpenWRt does not support eBPF without a custom kernel and compiling your own firmware.
+
+- [openwrt - prometheus](https://www.cloudrocket.at/posts/monitor-openwrt-nodes-with-prometheus/)
+- [openwrt - tailscale](https://openwrt.org/docs/guide-user/services/vpn/tailscale/start)
+
+### Cat Cam
+
+I made a cat camera, using [rtsp-simple-server](https://github.com/bluenviron/mediamtx) (now known as mediamtx) and using raspberry pi with a camera attachment. Then I run motion separately for a nicer interface on top of all the cameras. The quality of the camera is poor since it is $10 compared to nicer smart home account-locked ones.
+Setup is very simple.
+
+## Some problems I fixed in the past year:
+
+## Grafana
+
+- Moving Grafana Dashboard requires copying JSON and changing the datasource ID.
+- Public dashboards don't allow you to use variables BRUH: [github discussion](https://github.com/grafana/grafana/discussions/49253)
+
+## Docker
+
+- Pin a container to a specific version or you will run into issues with watchtower. ex: I was not ready to update grafana to v10 and my dashboards all broke.
+- Editing daemon.json allows you to change the docker defaults such as sending logs to rsyslog instead of to stdout/stderr.
+
+## Ansible
+
+When using `become:yes` in an ansible playbook, you are saying to become root on the server, which might have a different python interpreter (which might have different compatible packages) than the user.
+
+The error i was getting: Please read the module documentation and install it in the appropriate location. If the required library is installed, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter, for example via `pip install docker` (Python >= 3.6) or `pip install docker==4.4.4` (Python 2.7) or `pip install docker-py` (Python 2.6). The error was: No module named 'docker
+
+## Postgres
+
+- In PostgreSQL, you can create user defined functions(UDF's). As an example, I created a function to validate JSON. See this [Stack Overflow post](https://stackoverflow.com/questions/30187554/how-to-verify-a-string-is-valid-json-in-postgresql) for guidance.
+
+- When using postgres in a docker container with a bridge network, you need to change the pg_hba.conf to allow connections outside the container. [Stack Overflow post](https://stackoverflow.com/questions/30187554/how-to-verify-a-string-is-valid-json-in-postgresql) for guidance.
+
+## Dagster
+
+For the deployment of Dagster, four Docker containers are created using Ansible:
+
+- Postgres: This container is used for storing Dagster-related data such as event logs and sensor ticks.
+- User code: This container holds the code, allowing for easy redeployment of code changes.
+- Dagster daemon: A long-running process responsible for running sensors and managing asset materialization queues.
+- Dagit: This container provides Dagster&#39;s user interface, allowing manual inspection of pipelines and running backfills.
+
+There are many breaking changes in dagster: [https://dagster.slack.com/archives/C01U954MEER/p1681757224224769](https://dagster.slack.com/archives/C01U954MEER/p1681757224224769)
+
+## Some scraped Projects
+
+## Spotify API tools
+
+Spotify limit the number of tracks you can get from their recently played API to 50.
+If you want to know more, refer to this [Stack Overflow post](https://stackoverflow.com/questions/56061606/spotify-api-recently-played-paging). Lastfm lets you do this search however, most people don't want to sign up for another platform :)
+
+You can also do a personal data request to get full history!
+
+## RFID
+
+- You can't use a flipper zero to do RFID scanning in store: [Support for 860 - 960 MHz UHF RFID tags (ISO/ IEC 18000-63 / EPC UHF Gen2) · Issue #1285 · flipperdevices/flipperzero-firmware](https://github.com/flipperdevices/flipperzero-firmware/issues/1285)
+
+## setup laptop running debain based linux so it doesn't sleep
+
+```bash
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+```
+
+I also ran into high memory usage, where I could hear the fan running, but device was idle. This was the issue for me:
+https://discussion.fedoraproject.org/t/systemd-logind-eats-cpu-when-closing-laptop-lid/67805/2
