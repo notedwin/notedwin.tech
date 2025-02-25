@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 	},
 	description: metaData.description,
 	openGraph: {
-		site_name: metaData.name,
 		images: metaData.ogImage,
 		title: metaData.title,
 		description: metaData.description,
