@@ -26,7 +26,7 @@ export default function Photos() {
 						src: "/photos/6.png",
 						alt: "pink sunset",
 					},
-					{ src: "/photos/bob.gif", alt: "Bob Esponge", optimized: false },
+					{ src: "/photos/bob.gif", alt: "Bob Esponge" },
 					{
 						src: "/photos/5.png",
 						alt: "tv",
