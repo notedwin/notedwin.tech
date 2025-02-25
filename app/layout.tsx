@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 	},
 	description: metaData.description,
 	openGraph: {
+		site_name: metaData.name,
 		images: metaData.ogImage,
 		title: metaData.title,
 		description: metaData.description,
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
 	twitter: {
 		title: metaData.name,
 		card: "summary_large_image",
-    site: "@mu0xide",
+		site: "@mu0xide",
 	},
 	icons: {
 		icon: "/favicon.ico",

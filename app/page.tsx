@@ -20,11 +20,21 @@ export default function Page() {
 			<h1 className="mb-8 text-2xl font-medium tracking-tight">Hey!</h1>
 			<div className="prose prose-neutral dark:prose-invert">
 				<p>
-					im Edwin, a data engineer at <a href="https://mcdonalds.com">mcd</a>.
+					im Edwin, a data engineer at{" "}
+					<a
+						href="https://mcdonalds.com"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						mcd
+					</a>
+					.
 					<br />
 					In my free time, I am either building out my{" "}
-					<a href="https://notedwin.com/blog/homelab">homelab</a> or riding my
-					bike.
+					<a href="/blog/homelab" target="_blank" rel="noopener noreferrer">
+						homelab
+					</a>{" "}
+					or riding my bike.
 				</p>
 			</div>
 		</section>
