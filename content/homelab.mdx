@@ -5,10 +5,17 @@ publishedAt: "2025-02-24"
 tags: "homelab"
 ---
 
-## what does my homelab look like?
+## My Homelab in early 2025
 
-The hardware I used hasn't changed in 2 years.
-I used some used dell optiplex's (9020m, 7060)
+My homelab setup has remained stable since last year, with a few software changes on simplification and utility. <br/>
+The main hardware I use is repurposed Dell Optiplex machines (9020m and 7060m).
+
+## **Hardware Configuration**
+
+- **Dell 9020m**: i3-....
+- **Dell 7060m**: i5-8500T, 16GB, 256GB
+
+Power consumption is under 20W on average for both machines.
 
 <Image
 	src="/assets/home-server/1.png"
@@ -17,62 +24,75 @@ I used some used dell optiplex's (9020m, 7060)
 	height="300"
 />
 
-New software additions:
+## **Network Configuration**
 
-- [beszel](https://beszel.dev/)
-- [glance](https://github.com/glanceapp/glance)
-- healthchecks
-- immich
-- infisical - use .env, im just knees deep
-- memos
+I upgraded from a thrifted OpenWRT router to a new router, though the performance gain was negligible for my usage. I should have consulted resources like WiiSFi before making this purchase ;\_;
 
-No more:
-motioneye, openwrt, dagster, grafana, filestash, homepage
+## Software
 
-Main reason for ditching the services above is they either added unneeded complexity and/or i did not use them!
+### **New Additions**
 
-check out the ansible code for more details: [ansible-compose](https://github.com/notedwin/ansible-compose)
+My software stack has evolved with several new additions that enhance functionality:
 
-## Other additions
+- **Beszel**: A lightweight communication tool for self-hosting
+- **Glance**: A quick file viewer that supports various formats
+- **Healthchecks**: For monitoring and alerting on my scheduled tasks
+- **Immich**: Self-hosted photo and video backup solution
+- **Infisical**: Secret management solution (though I'm still using .env files for now)
+- **Memos**: A lightweight note-taking service
 
-For Christmas I explored using individually addressable LED again, using a wled controller.
-I switched from a thrifted openwrt router to a new router, performance gain was negligible for me.
-I should have read this before buying [wiisfi](https://www.wiisfi.com/)
+### **Retired Services**
 
-## Next goals
+I've removed several services to reduce complexity and focus on what I actually use:
 
-Do I want a small rack? yes
-Do I want more ubiquiti stuff? yes
-Do I want to spend that money? no
+- Motioneye
+- OpenWRT
+- Dagster
+- Grafana
+- Filestash
+- Homepage
 
-I plan on setting up an all-in-one server that will act as a
+The main reason for ditching these services was that they either added unnecessary complexity to my setup or I simply wasn't using them regularly enough to justify their maintenance.
 
-- NAS, media server and gpu inference server
-  This server will run proxmox with truenas.
+For the complete configuration details, check out my Ansible code: ansible-compose
 
-I am waiting on some parts from aliexpress so maybe ill make another blogpost later.
+## **Why Spend Time on a Homelab?**
 
-## Why even spend time on a homelab?
+For me, tinkering with hardware and software helps me become better at making tradeoffs between money, time, and learning.
 
-I wont go into too much detail about the benefit of each individual service.
-However, I will talks about the general benefits of a homelab for me.
+I've learned that:
 
-Tinkering with these things helps me make tradeoff's between time, exploration and cost.
-Spending 20hrs saving 10 dollars is a bad choice!
+- Spending 20 hours to save $10 is a poor investment of time
+- Spending 40 hours building a project that won't see regular use is equally unproductive
 
-Also, building things from hardware to final product helps me understand new things and build on knowledge I already have!
+My homelab journey has evolved through distinct phases:
+
+1. **Initial Learning Phase**: Focusing on Linux, Docker, and Infrastructure as Code (IaC)
+2. **Building Phase**: Developing my personal data platform
+3. **Optimization Phase**: Managing my time effectively, simplifying workflows, and aligning projects with my personal values
+
+Building things from hardware to final product has helped me understand new concepts while building upon my existing knowledge base.
+
+## **Future Plans**
+
+Do I want a small rack? Yes. Does a full Ubiquiti setup sound cool? Absolutely. <br/>
+Do I want to spend a fortune? Not really.
+
+I already have some projects in the works to build a NAS to store photos, videos, and as a backup for my personal documents.<br/>
+I'm going down the route of Thunderbolt for connectivity between the NAS and my laptop.
+A full write-up on this setup is coming soon!
+
+The software stack for this NAS will likely be TrueNAS virtualized on Proxmox.
 
 ## Links
 
-[Ubiquiti goals](https://arslan.io/2024/09/10/my-homelab-setup)
-[Proxmox and GPU passthrough](https://jocke.no/2022/02/23/plex-gpu-transcoding-in-docker-on-lxc-on-proxmox/#Problems_encountered)
-[PCI passthrough via OVMF - ArchWiki](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
-
-[LLMs](https://nullprogram.com/blog/2024/11/10/)
-[NvidiaOverclocking/Nvidia Overclocking.md at main · LunarPSD/NvidiaOverclocking](https://github.com/LunarPSD/NvidiaOverclocking/blob/main/Nvidia%20Overclocking.md)
-
-[High speed USB4 mesh network](https://fangpenlin.com/posts/2024/01/14/high-speed-usb4-mesh-network/)
-[Direct 20 Gbps connection between Mac and Windows machine with no Ethernet adapters](https://www.jiribrejcha.net/2024/05/direct-20-gbps-connection-between-mac-and-windows-machine-with-no-ethernet-adapters/)
-[Homelab inspo](https://blog.stonegarden.dev/)
-[What are your most used self-hosted applications?](https://noted.lol/what-are-your-most-used-self-hosted-applications/)
-[Bios settings for low power setup](https://technotim.live/posts/plex-build-low-power-server/)
+- [Ubiquiti goals](https://arslan.io/2024/09/10/my-homelab-setup)
+- [Proxmox and GPU passthrough](https://jocke.no/2022/02/23/plex-gpu-transcoding-in-docker-on-lxc-on-proxmox/#Problems_encountered)
+- [PCI passthrough via OVMF - ArchWiki](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
+- [LLMs](https://nullprogram.com/blog/2024/11/10/)
+- [NvidiaOverclocking/Nvidia Overclocking.md at main · LunarPSD/NvidiaOverclocking](https://github.com/LunarPSD/NvidiaOverclocking/blob/main/Nvidia%20Overclocking.md)
+- [High speed USB4 mesh network](https://fangpenlin.com/posts/2024/01/14/high-speed-usb4-mesh-network/)
+- [Direct 20 Gbps connection between Mac and Windows machine with no Ethernet adapters](https://www.jiribrejcha.net/2024/05/direct-20-gbps-connection-between-mac-and-windows-machine-with-no-ethernet-adapters/)
+- [Homelab inspo](https://blog.stonegarden.dev/)
+- [What are your most used self-hosted applications?](https://noted.lol/what-are-your-most-used-self-hosted-applications/)
+- [Bios settings for low power setup](https://technotim.live/posts/plex-build-low-power-server/)
