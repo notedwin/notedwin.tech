@@ -36,8 +36,8 @@ export default function Photos() {
 						alt: "bike",
 					},
 					{
-						src: "/photos/4.png",
-						alt: "rainbow",
+						src: "/photos/10.png",
+						alt: "server",
 					},
 
 					{

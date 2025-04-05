@@ -1,0 +1,91 @@
+---
+title: "Thunderbolt: Cost effective 20GB networking"
+summary: "researching thunderbolt for my homelab"
+publishedAt: "2025-04-04"
+tags: "homelab, thunderbolt"
+---
+
+I recently spent a bunch of time messing with thunderbolt, here are some notes I took.
+
+<Image
+	src="/assets/thunderbolt/thunderbolt_market.png"
+	alt="hardware"
+	width="1000"
+	height="600"
+/>
+
+In theory, Thunderbolt as a connectivity standard is great!
+There are a couple of things that are confusing!
+
+## Platform specific issues
+
+On Linux, devices are not authorized when connected.
+To "authorize" the connection, you have to set up dev rules.
+
+However, I found it easier to disable thunderbolt security in the bios.
+This only leaves you vulnerable to physical attacks, where someone can plug something into your device.
+
+Another thing, is that hot plugging might not work, this issue turns out to be a firmware issue, so always update your thunderbolt controller using either
+`sudo fwupdmgr get-devices` or by going to your manufacture's website and looking for firmware updates.
+
+On Mac, it just works™️.
+
+## What's the big deal with Thunderbolt networking?
+
+20 GB!
+
+<Image
+	src="/assets/thunderbolt/20gbe.png"
+	alt="hardware"
+	width="1000"
+	height="600"
+/>
+
+### Hardware
+
+> Opinion: Why are people not considering Thunderbolt as an alternative to 10GbE?
+> 10GbE is still an unusually expensive/premium add-on for desktop computers/Macs, despite its age.
+
+10 GB can be cheap, if all you only work off a desktop with 10 GBe or SFP+.
+
+If not, you will have to buy a dongle to connect your server.
+A 10GBe dongle is around 200 dollars: [ubiquiti usb-c 10gbe](https://store.ui.com/us/en/category/accessories-installations/products/uacc-adapter-rj45-usbc-10ge)
+
+For my specific scenario, I wanted to build on AM4, as the cost/price performance made the most sense for me.
+The cheapest motherboard with 10GBe was 400 dollars(!!).
+
+My alternative was a cost-effective AM4 microATX motherboard compatible with a thunderbolt add-in card!
+
+- [asus pro b550m](https://shop.asus.com/us/90mb15q0-m0aayc-pro-b550m-c-csm.html) - 80 USD
+- [thunderboltex4 add-in](https://www.amazon.com/gp/product/B08ZS3D6JY?smid=A2L77EE7U53NWQ&psc=1) - 100 USD
+- [thunderbolt 4 cable](https://notedwin.com) - 15 USD
+
+If you want to learn more about my new server, wait for my next [post](https://notedwin.com/blog/truenas-aio)
+
+For the add-in card, I would wait to find an open box/return, since many people don't do the research on what motherboards are compatible.
+There wasn't any AM4 micro-atx boards with built-in USB4, typically on high-end ATX boards have it and I wanted to build in a small case.
+
+## Left-overs
+
+My fixation on micro-atx is because I have a case sitting around that only fits microATX! <br/>
+Reduce reuse recycle<br/>
+Debugging tools:
+
+- udevadm monitor
+- bolt
+- [tbtools](https://github.com/intel/tbtools)
+
+I am aware of 10GB(refers to gigabit) networking is **1,250** Megabytes, which most HDD can only write at 150 MB/s.<br/>
+On TrueNas, I was not able to install tbtools. I was in developer mode and I ran the installation script from a data drive. Oh well, I figured it out.
+
+> generic truenas is an appliance comment<br/>
+> USB4 != Thunderbolt 4
+
+## Resources
+
+- [Guides on setting up Thunderbolt networking on Mac](https://www.jiribrejcha.net/tag/nbaset/)
+- [SMB: Mac Sequoia](https://discussions.apple.com/thread/255832728?sortBy=oldest_first&page=2)
+- [Video in Mandarin similar to my setup](https://www.youtube.com/watch?v=WZD2QaeB53M)
+- [Arch Wiki: thunderbolt](https://wiki.archlinux.org/title/Thunderbolt)
+- [stackoverflow: thunderbolt](https://askubuntu.com/questions/1521367/i-think-my-problem-is-thunderbolt)
+- [Truenas Forums: Thunderbolt](https://forums.truenas.com/t/thunderbolt-to-10gbe-adapter/9005/39)
