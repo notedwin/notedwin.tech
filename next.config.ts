@@ -7,6 +7,7 @@ const old_urls = [
 	"/caddy-tailscale",
 	"/haxml",
 	"/health-data",
+	"/local_setup",
 ];
 
 const redirects = old_urls.map((url) => ({
@@ -45,6 +46,10 @@ const nextConfig: NextConfig = {
 			{
 				source: "/json",
 				destination: "/feed/feed.json",
+			},
+			{
+				source: "/about",
+				destination: "/blog/lore",
 			},
 		];
 		// concat the rss array with the new urls array
