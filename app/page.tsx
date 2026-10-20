@@ -1,18 +1,14 @@
 import Link from "next/link";
 import { Cube } from "./components/cube";
-import { DitherPhoto } from "./components/dither";
 import { CommitLine } from "./components/commit-line";
-import { DomainMark, SectionHead } from "./components/ne";
-import { getBlogPosts, getCardImage, isoDate } from "./lib/posts";
-
-// Three columns inside the 782px column from 768px up, two below (gutters and gaps taken off).
-const cardSizes = "(max-width: 767px) calc((100vw - 50px) / 2), 245px";
+import { SectionHead } from "./components/ne";
+import { PostCard } from "./components/post-card";
+import { getBlogPosts, getCardImage } from "./lib/posts";
 
 export default function Page() {
 	// The six newest posts that have an image, for the grid's dithered header plates.
 	let recent = getBlogPosts()
-		.map((post) => ({ post, image: getCardImage(post) }))
-		.filter((p): p is { post: (typeof p)["post"]; image: string } => Boolean(p.image))
+		.filter((post) => getCardImage(post))
 		.slice(0, 6);
 
 	return (
@@ -49,22 +45,9 @@ export default function Page() {
 					}
 				/>
 				<ul className="post-grid">
-					{recent.map(({ post, image }) => (
+					{recent.map((post) => (
 						<li key={post.slug}>
-							<Link className="post-card" href={`/blog/${post.slug}`}>
-								<DitherPhoto src={image} alt="" sizes={cardSizes} className="post-card__plate" />
-								<p className="t-label post-card__meta">
-									{isoDate(post.metadata.publishedAt)} · <DomainMark domain={post.metadata.domain} />
-								</p>
-								<h3 className="post-card__title">
-									{post.metadata.start && (
-										<span className="star" aria-label="start here">
-											★{" "}
-										</span>
-									)}
-									{post.metadata.title}
-								</h3>
-							</Link>
+							<PostCard post={post} domain />
 						</li>
 					))}
 				</ul>
