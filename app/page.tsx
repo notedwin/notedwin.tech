@@ -47,7 +47,7 @@ export default function Page() {
 				<ul className="post-grid">
 					{recent.map((post) => (
 						<li key={post.slug}>
-							<PostCard post={post} domain />
+							<PostCard post={post} />
 						</li>
 					))}
 				</ul>

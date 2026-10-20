@@ -15,8 +15,8 @@ Personality: **quiet, deliberate.** Reject anything that contradicts it.
 ## Site decisions (override the design system where they differ)
 
 - Header is the flame (home link), nav and theme toggle on one row at every width; no wordmark text, no commit line.
-- Home is one screen at 390×844 and 1280×800: header, intro (lede + the commit line under it), then a `blog` grid of the six newest posts with images (5:2 dithered header plates, date · domain, title). Three columns on desktop; two columns and four posts on phones, where the cube is hidden.
-- The section and nav item are called "blog", never "log" or "workbench". `/blog` is the same card grid as home (`PostCard`: plate, date, title; no domain or status marks), every post; posts without an image get a seeded data plate (`FieldPlate`). Domain and status stay on the post page rail.
+- Home is one screen at 390×844 and 1280×800: header, intro (lede + the commit line under it), then a `blog` grid of the six newest posts with images (5:2 dithered header plates, date, title). Three columns on desktop; two columns and four posts on phones, where the cube is hidden.
+- The section and nav item are called "blog", never "log" or "workbench". `/blog` is the same card grid as home (`PostCard`: plate, date, title; no domain or status marks on either), every post; posts without an image get a seeded data plate (`FieldPlate`). Domain and status stay on the post page rail.
 - Dithered photos use `--dither-ink` at `--dither-opacity`: sage (`flame-body`) at 90% on graphite, `ember` at 65% on smoke, so the orange stays subdued.
 - The cube splits evenly on opposite faces: two `ash-300`, two `flame-shadow` mixed 35% toward the graphite base, and two in the page `ground` (repaints with the theme).
 
