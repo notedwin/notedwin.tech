@@ -25,8 +25,9 @@ for (const colorScheme of ["dark", "light"] as const) {
 				test(`layout ${route} @${width}`, async ({ page }, info) => {
 					let errors: string[] = [];
 					page.on("console", (m) => {
-						// The 404 page reports its own status; external embeds may fail offline.
-						if (m.type() === "error" && !/status of 404|ERR_CONNECTION|_vercel/.test(m.text())) errors.push(m.text());
+						// The 404 page reports its own status; external embeds may fail offline, and the
+						// YouTube embed sometimes probes the Compute Pressure API, which Chrome logs.
+						if (m.type() === "error" && !/status of 404|ERR_CONNECTION|_vercel|compute-pressure/.test(m.text())) errors.push(m.text());
 					});
 					await page.setViewportSize({ width, height: 900 });
 					await page.goto(route);

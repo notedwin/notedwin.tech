@@ -293,14 +293,15 @@
 		position: relative;
 		overflow: hidden;
 	}
-	/* At 90% the plate's ground-sunk shows through, softening the light ink a touch. */
+	/* The plate's ground-sunk shows through the canvas, softening the dither ink: a touch on
+	   graphite, more on smoke, where the ink is ember. */
 	.ne-photo canvas {
 		position: absolute;
 		inset: 0;
 		width: 100%;
 		height: 100%;
 		image-rendering: pixelated;
-		opacity: 0.9;
+		opacity: var(--dither-opacity);
 	}
 	.ne-plate.ne-photo img {
 		height: 100%;
@@ -726,6 +727,22 @@
 		margin: var(--space-6) 0;
 		display: flex;
 		justify-content: center;
+	}
+
+	/* Photo dither ink and strength: sage on graphite, subdued ember on smoke. */
+	:root {
+		--dither-ink: var(--flame-body);
+		--dither-opacity: 0.9;
+	}
+	@media (prefers-color-scheme: light) {
+		:root:not([data-theme="dark"]) {
+			--dither-ink: var(--ember);
+			--dither-opacity: 0.65;
+		}
+	}
+	:root[data-theme="light"] {
+		--dither-ink: var(--ember);
+		--dither-opacity: 0.65;
 	}
 
 	/* Code colors: shiki's css-variables theme on the sunk ground (no ember). Text and keywords in ink,

@@ -1,30 +1,36 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ditherField, tok } from "./ink";
+import { ditherField, mix, onThemeChange, tok } from "./ink";
 
 // The home page's eye-grabber, from the design system's Cube component. Each face is a
-// 52px value field in the photo dither; the inks are fixed so it reads the same in both themes.
+// 52px value field in the photo dither on a fixed graphite base. Three inks, two faces each, on
+// opposite sides (front/back, right/left, top/bottom), so every corner shows all three: sage, a
+// subdued ember, and the page's own ground, which follows the theme.
 const BASE = "#2b302f"; // graphite ground-sunk, fixed by the Cube spec
-const FACES: [(x: number, y: number) => number, string][] = [
-	[(x, y) => 0.25 + 0.6 * (1 - y), "--ash-300"],
-	[(x) => 0.3 + 0.5 * x, "--ash-500"],
-	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), "--flame-shadow"],
-	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), "--ash-100"],
-	[(x, y) => 0.85 - 0.6 * y, "--ash-100"],
-	[() => 0.4, "--ash-700"],
+const FACES: [(x: number, y: number) => number, () => string][] = [
+	[(x, y) => 0.25 + 0.6 * (1 - y), () => tok("--ash-300")],
+	[(x) => 0.3 + 0.5 * x, () => tok("--ash-300")],
+	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), () => mix(tok("--flame-shadow"), BASE, 0.35)],
+	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), () => mix(tok("--flame-shadow"), BASE, 0.35)],
+	[(x, y) => 0.85 - 0.6 * y, () => tok("--ground")],
+	[(x, y) => 0.45 + 0.35 * Math.cos(x * 4 + y * 3), () => tok("--ground")],
 ];
 
 export function Cube() {
 	let ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
-		let faces = ref.current!.children;
-		FACES.forEach(([field, ink], i) => {
-			let c = document.createElement("canvas");
-			c.width = c.height = 52;
-			ditherField(c.getContext("2d")!, 52, 52, (x, y) => field(x / 52, y / 52), BASE, tok(ink));
-			(faces[i] as HTMLElement).style.backgroundImage = `url(${c.toDataURL()})`;
-		});
+		let paint = () => {
+			let faces = ref.current!.children;
+			FACES.forEach(([field, ink], i) => {
+				let c = document.createElement("canvas");
+				c.width = c.height = 52;
+				ditherField(c.getContext("2d")!, 52, 52, (x, y) => field(x / 52, y / 52), BASE, ink());
+				(faces[i] as HTMLElement).style.backgroundImage = `url(${c.toDataURL()})`;
+			});
+		};
+		paint();
+		return onThemeChange(paint);
 	}, []);
 	return (
 		<div className="ne-stage" aria-hidden="true">

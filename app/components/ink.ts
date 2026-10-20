@@ -31,6 +31,12 @@ const BAYER = [
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 const lum = (c: number[]) => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
 
+// Blends hex color a toward b by t (0 = a, 1 = b), for muting an ink against its ground.
+export function mix(a: string, b: string, t: number) {
+	let [x, y] = [rgb(a), rgb(b)];
+	return "#" + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, "0")).join("");
+}
+
 // Two-ink 8×8 ordered dither of a value field (0..1 per pixel); bright values take the lighter ink.
 export function ditherField(
 	ctx: CanvasRenderingContext2D,
@@ -127,6 +133,6 @@ export function ditherImage(src: CanvasImageSource, sw: number, sh: number, dst:
 		h,
 		(x, y) => (values[y * w + x] - base) / span,
 		tok("--ground-sunk"),
-		tok("--flame-body")
+		tok("--dither-ink")
 	);
 }
