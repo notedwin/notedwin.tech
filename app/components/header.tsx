@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { Flame } from "./flame";
+import { Flame, ThemeToggle } from "@notedwin/design/client";
 import { Nav } from "./nav";
-import { ThemeToggle } from "./theme-toggle";
 
 // The flame as the home link, then nav and theme toggle.
 export function Header() {

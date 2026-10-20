@@ -2,16 +2,22 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "predev": "pnpm -F @notedwin/design build",
     "dev": "next dev",
+    "prebuild": "pnpm -F @notedwin/design build",
     "build": "next build",
     "start": "next start",
+    "pretypecheck": "pnpm -F @notedwin/design build",
     "typecheck": "tsc --noEmit",
-    "tokens": "node scripts/sync-design-system.mjs",
     "test:ui": "PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
     "ui:open": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli open --config=playwright-cli.json http://localhost:3000",
-    "ui:shot": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli screenshot --filename=.playwright-cli/screenshot.png"
+    "ui:shot": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli screenshot --filename=.playwright-cli/screenshot.png",
+    "design": "pnpm -F @notedwin/design",
+    "design:push": "git subtree push --prefix=design https://gitea.notedwin.com/notedwin/design.git main",
+    "design:pull": "git subtree pull --prefix=design https://gitea.notedwin.com/notedwin/design.git main"
   },
   "dependencies": {
+    "@notedwin/design": "workspace:*",
     "@types/node": "22.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

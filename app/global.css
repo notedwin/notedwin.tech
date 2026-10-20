@@ -1,8 +1,8 @@
 @import "tailwindcss";
-/* Generated from design-system/ by `pnpm tokens`; never edit those three files by hand. */
-@import "./styles/tokens.css";
-@import "./styles/theme.css";
-@import "./styles/bundle.css" layer(components);
+/* The design system package (design/): tokens, Tailwind theme and component CSS. */
+@import "@notedwin/design/css/tokens.css";
+@import "@notedwin/design/css/theme.css";
+@import "@notedwin/design/css/components.css" layer(components);
 
 /* Site layer: the notedwin system applied to the blog. Tokens only; no raw colors or sizes
    outside the scale. Breakpoints 480 / 768 / 1024 (design system → Finishing details). */
@@ -56,24 +56,6 @@
 	}
 	.ne-commit code a {
 		text-decoration: none;
-	}
-	/* Show the label for the theme the toggle switches to. */
-	.ne-theme [data-when="light"] {
-		display: none;
-	}
-	:root[data-theme="light"] .ne-theme [data-when="dark"] {
-		display: none;
-	}
-	:root[data-theme="light"] .ne-theme [data-when="light"] {
-		display: inline;
-	}
-	@media (prefers-color-scheme: light) {
-		:root:not([data-theme]) .ne-theme [data-when="dark"] {
-			display: none;
-		}
-		:root:not([data-theme]) .ne-theme [data-when="light"] {
-			display: inline;
-		}
 	}
 
 	.site-footer {
@@ -129,17 +111,6 @@
 	.stack-links .more-link {
 		margin-top: 0;
 	}
-	.ne-dom {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-	}
-	.ne-dom::before {
-		content: "";
-		width: 7px;
-		height: 7px;
-		background: var(--domain);
-	}
 	.row-meta {
 		display: flex;
 		flex-wrap: wrap;
@@ -151,8 +122,6 @@
 		font: inherit;
 	}
 	.ne-plate--clean::before,
-	.ne-photo::before,
-	.ne-photo::after,
 	.prose-plate::before,
 	.prose-plate::after,
 	.video-plate::before,
@@ -288,31 +257,6 @@
 		text-decoration-thickness: 1px;
 	}
 
-	/* Dithered photo plates: the original fades in on hover or focus. */
-	.ne-photo {
-		position: relative;
-		overflow: hidden;
-	}
-	/* The plate's ground-sunk shows through the canvas, softening the dither ink: a touch on
-	   graphite, more on smoke, where the ink is ember. */
-	.ne-photo canvas {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		image-rendering: pixelated;
-		opacity: var(--dither-opacity);
-	}
-	.ne-plate.ne-photo img {
-		height: 100%;
-		object-fit: cover;
-		opacity: 0;
-		transition: opacity var(--dur-base) var(--ease-out);
-	}
-	.ne-photo:hover img,
-	.ne-photo:focus-visible img {
-		opacity: 1;
-	}
 	.ratio-3-2 {
 		aspect-ratio: 3 / 2;
 	}

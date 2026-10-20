@@ -8,7 +8,7 @@ import { Header } from "./components/header";
 import Footer from "./components/footer";
 import { metaData } from "./config";
 import { color } from "./lib/tokens";
-import { themeScript } from "./lib/theme";
+import { themeScript } from "@notedwin/design/theme";
 
 // Three faces, each with one job (design system → Typography).
 const sans = Instrument_Sans({
@@ -20,8 +20,8 @@ const sans = Instrument_Sans({
 });
 const mono = localFont({
 	src: [
-		{ path: "./fonts/CommitMono-Regular.woff2", weight: "400" },
-		{ path: "./fonts/CommitMono-SemiBold.woff2", weight: "500 700" },
+		{ path: "../node_modules/@notedwin/design/fonts/CommitMono-Regular.woff2", weight: "400" },
+		{ path: "../node_modules/@notedwin/design/fonts/CommitMono-SemiBold.woff2", weight: "500 700" },
 	],
 	variable: "--nf-mono",
 	display: "swap",
@@ -31,7 +31,7 @@ const mono = localFont({
 	adjustFontFallback: false,
 });
 const pixel = localFont({
-	src: "./fonts/DepartureMono-Regular.woff2",
+	src: "../node_modules/@notedwin/design/fonts/DepartureMono-Regular.woff2",
 	weight: "400",
 	variable: "--nf-pixel",
 	display: "swap",

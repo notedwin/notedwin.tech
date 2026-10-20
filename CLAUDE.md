@@ -24,9 +24,9 @@ Personality: **quiet, deliberate.** Reject anything that contradicts it.
 ## Design system (source of truth)
 
 - The notedwin design system artifact: <https://claude.ai/artifact/12mNGtWDgTVCRqkLiALDyB> (README, layout-and-modes, motion, voice, data-viz, components).
-- Vendored copies: `design-system/tokens.json`, `design-system/bundle.css`. Re-sync: replace both, run `pnpm tokens`.
-- `app/styles/{tokens,theme,bundle}.css` are generated. Never edit them; site rules live in `app/global.css`.
-- Token changes are their own commit, never part of a feature task.
+- In code it's the `@notedwin/design` package in `design/` (a pnpm workspace package and a git subtree of the private `notedwin/design` repo on gitea.notedwin.com, checked out at `~/notedwin/projects/design`; sync with `pnpm design:push` / `pnpm design:pull`, see `design/README.md`). Tokens, CSS, fonts, `Flame`, `DitherPhoto`, `ThemeToggle`, `Tag`/`Status`/`Meta`/`SectionHead` and the Perspective theme live there; the site imports them and keeps only its own parts (cube, post cards, page heads, layouts).
+- Edit tokens in `design/src/tokens.json` only, then `pnpm design generate` and `pnpm design check`. `design/css/` and the Python data are generated; never edit them. Site rules live in `app/global.css`.
+- Anything another project could use goes in `design/`, not `app/`. Token and package changes are their own commit, never part of a feature task.
 - Where the field guide's defaults conflict with the system (fonts, radius, breakpoints), the system wins.
 
 ## Tokens you may use (nothing else)
