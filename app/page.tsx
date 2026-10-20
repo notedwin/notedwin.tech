@@ -16,18 +16,18 @@ export default function Page() {
 			<section className="intro" aria-label="intro">
 				<div>
 					<h1 className="intro__lede">
-						My name is Edwin. I’m a data engineer at{" "}
+						Hey, I’m Edwin, currently doing data and ML things at{" "}
 						<a className="ne-link" href="https://mcdonalds.com" rel="noopener noreferrer">
-							McDonald’s
-						</a>
-						, and I learn by taking things apart.
+							McD
+						</a>{" "}
+						🍟
 					</h1>
 					<p className="intro__lede intro__lede--muted">
-						Outside work I’m building out my{" "}
+						In my free time, I’m either cycling or building pet projects on my{" "}
 						<Link className="ne-link" href="/blog/homelab">
-							homelab
-						</Link>{" "}
-						or riding my bike.
+							personal cloud
+						</Link>
+						.
 					</p>
 					<CommitLine className="intro__commit" />
 				</div>
