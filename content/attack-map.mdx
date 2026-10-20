@@ -1,18 +1,19 @@
 ---
-title: "Attack Map: SSH Log Parser"
+title: "Attack Map: SSH log parser"
 publishedAt: "2022-06-22"
 summary: ""
 tags: "attack-map, featured"
+domain: infra
+status: settled
 ---
 
-> What I thought I looked like using a hex editor after making my subways surfer score 2^31
-<Image src="/assets/attack-map/hacker.gif" alt="bruh" width="200" height="200" class="center" />
+> What I thought I looked like using a hex editor after making my Subway Surfers score 2^31
+
+<Image src="/assets/attack-map/hacker.gif" alt="bruh" width="200" height="200" />
 
 [Live App](https://map.notedwin.com)
 
-[Github repository](https://github.com/notedwin/attack-map)
-
-### Table of contents
+[GitHub repository](https://github.com/notedwin/attack-map)
 
 # Intro
 Hey! I have worked on the attack map project for 2 years now! How time flies! Before I retire the project, I wanted to get all my thoughts out and share my experiences!
@@ -20,7 +21,7 @@ Hey! I have worked on the attack map project for 2 years now! How time flies! Be
 Map: [map.notedwin.com](http://map.notedwin.com)
 
 ### Preface
-When self-hosting a web service, you don’t want your server to be used in a botnet farm, as it will decrease your home bandwidth and your ISP wont be too happy.
+When self-hosting a web service, you don’t want your server to be used in a botnet farm, as it will decrease your home bandwidth and your ISP won’t be too happy.
 
 Two effective solutions to avoid becoming a victim are stopping vulnerabilities by securing your application and adding monitoring to detect when you have an intruder.
 
@@ -30,7 +31,7 @@ Most programming languages have safety features that prevent you from shooting y
 wait that’s not true at all:
 [SQL_Injection](https://owasp.org/www-community/attacks/SQL_Injection)
 
-It looks like you need a Ph.D. in Computer security to avoid getting hacked using this method.
+It looks like you need a Ph.D. in computer security to avoid getting hacked using this method.
 
 #### Monitoring
 To improve our ability to detect when our server is being used in a botnet, let’s add monitoring.
@@ -41,17 +42,17 @@ Some questions that come up before we can get started:
 
 My primary concern was brute force SSH attempts. By exposing my SSH port, I could make changes to my server remotely, but this also invites malicious activity.
 
-> what is SSH? Secure shell is used to access remote machines and administration tasks.
+> What is SSH? Secure Shell is used to access remote machines and administration tasks.
 
 #### Implementation details
 
-To start, I first found where the SSH attempts were recorded to. I filtered this data down using grep to get a stream of IP addresses attempting to login.
+To start, I first found where the SSH attempts were recorded to. I filtered this data down using grep to get a stream of IP addresses attempting to log in.
 
 ```bash
 tail -Fn0 /var/log/auth.log | grep --line-buffered "Failed password for" | grep --line-buffered -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
 ```
 
-That looks good, Let’s visualize all these IP address:
+That looks good. Let’s visualize all these IP addresses:
 
 ```python
 import*
@@ -79,9 +80,9 @@ gdf.plot(ax=world.plot(figsize=(10, 6)), marker='o', color='red', markersize=15)
 ```
 
 
-![inital-map](assets/blog/attack-map/py.png)
+![initial map](/assets/attack-map/py.png)
 
-That looks great, however let’s automate this process by using Rsyslog and a custom log processing service to store attempts in a database.
+That looks great; however, let’s automate this process by using Rsyslog and a custom log processing service to store attempts in a database.
 
 ```bash
 template(name="json" type="list"){
@@ -126,7 +127,7 @@ def handler(event, context):
          # try to parse data into DB
 ```
 
-Great now we have all the data and can visualize it. Wait, HTTP is alot of overhead, our logs are on the same system can we do this better?
+Great, now we have all the data and can visualize it. Wait, HTTP is a lot of overhead. Our logs are on the same system; can we do this better?
 
 ```rust
 const API: &str = "http://ip-api.com/json/";
@@ -186,10 +187,10 @@ pub fn pull_hackers() -> Vec<Hacker> {
 }
 ```
 
-## Final Thoughts:
-Initally, my goal was to store failed logins. However, I realized a more useful purpose would be to build an intrusion detection system using successful logins!
+## Final thoughts
+Initially, my goal was to store failed logins. However, I realized a more useful purpose would be to build an intrusion detection system using successful logins!
 
-I did learn learn more about linux and how logs are stored.
+I did learn more about Linux and how logs are stored.
 
 ### What kind of issues did I run into?
 -   Ubuntu’s preinstalled rsyslog lacked modules, so I had to compile them from source.
@@ -201,7 +202,7 @@ I did learn learn more about linux and how logs are stored.
 - [ssh log to influx](https://github.com/acouvreur/ssh-log-to-influx)
 - [pewpew](https://github.com/hrbrmstr/pewpew)
 - [Locating SSH Hackers in Real Time](https://devconnected.com/geolocating-ssh-hackers-in-real-time/)
-- [Kapersky Map](https://cybermap.kaspersky.com/)
+- [Kaspersky Map](https://cybermap.kaspersky.com/)
 - [Globe.gl](https://github.com/vasturiano/globe.gl)
 - [Globe](https://www.timcchang.com/posts/threejs-globe)
 - [Cowrie](https://cowrie.readthedocs.io/en/latest/graylog/README.html#syslog-configuration)

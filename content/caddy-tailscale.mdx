@@ -1,13 +1,15 @@
 ---
-title: "Caddy and Tailscale Integration"
+title: "Caddy and Tailscale integration"
 summary: "Integrating Caddy and Tailscale for secure data transfer"
 publishedAt: "2023-06-20"
 tags: "caddy, tailscale"
+domain: infra
+status: settled
 ---
 
-I previously decided I wanted to transfer data from a SQLite database on my laptop to my server's PostgreSQL database as part of some data exploration I was doing on screen time. In my [previous post](https://notedwin.com/health-data), I briefly discussed the reasoning behind this data transfer.
+I previously decided I wanted to transfer data from a SQLite database on my laptop to my server's PostgreSQL database as part of some data exploration I was doing on screen time. In my [previous post](/blog/health-data), I briefly discussed the reasoning behind this data transfer.
 
-## Quick Background
+## Quick background
 
 Before diving into the integration of Caddy and Tailscale, let's quickly understand what each component does. Caddy is a web server with a simple configuration syntax that prioritizes ease of use and security through automatic HTTPS. Tailscale is a VPN solution that allows you to establish secure connections between different devices and networks easily.
 
@@ -15,7 +17,7 @@ Before diving into the integration of Caddy and Tailscale, let's quickly underst
 
 There is a common pattern in data engineering to SFTP a file from a remote server and do the processing needed. This approach works when the data is stored on a server that stays on the same network and enabling SSH is not an issue.
 
-However, the data I need exists on laptop that cannot have it's port 22 open for security reasons when going on networks I don't fully trust. I also did not want to manage more python dependencies on my laptop since I have conflicting package versions and could very easily break a dependency.
+However, the data I need exists on a laptop that cannot have its port 22 open for security reasons when going on networks I don't fully trust. I also did not want to manage more Python dependencies on my laptop since I have conflicting package versions and could very easily break a dependency.
 
 ## Tailscale SSH
 
@@ -67,7 +69,7 @@ Awesome! I wrote a pipeline to pull the data from my Mac to PostgreSQL using [Da
 
 The majority of this post was on Tailscale, but I wanted to plug Caddy since I have found it to be an amazing piece of software!
 
-Connecting both of the components we can access certain domains only when connected to the tailscale network, without having to rely on remembering IP and port combinations. Also, Tailscale allows you to share your network with other users with fine-grained access control logic.
+Connecting both of the components, we can access certain domains only when connected to the Tailscale network, without having to rely on remembering IP and port combinations. Also, Tailscale allows you to share your network with other users with fine-grained access control logic.
 
 Ex: `https://notedwin.cow-ghost.ts.net` is not publicly accessible, but it is accessible through Tailscale. :p
 
@@ -107,7 +109,7 @@ More information about enabling HTTPS with Tailscale can be found [here](https:/
 
 ## Conclusion
 
-I was able to complete my personal health dashboard thanks to tailscale! Here is one panel from my grafana dashboard:
+I was able to complete my personal health dashboard thanks to Tailscale! Here is one panel from my Grafana dashboard:
 
 <Image
 	src="/assets/grafana.png"
