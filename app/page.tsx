@@ -1,21 +1,15 @@
 import Link from "next/link";
 import { Cube } from "./components/cube";
 import { DitherPhoto } from "./components/dither";
+import { CommitLine } from "./components/commit-line";
 import { DomainMark, SectionHead, Status } from "./components/ne";
 import { getBlogPosts, getFirstImage, isoDate } from "./lib/posts";
 import { featured } from "./projects/project-data";
-import { photos } from "./photos/photo-data";
 
 export default function Page() {
 	let posts = getBlogPosts();
 	let report = posts[0];
 	let reportImage = getFirstImage(report);
-	// Four newest, plus the start-here entry if it's older, in date order.
-	let start = posts.find((p) => p.metadata.start);
-	let log = posts.slice(0, start && !posts.slice(0, 5).includes(start) ? 4 : 5);
-	if (start && !log.includes(start)) {
-		log = [...log, start];
-	}
 
 	return (
 		<main id="main" className="home">
@@ -35,9 +29,7 @@ export default function Page() {
 						</Link>{" "}
 						or riding my bike.
 					</p>
-					<p className="ne-route">
-						networking → security → <span className="is-now">data</span> → quant, eventually
-					</p>
+					<CommitLine className="intro__commit" />
 				</div>
 				<Cube />
 			</section>
@@ -88,47 +80,6 @@ export default function Page() {
 				</div>
 			</section>
 
-			<section className="home-section" aria-labelledby="field-photos">
-				<SectionHead id="field-photos" title="field photos" note="hover for color" />
-				<div className="photo-row">
-					{photos.slice(0, 3).map((photo, i) => (
-						<figure className="ne-fig" key={photo.src}>
-							<DitherPhoto src={photo.src} alt={photo.alt} sizes="(max-width: 768px) 100vw, 260px" className="ratio-3-2" />
-							<figcaption>
-								<span>
-									<b>fig:{String(i + 1).padStart(2, "0")}</b> · {photo.alt}
-								</span>
-							</figcaption>
-						</figure>
-					))}
-				</div>
-				<Link className="more-link" href="/photos">
-					all photos →
-				</Link>
-			</section>
-
-			<section className="home-section" aria-labelledby="log">
-				<SectionHead id="log" title="log" note="★ = start here" />
-				<ul className="ne-loglist">
-					{log.map((post) => (
-						<li key={post.slug}>
-							<Link href={`/blog/${post.slug}`}>
-								<time dateTime={post.metadata.publishedAt}>{isoDate(post.metadata.publishedAt)}</time>
-								<span className="ne-loglist__star">
-									{post.metadata.start ? <span aria-label="start here">★</span> : null}
-								</span>
-								<span className="ne-loglist__t">{post.metadata.title}</span>
-								<span className="ne-loglist__d" data-domain={post.metadata.domain}>
-									{post.metadata.domain}
-								</span>
-							</Link>
-						</li>
-					))}
-				</ul>
-				<Link className="more-link" href="/blog">
-					all entries →
-				</Link>
-			</section>
 		</main>
 	);
 }

@@ -8,9 +8,16 @@ Personality: **quiet, deliberate.** Reject anything that contradicts it.
 
 - Audience: engineers and curious readers who find a post through search or a link.
 - Tone: quiet, deliberate. Ash is structure, ember is signal.
-- Signature moment: the header flame loops (every page); the home cube tumbles. Nothing else moves on its own.
+- Signature moment: the header flame loops (every page); the home cube tumbles (hidden below 768px). Nothing else moves on its own.
 - Type: Instrument Sans (prose) · Commit Mono (name, nav, titles, meta, code) · Departure Mono (technical labels only, at 11/22/33px).
-- Accent: ember, sparingly: the commit square, the current route stop, the ★ start-here entry.
+- Accent: ember, sparingly: the commit square, the ★ start-here entry, the highlighted series in a post's figures.
+
+## Site decisions (override the design system where they differ)
+
+- Header is the flame (home link), nav and theme toggle on one row at every width; no wordmark text, no commit line.
+- Home is one screen at 390×844 and 1280×800: header, intro (lede + the commit line under it), workbench. No field photos or log on home. Phones hide the cube and the project plates and descriptions.
+- The log (`/blog`) is a plain row list like `/projects` (date · domain · status, title, summary), not the trail layout.
+- Dithered photos draw at 90% opacity for slightly softer contrast.
 
 ## Design system (source of truth)
 
