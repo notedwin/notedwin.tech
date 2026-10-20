@@ -1,13 +1,44 @@
 import "./global.css";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Navbar } from "./components/nav";
+import type { Metadata, Viewport } from "next";
+import { Instrument_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Header } from "./components/header";
 import Footer from "./components/footer";
-import { ThemeProvider } from "./components/theme-switch";
 import { metaData } from "./config";
+import { color } from "./lib/tokens";
+import { themeScript } from "./lib/theme";
+
+// Three faces, each with one job (design system → Typography).
+const sans = Instrument_Sans({
+	subsets: ["latin"],
+	axes: ["wdth"],
+	// No italic file: posts use few <em>, and the synthesized slant saves a 57 KB preload.
+	variable: "--nf-sans",
+	display: "swap",
+});
+const mono = localFont({
+	src: [
+		{ path: "./fonts/CommitMono-Regular.woff2", weight: "400" },
+		{ path: "./fonts/CommitMono-SemiBold.woff2", weight: "500 700" },
+	],
+	variable: "--nf-mono",
+	display: "swap",
+	// Only the sans (the LCP text) is preloaded; the monos load as CSS asks for them.
+	preload: false,
+	fallback: ["ui-monospace", "SF Mono", "Menlo", "monospace"],
+	adjustFontFallback: false,
+});
+const pixel = localFont({
+	src: "./fonts/DepartureMono-Regular.woff2",
+	weight: "400",
+	variable: "--nf-pixel",
+	display: "swap",
+	preload: false,
+	fallback: ["ui-monospace", "SF Mono", "Menlo", "monospace"],
+	adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
 	metadataBase: new URL(metaData.baseUrl),
@@ -42,54 +73,43 @@ export const metadata: Metadata = {
 		site: "@mu0xide",
 	},
 	icons: {
-		icon: "/favicon.ico",
+		icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],
+	},
+	alternates: {
+		types: {
+			"application/rss+xml": "/rss.xml",
+			"application/atom+xml": "/atom.xml",
+			"application/feed+json": "/feed.json",
+		},
 	},
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(" ");
+export const viewport: Viewport = {
+	colorScheme: "dark light",
+	themeColor: [
+		{ media: "(prefers-color-scheme: dark)", color: color("ground", "dark") },
+		{ media: "(prefers-color-scheme: light)", color: color("ground", "light") },
+	],
+};
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={cx(GeistSans.variable, GeistMono.variable)}>
+		// data-theme is set before hydration by themeScript.
+		<html lang="en" className={`${sans.variable} ${mono.variable} ${pixel.variable}`} suppressHydrationWarning>
 			<head>
-				<link
-					rel="alternate"
-					type="application/rss+xml"
-					href="/rss.xml"
-					title="RSS Feed"
-				/>
-				<link
-					rel="alternate"
-					type="application/atom+xml"
-					href="/atom.xml"
-					title="Atom Feed"
-				/>
-				<link
-					rel="alternate"
-					type="application/feed+json"
-					href="/feed.json"
-					title="JSON Feed"
-				/>
+				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
-			<body className="antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40">
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					<main className="flex-auto min-w-0 mt-2 md:mt-6 flex flex-col px-6 sm:px-4 md:px-0 max-w-[630px] w-full">
-						<Navbar />
-						{children}
-						<Footer />
-						<Analytics />
-						<SpeedInsights />
-					</main>
-				</ThemeProvider>
+			<body>
+				<a className="skip-link" href="#main">
+					skip to content
+				</a>
+				<div className="ne-col site">
+					<Header />
+					{children}
+					<Footer />
+				</div>
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

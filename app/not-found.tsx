@@ -1,19 +1,26 @@
+import Link from "next/link";
 import type { Metadata } from "next";
+import { PageHead } from "./components/ne";
 
 export const metadata: Metadata = {
-  title: "404",
-  description: "Error 404",
+	title: "Page not found",
+	description: "This page doesn't exist, or it moved.",
 };
 
 export default function NotFound() {
-  return (
-    <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tight">
-        404 - Page not found
-      </h1>
-      <p className="mb-4">
-        Oops! The page you're looking for doesn't seem to exist.
-      </p>
-    </section>
-  );
+	return (
+		<main id="main">
+			<PageHead title="Page not found" note="status:404">
+				<p className="page-head__lede">This page doesn’t exist, or it moved. Older posts now live under /blog.</p>
+			</PageHead>
+			<p className="stack-links">
+				<Link className="more-link" href="/blog">
+					› read the log
+				</Link>
+				<Link className="more-link" href="/">
+					› go home
+				</Link>
+			</p>
+		</main>
+	);
 }

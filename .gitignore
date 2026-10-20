@@ -36,3 +36,15 @@ yarn-error.log*
 .obsidian
 .vscode
 archive
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+
+# Playwright test output
+test-results/
+playwright-report/
+
+# Local plans and screenshots
+scratchpad/
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo

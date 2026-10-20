@@ -1,21 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
+import { PageHead } from "./components/ne";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+	useEffect(() => {
+		console.error(error);
+	}, [error]);
 
-  return (
-    <div>
-      <p>Oops! Something went wrong... maybe try refreshing?</p>
-    </div>
-  );
+	return (
+		<main id="main">
+			<PageHead title="Something broke" note="status:error">
+				<p className="page-head__lede">This page failed to render. Try again; if it keeps failing, the log still works.</p>
+			</PageHead>
+			<p className="stack-links">
+				<button className="ne-btn ne-btn--secondary" type="button" onClick={reset}>
+					try again
+				</button>
+				<a className="more-link" href="/blog">
+					› read the log
+				</a>
+			</p>
+		</main>
+	);
 }

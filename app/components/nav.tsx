@@ -1,35 +1,26 @@
+"use client";
+
 import Link from "next/link";
-import { ThemeSwitch } from "./theme-switch";
-import { metaData } from "../config";
+import { usePathname } from "next/navigation";
 
-const navItems = {
-	"/blog": { name: "Blog" },
-	"/projects": { name: "Projects" },
-	"/photos": { name: "Photos" },
-};
+// "log" is the blog; its URLs stay under /blog so old links keep working.
+const items = [
+	{ href: "/", name: "home" },
+	{ href: "/blog", name: "log" },
+	{ href: "/projects", name: "projects" },
+	{ href: "/photos", name: "photos" },
+];
 
-export function Navbar() {
+export function Nav() {
+	let pathname = usePathname();
+	let current = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 	return (
-		<nav className="lg:mb-16 mb-12 py-5">
-			<div className="flex flex-col md:flex-row md:items-center justify-between">
-				<div className="flex items-center">
-					<Link href="/" className="text-3xl font-semibold tracking-tight">
-						{metaData.title}
-					</Link>
-				</div>
-				<div className="flex flex-row gap-4 mt-6 md:mt-0 md:ml-auto items-center">
-					{Object.entries(navItems).map(([path, { name }]) => (
-						<Link
-							key={path}
-							href={path}
-							className="transition-all flex align-middle relative hover:text-orange-400"
-						>
-							{name}
-						</Link>
-					))}
-					<ThemeSwitch />
-				</div>
-			</div>
+		<nav className="ne-nav" aria-label="main">
+			{items.map(({ href, name }) => (
+				<Link key={href} href={href} aria-current={current(href) ? "page" : undefined}>
+					{name}
+				</Link>
+			))}
 		</nav>
 	);
 }

@@ -3,13 +3,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeShiki from "@shikijs/rehype";
+import { createCssVariablesTheme } from "shiki/core";
 import { TweetComponent } from "./tweet";
 import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
+import { Results } from "./results";
+import { proseSizes } from "app/lib/image-sizes";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import "katex/dist/katex.min.css";
+
+// Code colors come from --shiki-* variables mapped to tokens in global.css, so both themes work.
+const codeTheme = createCssVariablesTheme({ name: "notedwin", variablePrefix: "--shiki-" });
 
 function CustomLink(props) {
 	let href = props.href;
@@ -23,41 +28,48 @@ function CustomLink(props) {
 	if (href.startsWith("#")) {
 		return <a {...props} />;
 	}
-	return <a target="_blank" rel="noopener noreferrer" {...props} />;
+	return <a rel="noopener noreferrer" {...props} />;
 }
 
-function RoundedImage(props) {
-	return <Image alt={props.alt} className="rounded-lg" {...props} />;
-}
-function Code({ children, className }) {
-  // Extract language from className (format: "language-xxx")
-  const lang = className?.replace("language-", "") || "text";
-  
-  return (
-    <code className={className}>
-      {children}
-    </code>
-  );
+// Images are evidence: a plate, square, full width of the column.
+// Sized to the column, never past the image's own width, so phones get a phone-sized file.
+function PlateImage({ className, ...props }: React.ComponentProps<typeof Image>) {
+	let max = Number(props.width) || undefined;
+	return (
+		<span className="prose-plate">
+			<Image sizes={proseSizes({ max })} {...props} alt={props.alt ?? ""} />
+		</span>
+	);
 }
 
 function Table({ data }) {
+	// Number columns are right-aligned; long text wraps so the numbers stay in view.
+	let num = data.headers.map((_, col) => data.rows.every((row) => typeof row[col] === "number"));
+	let cellClass = (cell, col) => (num[col] ? "num" : String(cell).length > 32 ? "wrap" : undefined);
 	let headers = data.headers.map((header, index) => (
-		<th key={index}>{header}</th>
+		<th key={index} className={num[index] ? "num" : undefined}>
+			{header}
+		</th>
 	));
 	let rows = data.rows.map((row, index) => (
 		<tr key={index}>
 			{row.map((cell, cellIndex) => (
-				<td key={cellIndex}>{cell}</td>
+				<td key={cellIndex} className={cellClass(cell, cellIndex)}>
+					{cell}
+				</td>
 			))}
 		</tr>
 	));
 	return (
-		<table>
-			<thead>
-				<tr className="text-left">{headers}</tr>
-			</thead>
-			<tbody>{rows}</tbody>
-		</table>
+		// Focusable so keyboard readers can scroll a wide table.
+		<div className={`table-wrap${data.headers.length >= 6 ? " table-wrap--wide" : ""}`} tabIndex={0} role="region" aria-label={`table: ${data.headers.join(", ")}`}>
+			<table>
+				<thead>
+					<tr>{headers}</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</table>
+		</div>
 	);
 }
 
@@ -65,13 +77,22 @@ function Strikethrough(props) {
 	return <del {...props} />;
 }
 
-function Callout(props) {
+// No emoji in the interface: a callout is a note with a label.
+function Callout({ children }) {
 	return (
-		<div className="px-4 py-3 bg-[#F7F7F7] dark:bg-[#181818] rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
-			<div className="flex items-center w-4 mr-4">{props.emoji}</div>
-			<div className="w-full callout leading-relaxed">{props.children}</div>
-		</div>
+		<aside className="callout">
+			<span className="t-label callout__label">note</span>
+			<div>{children}</div>
+		</aside>
 	);
+}
+
+// Plain text of a heading's children, so **bold** or `code` in a heading still gives a real id.
+function textOf(node): string {
+	if (node == null || typeof node === "boolean") return "";
+	if (typeof node === "string" || typeof node === "number") return String(node);
+	if (Array.isArray(node)) return node.map(textOf).join("");
+	return textOf(node.props?.children);
 }
 
 function slugify(str) {
@@ -87,18 +108,17 @@ function slugify(str) {
 
 function createHeading(level) {
 	const Heading = ({ children }) => {
-		let slug = slugify(children);
+		let slug = slugify(textOf(children));
 		return React.createElement(
 			`h${level}`,
 			{ id: slug },
-			[
-				React.createElement("a", {
-					href: `#${slug}`,
-					key: `link-${slug}`,
-					className: "anchor",
-				}),
-			],
-			children
+			children,
+			React.createElement("a", {
+				href: `#${slug}`,
+				key: `link-${slug}`,
+				className: "anchor",
+				"aria-label": "link to this section",
+			})
 		);
 	};
 	Heading.displayName = `Heading${level}`;
@@ -106,23 +126,57 @@ function createHeading(level) {
 }
 
 let components = {
-	h1: createHeading(1),
+	// A post's title is the page h1; headings inside a post start at h2.
+	h1: createHeading(2),
 	h2: createHeading(2),
 	h3: createHeading(3),
 	h4: createHeading(4),
 	h5: createHeading(5),
 	h6: createHeading(6),
-	Image: RoundedImage,
+	Image: PlateImage,
 	ImageGrid,
 	a: CustomLink,
 	StaticTweet: TweetComponent,
 	Caption: CaptionComponent,
 	YouTube: YouTubeComponent,
-	code: Code,
 	Table,
 	del: Strikethrough,
 	Callout,
+	KatexStyles,
+	Results,
 };
+
+// An <Image> in a post's opening blocks is likely its LCP element: load it eagerly at high
+// priority instead of lazily.
+function remarkLeadImage() {
+	return (tree) => {
+		let lead = tree.children
+			.slice(0, 4)
+			.find((node) => node.type?.startsWith("mdxJsx") && node.name === "Image");
+		lead?.attributes.push(
+			{ type: "mdxJsxAttribute", name: "loading", value: "eager" },
+			{ type: "mdxJsxAttribute", name: "fetchPriority", value: "high" }
+		);
+	};
+}
+
+// KaTeX's stylesheet (copied to public/katex from katex@0.19.0's dist) blocks rendering, so
+// only posts with math load it: this inserts <KatexStyles /> when remark-math found any.
+function remarkKatexStyles() {
+	return (tree) => {
+		let found = false;
+		let walk = (node) => {
+			if (node.type === "math" || node.type === "inlineMath") found = true;
+			node.children?.forEach(walk);
+		};
+		walk(tree);
+		if (found) tree.children.unshift({ type: "mdxJsxFlowElement", name: "KatexStyles", attributes: [], children: [] });
+	};
+}
+
+function KatexStyles() {
+	return <link rel="stylesheet" href="/katex/katex.min.css" precedence="default" />;
+}
 
 export function CustomMDX(props) {
 	return (
@@ -130,15 +184,11 @@ export function CustomMDX(props) {
 			{...props}
 			components={{ ...components, ...(props.components || {}) }}
 			options={{
+				// Posts are our own files and use JSX props like width={640}.
+				blockJS: false,
 				mdxOptions: {
-					remarkPlugins: [remarkMath],
-					rehypePlugins: [
-						rehypeKatex,
-						[
-							rehypeShiki,
-							{ theme: "github-dark", inline: "tailing-curly-colon" },
-						],
-					],
+					remarkPlugins: [remarkMath, remarkLeadImage, remarkKatexStyles],
+					rehypePlugins: [rehypeKatex, [rehypeShiki, { theme: codeTheme, inline: "tailing-curly-colon" }]],
 				},
 			}}
 		/>

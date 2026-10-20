@@ -1,0 +1,13 @@
+{
+  "env": {
+    "PLAYWRIGHT_BROWSERS_PATH": "0"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pnpm exec playwright-cli *)",
+      "Bash(PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli *)",
+      "Bash(pnpm ui:open)",
+      "Bash(pnpm ui:shot)"
+    ]
+  }
+}
