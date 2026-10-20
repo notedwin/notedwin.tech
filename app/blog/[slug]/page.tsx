@@ -77,7 +77,7 @@ export default async function Blog({ params }) {
 			/>
 			<header className="post-head">
 				<p className="t-label post-head__kicker">
-					<Link href="/blog">log</Link> · {isoDate(publishedAt)}
+					<Link href="/blog">blog</Link> · {isoDate(publishedAt)}
 				</p>
 				<h1 className="post-head__title">{title}</h1>
 				{summary && <p className="post-head__summary">{summary}</p>}
@@ -109,7 +109,7 @@ export default async function Blog({ params }) {
 			</div>
 			<p className="post-foot">
 				<Link className="more-link" href="/blog">
-					← all entries
+					← all posts
 				</Link>
 			</p>
 		</main>

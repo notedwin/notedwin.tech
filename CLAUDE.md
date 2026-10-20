@@ -15,8 +15,8 @@ Personality: **quiet, deliberate.** Reject anything that contradicts it.
 ## Site decisions (override the design system where they differ)
 
 - Header is the flame (home link), nav and theme toggle on one row at every width; no wordmark text, no commit line.
-- Home is one screen at 390×844 and 1280×800: header, intro (lede + the commit line under it), workbench. No field photos or log on home. Phones hide the cube and the project plates and descriptions.
-- The log (`/blog`) is a plain row list like `/projects` (date · domain · status, title, summary), not the trail layout.
+- Home is one screen at 390×844 and 1280×800: header, intro (lede + the commit line under it), then a `blog` grid of the six newest posts with images (5:2 dithered header plates, date · domain, title). Three columns on desktop; two columns and four posts on phones, where the cube is hidden.
+- The section and nav item are called "blog", never "log" or "workbench". `/blog` is a plain row list like `/projects` (date · domain · status, title, summary), not the trail layout.
 - Dithered photos draw at 90% opacity for slightly softer contrast.
 
 ## Design system (source of truth)
@@ -45,7 +45,7 @@ Personality: **quiet, deliberate.** Reject anything that contradicts it.
 
 ## Content
 
-- Posts: `content/*.mdx` with frontmatter `title publishedAt summary tags domain status` (+ `updated`, `start: true` for the one start-here post). A file with no frontmatter is a draft and is skipped.
+- Posts: `content/*.mdx` with frontmatter `title publishedAt summary tags domain status` (+ `updated`, `start: true` for the one start-here post, `cover` for the home card image when the first image prints flat). A file with no frontmatter is a draft and is skipped; keep drafts out of git (add them to `.gitignore`).
 - `domain`: infra | data | play. `status`: seed | growing | settled | live.
 - Projects: `app/projects/project-data.tsx`; photos: `app/photos/photo-data.ts`.
 - Bump `SITE_VERSION` in `app/components/footer.tsx` on every redesign.

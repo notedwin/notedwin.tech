@@ -15,7 +15,7 @@ export default function NotFound() {
 			</PageHead>
 			<p className="stack-links">
 				<Link className="more-link" href="/blog">
-					› read the log
+					› read the blog
 				</Link>
 				<Link className="more-link" href="/">
 					› go home

@@ -2,14 +2,18 @@ import Link from "next/link";
 import { Cube } from "./components/cube";
 import { DitherPhoto } from "./components/dither";
 import { CommitLine } from "./components/commit-line";
-import { DomainMark, SectionHead, Status } from "./components/ne";
-import { getBlogPosts, getFirstImage, isoDate } from "./lib/posts";
-import { featured } from "./projects/project-data";
+import { DomainMark, SectionHead } from "./components/ne";
+import { getBlogPosts, getCardImage, isoDate } from "./lib/posts";
+
+// Three columns inside the 782px column from 768px up, two below (gutters and gaps taken off).
+const cardSizes = "(max-width: 767px) calc((100vw - 50px) / 2), 245px";
 
 export default function Page() {
-	let posts = getBlogPosts();
-	let report = posts[0];
-	let reportImage = getFirstImage(report);
+	// The six newest posts that have an image, for the grid's dithered header plates.
+	let recent = getBlogPosts()
+		.map((post) => ({ post, image: getCardImage(post) }))
+		.filter((p): p is { post: (typeof p)["post"]; image: string } => Boolean(p.image))
+		.slice(0, 6);
 
 	return (
 		<main id="main" className="home">
@@ -34,52 +38,37 @@ export default function Page() {
 				<Cube />
 			</section>
 
-			<section className="home-section" aria-labelledby="workbench">
-				<SectionHead id="workbench" title="workbench" note="field reports" />
-				<div className="workbench">
-					<div>
-						<article className="ne-report">
-								<svg className="ne-report__clip" viewBox="0 0 22 66" aria-hidden="true">
-									<path d="M6 60 V10 a5 5 0 0 1 10 0 V52 a3 3 0 0 1 -6 0 V18" />
-								</svg>
-								<h3 className="ne-report__title">{report.metadata.title.split(":")[0]}</h3>
-								<div className="report__bottom">
-									<p className="ne-report__body">
-										field report · {report.metadata.domain} · {isoDate(report.metadata.publishedAt)}
-										<br />
-										{report.metadata.summary}
-									</p>
-									{reportImage && (
-										<DitherPhoto src={reportImage} alt="" sizes="110px" className="plate-110" />
-									)}
-								</div>
-								<span className="ne-tear" aria-hidden="true" />
-							</article>
-						<Link className="more-link" href={`/blog/${report.slug}`}>
-							› open the workbench
+			<section className="home-section" aria-labelledby="blog">
+				<SectionHead
+					id="blog"
+					title="blog"
+					note={
+						<Link className="sh-link" href="/blog">
+							all posts →
 						</Link>
-					</div>
-					<ul className="project-rows">
-						{featured.map((p) => (
-							<li key={p.title}>
-								<DitherPhoto src={p.image!} alt={p.imageAlt!} sizes="110px" className="plate-110" />
-								<div>
-									<p className="t-meta row-meta">
-										{p.year} · <DomainMark domain={p.domain} /> · <Status state={p.status} />
-									</p>
-									<h3 className="t-h3">
-										<a href={p.url} className="row-title">
-											{p.title}
-										</a>
-									</h3>
-									<p className="t-body-sm muted">{p.description}</p>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
+					}
+				/>
+				<ul className="post-grid">
+					{recent.map(({ post, image }) => (
+						<li key={post.slug}>
+							<Link className="post-card" href={`/blog/${post.slug}`}>
+								<DitherPhoto src={image} alt="" sizes={cardSizes} className="post-card__plate" />
+								<p className="t-label post-card__meta">
+									{isoDate(post.metadata.publishedAt)} · <DomainMark domain={post.metadata.domain} />
+								</p>
+								<h3 className="post-card__title">
+									{post.metadata.start && (
+										<span className="star" aria-label="start here">
+											★{" "}
+										</span>
+									)}
+									{post.metadata.title}
+								</h3>
+							</Link>
+						</li>
+					))}
+				</ul>
 			</section>
-
 		</main>
 	);
 }

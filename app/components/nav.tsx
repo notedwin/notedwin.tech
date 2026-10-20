@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// "log" is the blog; its URLs stay under /blog so old links keep working.
 const items = [
 	{ href: "/", name: "home" },
-	{ href: "/blog", name: "log" },
+	{ href: "/blog", name: "blog" },
 	{ href: "/projects", name: "projects" },
 	{ href: "/photos", name: "photos" },
 ];

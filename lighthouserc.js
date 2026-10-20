@@ -3,6 +3,9 @@
 module.exports = {
 	ci: {
 		collect: {
+			// Real throttling: on localhost the default simulated mode replays an unthrottled trace
+			// and reports LCP up to 2× too high (image paint chained behind hydration).
+			settings: { throttlingMethod: "devtools" },
 			startServerCommand: "pnpm start --port 3200",
 			url: ["http://localhost:3200/", "http://localhost:3200/blog", "http://localhost:3200/blog/thunderbolt", "http://localhost:3200/photos"],
 			numberOfRuns: 3,

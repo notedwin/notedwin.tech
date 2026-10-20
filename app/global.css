@@ -217,50 +217,64 @@
 		padding-top: 0;
 		border-top: 0;
 	}
-	/* Home is one screen: header, intro, workbench. Tighter rhythm than inner pages. */
+	/* Home is one screen: header, intro, the blog grid. Tighter rhythm than inner pages. */
 	.site:has(> .home) .site-header {
 		padding-bottom: var(--space-8);
 	}
 	.home-section {
-		margin-top: var(--space-12);
+		margin-top: var(--space-8);
 	}
 	.home-section > .ne-sh {
-		margin-bottom: var(--space-8);
+		margin-bottom: var(--space-6);
 	}
-	.workbench {
+	.sh-link {
+		text-decoration: none;
+		transition: color 150ms var(--flick);
+	}
+	.sh-link:hover {
+		color: var(--ink);
+	}
+	/* Blog grid: small dithered header plates (5:2) over a label meta line and a two-line title. */
+	.post-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-		gap: var(--space-12);
-		align-items: start;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--space-4) var(--space-6);
 	}
-	/* Title on its own row; the 110px plate sits beside the two-line body (11px rhythm). */
-	.report__bottom {
-		display: flex;
-		justify-content: space-between;
-		align-items: end;
-		gap: 22px;
+	.post-card {
+		display: block;
+		text-decoration: none;
 	}
-	.report__bottom .ne-report__body {
-		min-width: 0;
+	.post-card__plate {
+		aspect-ratio: 5 / 2;
 	}
-	.ne-report .plate-110 {
-		margin-top: 22px;
+	.post-card:hover .ne-photo img,
+	.post-card:focus-visible .ne-photo img {
+		opacity: 1;
 	}
-	.plate-110 {
-		width: 110px;
-		height: 110px;
-		flex: none;
+	.post-card__meta {
+		margin-top: var(--space-2);
+		color: var(--ink-muted);
 	}
-	.project-rows > li {
-		display: grid;
-		grid-template-columns: 110px minmax(0, 1fr);
-		gap: var(--space-4);
-		padding: var(--space-6) 0;
-		border-top: var(--hairline) solid var(--rule);
+	.post-card__title {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		font-size: 15px;
+		line-height: 24px;
+		font-weight: 600;
+		text-wrap: pretty;
+		transition: color 150ms var(--flick);
 	}
-	.project-rows > li:first-child {
-		padding-top: 0;
-		border-top: 0;
+	.post-card:hover .post-card__title {
+		color: var(--link);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-thickness: 1px;
+	}
+	.post-card__title .star {
+		font: 400 15px/24px var(--font-mono);
+		color: var(--ember-ink);
 	}
 	.row-title {
 		text-decoration: none;
@@ -272,9 +286,6 @@
 		text-decoration: underline;
 		text-underline-offset: 4px;
 		text-decoration-thickness: 1px;
-	}
-	.project-rows .t-h3 {
-		margin: var(--space-1) 0;
 	}
 
 	/* Dithered photo plates: the original fades in on hover or focus. */
@@ -768,16 +779,15 @@
 		}
 	}
 
-	/* Below 768px: intro, workbench and photos stack; sections tighten. */
+	/* Below 768px: intro and photos stack; sections tighten. */
 	@media (max-width: 767px) {
 		.site-header {
 			padding: var(--space-8) 0 var(--space-12);
 		}
-		.intro,
-		.workbench {
+		.intro {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		/* Phones: no cube, plates off the project rows, so home still fits one screen. */
+		/* Phones: no cube and four posts in two columns, so home still fits one screen. */
 		.intro .ne-stage {
 			display: none;
 		}
@@ -790,20 +800,12 @@
 		.intro__commit {
 			margin-top: var(--space-4);
 		}
-		.project-rows > li {
-			grid-template-columns: minmax(0, 1fr);
-			padding: var(--space-3) 0;
-		}
-		.project-rows > li:first-child {
-			padding-top: var(--space-3);
-			border-top: var(--hairline) solid var(--rule);
-		}
-		.project-rows .plate-110,
-		.project-rows .t-body-sm {
-			display: none;
-		}
-		.workbench {
+		.post-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: var(--space-4);
+		}
+		.post-grid > li:nth-child(n + 5) {
+			display: none;
 		}
 		.photo-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -840,12 +842,6 @@
 		}
 		.photo-grid {
 			grid-template-columns: minmax(0, 1fr);
-		}
-		.ne-report {
-			padding: 22px 22px 33px;
-		}
-		.ne-report__clip {
-			right: 44px;
 		}
 	}
 }

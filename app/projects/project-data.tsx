@@ -7,7 +7,7 @@ export interface Project {
 	url: string;
 	domain: Domain;
 	status: Status;
-	// Featured projects sit on the home workbench with a dithered plate of this image.
+	// A photo of the project, for a dithered plate.
 	image?: string;
 	imageAlt?: string;
 }
@@ -59,4 +59,3 @@ export const projects: Project[] = [
 	},
 ];
 
-export const featured = projects.filter((p) => p.image);

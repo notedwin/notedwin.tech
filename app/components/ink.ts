@@ -112,9 +112,15 @@ export function ditherImage(src: CanvasImageSource, sw: number, sh: number, dst:
 	};
 	let lo = percentile(0.02);
 	let hi = percentile(0.98);
-	// Never stretch more than 1.4×: widen a narrow range around its middle instead.
+	// Never stretch more than 1.4×. A narrow range is widened around the image's mean, which
+	// keeps its place on the scale, so a dark screenshot stays dark instead of going mid-grey.
 	let span = Math.max(hi - lo, 255 / 1.4);
-	let base = Math.max(0, Math.min((lo + hi) / 2 - span / 2, 255 - span));
+	let base = lo;
+	if (hi - lo < span) {
+		let mean = values.reduce((sum, v) => sum + v, 0) / n;
+		base = mean - (mean / 255) * span;
+	}
+	base = Math.max(0, Math.min(base, 255 - span));
 	ditherField(
 		dst.getContext("2d")!,
 		w,

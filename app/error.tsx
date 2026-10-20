@@ -11,14 +11,14 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 	return (
 		<main id="main">
 			<PageHead title="Something broke" note="status:error">
-				<p className="page-head__lede">This page failed to render. Try again; if it keeps failing, the log still works.</p>
+				<p className="page-head__lede">This page failed to render. Try again; if it keeps failing, the blog still works.</p>
 			</PageHead>
 			<p className="stack-links">
 				<button className="ne-btn ne-btn--secondary" type="button" onClick={reset}>
 					try again
 				</button>
 				<a className="more-link" href="/blog">
-					› read the log
+					› read the blog
 				</a>
 			</p>
 		</main>

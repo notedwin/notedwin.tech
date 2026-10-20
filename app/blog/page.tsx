@@ -4,7 +4,7 @@ import { DomainMark, PageHead, Status } from "app/components/ne";
 import { getBlogPosts, isoDate } from "app/lib/posts";
 
 export const metadata: Metadata = {
-	title: "Log",
+	title: "Blog",
 	description: "Everything I've written, newest first: homelab, networking, data and a few detours.",
 };
 
@@ -16,7 +16,7 @@ export default function BlogPosts() {
 
 	return (
 		<main id="main">
-			<PageHead title="Log" note={`${posts.length} entries · ${first} → ${last}`} />
+			<PageHead title="Blog" note={`${posts.length} posts · ${first} → ${last}`} />
 			<ul className="ne-rows project-list">
 				{posts.map((post) => (
 					<li key={post.slug}>

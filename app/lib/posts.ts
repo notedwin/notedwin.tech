@@ -13,7 +13,9 @@ type Metadata = {
 	status: Status;
 	updated?: string;
 	image?: string;
-	// The one start-here entry, marked ★ in the log.
+	// The home grid's card image, when the post's first image doesn't print well.
+	cover?: string;
+	// The one start-here entry, marked ★ on the blog.
 	start?: boolean;
 };
 
@@ -79,9 +81,9 @@ export function getTags(post: Post) {
 		.slice(0, 3);
 }
 
-// First image an MDX post shows, for its plate on the home page.
-export function getFirstImage(post: Post) {
-	return /<Image[\s\S]*?src="([^"]+)"/.exec(post.content)?.[1];
+// The image for a post's card: its `cover`, else the first image the post shows.
+export function getCardImage(post: Post) {
+	return post.metadata.cover || /<Image[\s\S]*?src="([^"]+)"/.exec(post.content)?.[1];
 }
 
 // ISO dates everywhere (design system: dates are ISO).
