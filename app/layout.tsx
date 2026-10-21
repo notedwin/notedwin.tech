@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "./components/header";
 import Footer from "./components/footer";
 import { metaData } from "./config";
+import { feedTypes } from "./lib/seo";
 import { color } from "./lib/tokens";
 import { themeScript } from "@notedwin/design/theme";
 
@@ -44,15 +45,17 @@ export const metadata: Metadata = {
 	metadataBase: new URL(metaData.baseUrl),
 	title: {
 		default: metaData.title,
-		template: `%s | ${metaData.title}`,
+		template: `%s · ${metaData.siteName}`,
 	},
 	description: metaData.description,
+	authors: [{ name: metaData.name, url: metaData.baseUrl }],
+	alternates: { types: feedTypes },
 	openGraph: {
 		images: metaData.ogImage,
 		title: metaData.title,
 		description: metaData.description,
 		url: metaData.baseUrl,
-		siteName: metaData.name,
+		siteName: metaData.siteName,
 		locale: "en_US",
 		type: "website",
 	},
@@ -68,19 +71,13 @@ export const metadata: Metadata = {
 		},
 	},
 	twitter: {
-		title: metaData.name,
+		title: metaData.title,
+		description: metaData.description,
 		card: "summary_large_image",
 		site: "@mu0xide",
 	},
 	icons: {
 		icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],
-	},
-	alternates: {
-		types: {
-			"application/rss+xml": "/rss.xml",
-			"application/atom+xml": "/atom.xml",
-			"application/feed+json": "/feed.json",
-		},
 	},
 };
 

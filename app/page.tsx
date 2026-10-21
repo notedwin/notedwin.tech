@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { metaData } from "./config";
+import { feedTypes, jsonLd, person } from "./lib/seo";
 import { Cube } from "./components/cube";
 import { CommitLine } from "./components/commit-line";
 import { SectionHead } from "./components/ne";
@@ -11,6 +14,26 @@ const homeCardSizes = "(max-width: 767px) calc((100vw - 50px) / 2), 145px";
 // The posts the home grid shows, in this order.
 const homeSlugs = ["homelab-2026", "homelab-2025", "attack-map", "haxml"];
 
+// The title and share card come from the layout.
+export const metadata: Metadata = {
+	alternates: { canonical: "/", types: feedTypes },
+};
+
+const siteJsonLd = jsonLd({
+	"@graph": [
+		{
+			"@type": "WebSite",
+			"@id": `${metaData.baseUrl}/#website`,
+			url: metaData.baseUrl,
+			name: metaData.siteName,
+			description: metaData.description,
+			inLanguage: "en",
+			author: { "@id": person["@id"] },
+		},
+		{ ...person, jobTitle: "Data and ML engineer", knowsAbout: ["homelab", "data engineering", "machine learning"] },
+	],
+});
+
 export default function Page() {
 	let posts = getBlogPosts();
 	let picked = homeSlugs
@@ -19,6 +42,7 @@ export default function Page() {
 
 	return (
 		<main id="main" className="home">
+			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: siteJsonLd }} />
 			<section className="intro" aria-label="intro">
 				<div>
 					<h1 className="intro__lede">

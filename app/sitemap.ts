@@ -1,21 +1,21 @@
 import { MetadataRoute } from "next";
 import { getBlogPosts } from "./lib/posts";
-import { metaData } from "./config";
+import { absoluteUrl } from "./lib/seo";
 
-const BaseUrl = metaData.baseUrl.endsWith("/")
-  ? metaData.baseUrl
-  : `${metaData.baseUrl}/`;
-
+// Real dates only: a lastmod that changes on every build teaches search engines to ignore it.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogs = getBlogPosts().map((post) => ({
-    url: `${BaseUrl}blog/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
-  }));
+	let posts = getBlogPosts();
+	let blogs = posts.map((post) => ({
+		url: absoluteUrl(`/blog/${post.slug}`),
+		lastModified: post.metadata.updated || post.metadata.publishedAt,
+	}));
+	let newest = blogs.map((post) => post.lastModified).sort().at(-1);
 
-  let routes = ["", "blog", "projects", "photos"].map((route) => ({
-    url: `${BaseUrl}${route}`,
-    lastModified: new Date().toISOString().split("T")[0],
-  }));
-
-  return [...routes, ...blogs];
+	return [
+		{ url: absoluteUrl("/"), lastModified: newest },
+		{ url: absoluteUrl("/blog"), lastModified: newest },
+		{ url: absoluteUrl("/projects") },
+		{ url: absoluteUrl("/photos") },
+		...blogs,
+	];
 }

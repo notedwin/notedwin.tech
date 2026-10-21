@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "app/lib/seo";
 import { PageHead } from "app/components/ne";
 import { PostCard } from "app/components/post-card";
 import { getBlogPosts } from "app/lib/posts";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: "Blog",
 	description: "Everything I've written, newest first: homelab, networking, data and a few detours.",
-};
+	path: "/blog",
+});
 
 // Every post as a card, newest first, in the same grid as the home page.
 export default function BlogPosts() {
