@@ -49,5 +49,5 @@ scratchpad/
 # TypeScript incremental build info
 tsconfig.tsbuildinfo
 
-# Unpublished drafts (no frontmatter) stay local
-content/homelab-2026.mdx
+# Local writing skill (voice and interview-derived material)
+.claude/skills/notedwin-writing/

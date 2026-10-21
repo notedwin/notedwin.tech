@@ -20,7 +20,7 @@ export const projects: Project[] = [
 		url: "https://github.com/notedwin/ansible-compose",
 		domain: "infra",
 		status: "growing",
-		image: "/photos/10.png",
+		image: "/photos/10.webp",
 		imageAlt: "The homelab server",
 	},
 	{
@@ -30,7 +30,7 @@ export const projects: Project[] = [
 		url: "/blog/haxml",
 		domain: "data",
 		status: "settled",
-		image: "/assets/haxml/shot-cone.png",
+		image: "/assets/haxml/shot-cone.webp",
 		imageAlt: "Shot cone from a player to the goal posts on a HaxBall pitch",
 	},
 	{

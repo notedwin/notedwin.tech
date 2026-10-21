@@ -1,0 +1,81 @@
+---
+title: "Homelab 2025: don't spend 20 hours to save $10"
+summary: "Two used Dell office PCs using less power than a light bulb, six services in, six out, and the rule that came out of it."
+publishedAt: "2025-02-24"
+updated: "2026-10-20"
+tags: "homelab"
+domain: infra
+status: settled
+---
+
+Part of a yearly series: [2024](/blog/homelab-2024) · **2025** · [2026](/blog/homelab-2026)
+
+My homelab got smaller this year. On January 9 I deleted 6,310 lines of config in one commit, including the Grafana dashboard that ran the [attack map](/blog/attack-map). Everything left runs on two used Dell office PCs that each draw under 20 W on average, less than an old 60 W light bulb.
+
+{/* src: homelab repo commit 2025-01-09 "2025 update: remove unused docker containers…" (30 files, 6,310 deletions; server/grafana/grafana/dashboards/map.json, 2,142 lines) */}
+
+## Hardware
+
+- **Dell OptiPlex 9020m:** i3
+- **Dell OptiPlex 7060m:** i5-8500T, 16GB, 256GB
+
+{/* INTERVIEW: which i3, and how much RAM/storage, in the 9020m? "Each under 20 W" holds whether the original "under 20W on average for both machines" meant each or combined; either way the pair stays under 60 W. */}
+
+<Image
+	src="/assets/home-server/1.webp"
+	alt="hardware"
+	width="500"
+	height="300"
+/>
+
+I also replaced the thrifted OpenWRT router with a new one. The performance gain was negligible for my usage. I should have checked WiiSFi before buying ;\_;
+
+{/* INTERVIEW: which router? */}
+
+## Six in, six out
+
+Added:
+
+- **Immich:** photo and video backup, like Google Photos, but the photos live on my machine
+- **Beszel:** lightweight server monitoring
+- **Memos:** quick notes
+- **Healthchecks:** alerts when a scheduled job doesn't run
+- **Glance:** a dashboard for feeds and widgets
+- **Infisical:** secret management (though I'm still using .env files for now)
+
+Removed: Motioneye, OpenWRT, Dagster, Grafana, Filestash and Homepage. They either added complexity I didn't need, or I wasn't using them enough to justify maintaining them.
+
+{/* src: homelab repo commit 2025-01-10 "add immich + infisical" */}
+
+## The rule
+
+A homelab makes me better at trading off money, time and learning. This year that came down to two rules:
+
+- Spending 20 hours to save $10 is a bad trade.
+- Spending 40 hours on a project nobody will use regularly is just as bad.
+
+Looking back, it's gone in three phases: learning (Linux, Docker, infrastructure as code), building (my personal data platform), and now cutting back to what I actually use.
+
+## Plans
+
+Do I want a small rack? Yes. Does a full Ubiquiti setup sound cool? Absolutely. Do I want to spend a fortune? Not really.
+
+Next is a NAS for photos, videos and personal documents, probably TrueNAS running inside Proxmox, connected to my laptop over Thunderbolt for fast transfers.
+
+## Looking back (2026)
+
+"Not really" lasted a year. I moved and went all in on UniFi. The NAS happened differently: a prebuilt N5 running TrueNAS directly, with Proxmox on the GPU server instead. [Thunderbolt](/blog/thunderbolt) works, but I rarely need it. More in [2026](/blog/homelab-2026).
+
+{/* src: homelab-2026 draft transcript; homelab docs/manual-steps.md (TrueNAS on the N5 from its ISO; Proxmox host runs the gpu LXC) */}
+
+Of the six additions, Beszel and Memos are still running and Immich moved to the NAS. Glance, Healthchecks and Infisical didn't last. Immich turned out to be the important one.
+
+{/* src: homelab repo server/ (beszel, memos), docs/adr/0021 (Immich on TrueNAS), no glance/healthchecks/infisical services */}
+
+## Links
+
+- [Ubiquiti goals](https://arslan.io/2024/09/10/my-homelab-setup)
+- [Direct 20 Gbps between a Mac and a Windows machine](https://www.jiribrejcha.net/2024/05/direct-20-gbps-connection-between-mac-and-windows-machine-with-no-ethernet-adapters/)
+- [High-speed USB4 mesh network](https://fangpenlin.com/posts/2024/01/14/high-speed-usb4-mesh-network/)
+- [BIOS settings for a low-power build](https://technotim.live/posts/plex-build-low-power-server/)
+- [Homelab inspo](https://blog.stonegarden.dev/)
