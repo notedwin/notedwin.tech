@@ -1,0 +1,68 @@
+{
+  "name": "@notedwin/design",
+  "version": "0.1.0",
+  "description": "notedwin ash & ember design system: tokens, CSS, React parts and a Perspective theme, generated from one tokens.json.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "css",
+    "dist",
+    "fonts",
+    "src/tokens.json",
+    "README.md"
+  ],
+  "exports": {
+    "./tokens.json": "./src/tokens.json",
+    "./css/*": {
+      "style": "./css/*",
+      "default": "./css/*"
+    },
+    "./fonts/*": "./fonts/*",
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "generate": "node build/generate.mjs",
+    "build": "node build/generate.mjs && tsup",
+    "check": "node build/generate.mjs --check && node checks/contrast.mjs",
+    "check:perspective": "node checks/perspective.mjs",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "registry": "https://gitea.notedwin.com/api/packages/notedwin/npm/"
+  },
+  "devDependencies": {
+    "@perspective-dev/client": "5.5.1",
+    "@perspective-dev/server": "5.5.1",
+    "@perspective-dev/viewer": "5.5.1",
+    "@perspective-dev/viewer-charts": "5.5.1",
+    "@perspective-dev/viewer-datagrid": "5.5.1",
+    "@playwright/test": "1.64.1",
+    "@types/react": "19.3.0",
+    "react": "19.3.1",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3"
+  }
+}

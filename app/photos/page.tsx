@@ -1,67 +1,39 @@
-import React from "react";
 import type { Metadata } from "next";
-import { ImageGrid } from "app/components/image-grid";
+import { DitherPhoto } from "app/components/dither";
+import { PageHead } from "app/components/ne";
+import { photos } from "./photo-data";
 
 export const metadata: Metadata = {
 	title: "Photos",
-	description: "My Photos",
+	description: "Photos I've taken, printed in the site's dither. Hover or focus one for color.",
 };
 
 export default function Photos() {
 	return (
-		<section>
-			<h1 className="mb-8 text-2xl font-medium tracking-tight">Photos</h1>
-			<ImageGrid
-				columns={3}
-				images={[
-					{
-						src: "/photos/9.png",
-						alt: "cloud",
-					},
-					{
-						src: "/photos/1.png",
-						alt: "pollock",
-					},
-					{
-						src: "/photos/6.png",
-						alt: "pink sunset",
-					},
-					{ src: "/photos/bob.gif", alt: "Bob Esponge" },
-					{
-						src: "/photos/5.png",
-						alt: "tv",
-					},
-					{
-						src: "/photos/2.png",
-						alt: "bike",
-					},
-					{
-						src: "/photos/10.png",
-						alt: "server",
-					},
-
-					{
-						src: "/photos/7.png",
-						alt: "blue sunset",
-					},
-					{
-						src: "/photos/8.png",
-						alt: "dark paintings",
-					},
-
-					{
-						src: "/photos/chelsea.jpg",
-						alt: "Chelsea",
-						href: "https://www.chelseafc.com/en",
-					},
-
-					{ src: "/photos/arch.jpg", alt: "arch linux" },
-					{
-						src: "/photos/3.png",
-						alt: "gumwall",
-					},
-				]}
-			/>
-		</section>
+		<main id="main">
+			<PageHead title="Photos" note={`${photos.length} plates · hover for color`} />
+			<div className="photo-grid">
+				{photos.map((photo, i) => (
+					<figure className="ne-fig" key={photo.src}>
+						<DitherPhoto
+							src={photo.src}
+							alt={photo.alt}
+							sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 260px"
+							className="ratio-3-2"
+						/>
+						<figcaption>
+							<span>
+								<b>fig:{String(i + 1).padStart(2, "0")}</b> · {photo.alt}
+							</span>
+							{photo.href && (
+								<a href={photo.href} rel="noopener noreferrer">
+									↗ link
+								</a>
+							)}
+						</figcaption>
+					</figure>
+				))}
+			</div>
+		</main>
 	);
 }

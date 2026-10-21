@@ -1,19 +1,21 @@
 ---
-title: HomeLab 2024
+title: Homelab 2024
 summary: "What does my homelab look like in 2024?"
 publishedAt: "2024-06-01"
 tags: "homelab"
+domain: infra
+status: settled
 ---
 
 ## What does my homelab look like in 2024?
 
-I have been running my own linux server to self host some applications for the past 5 years.
+I have been running my own Linux server to self-host some applications for the past 5 years.
 
-I have learned about linux, packages, networking, and modern linux tools.
+I have learned about Linux, packages, networking, and modern Linux tools.
 
-I have also learned that that the issue is always DNS :troll:
+I have also learned that the issue is always DNS :troll:
 
-Some things I self host:
+Some things I self-host:
 
 - Adguard - Adblock
 - Caddy - web server
@@ -21,30 +23,30 @@ Some things I self host:
 - OpenWRT router
 - Personal analytics ETL using Dagster, Postgres, Grafana
 - Tailscale
-- Filestash, Portainer, homepage, etc
+- Filestash, Portainer, homepage, etc.
 
-This probably isn't up to date but I have a [repo](https://github.com/notedwin/ansible-compose) that I use to manage my homelab.
+This probably isn't up to date, but I have a [repo](https://github.com/notedwin/ansible-compose) that I use to manage my homelab.
 
-## Why do I self host?
+## Why do I self-host?
 
-I have been self hosting for about 5 years now. I like being able to own and manage my services. It doesn't take too much work.
+I have been self-hosting for about 5 years now. I like being able to own and manage my services. It doesn't take too much work.
 
-Running a server does come with not only managing performance but mainly security you don't want people breaking into your hoem network due to a faulty config and being able to see you butt naked.
+Running a server does come with not only managing performance but mainly security: you don't want people breaking into your home network due to a faulty config and being able to see you butt naked.
 
 One of my first projects was trying to understand what types of attacks I could expect on my server.
 
 ## What projects do I run on my server?
 
-My server is a mini pc from 2013. It has 8GB of ram and a 500GB SSD. It is running Ubuntu 20.04.
+My server is a mini PC from 2013. It has 8GB of RAM and a 500GB SSD. It is running Ubuntu 20.04.
 
 ## Tailscale
 
-I use tailscale to connect to my server from anywhere. It is a VPN that is easy to setup and use. It is also free for personal use and up to 50(!!) devices.
-Could also selfhost headscale but i don't care for selfhosting everything.
+I use Tailscale to connect to my server from anywhere. It is a VPN that is easy to set up and use. It is also free for personal use and up to 50(!!) devices.
+I could also self-host Headscale, but I don't care for self-hosting everything.
 
 ## OpenWRT
 
-I had no interest in running OpenWRT, as the one I purchased for my appartment did not support OpenWRT. After a visit to a thrift store, I found a AC1900 router for 10 dollars!
+I had no interest in running OpenWRT, as the one I purchased for my apartment did not support OpenWRT. After a visit to a thrift store, I found an AC1900 router for 10 dollars!
 
 This router didn't explicitly support OpenWRT, but I thought the model number was close enough to another supported router and they used the same chipset.
 
@@ -55,43 +57,43 @@ The FCC ID is usually printed on the back of the device, and you can use it to f
 
 The only reason for running OpenWRT is I can force all DNS requests to go through my Adguard server, for those pesky smart devices that don't allow you to change DNS or have hardcoded DNS.
 
-Smart Devices ignore DNS server set by router[1]. With an OpenWRT server, I can intercept and redirect traffic using openwrt.
+Smart Devices ignore DNS server set by router[1]. With an OpenWRT server, I can intercept and redirect traffic using OpenWRT.
 https://labzilla.io/blog/force-dns-pihole
 
 I also was interested in running eBPF on my router to intercept my own traffic and see what eBPF is all about.
-However, OpenWRt does not support eBPF without a custom kernel and compiling your own firmware.
+However, OpenWRT does not support eBPF without a custom kernel and compiling your own firmware.
 
 - [openwrt - prometheus](https://www.cloudrocket.at/posts/monitor-openwrt-nodes-with-prometheus/)
 - [openwrt - tailscale](https://openwrt.org/docs/guide-user/services/vpn/tailscale/start)
 
-### Cat Cam
+### Cat cam
 
-I made a cat camera, using [rtsp-simple-server](https://github.com/bluenviron/mediamtx) (now known as mediamtx) and using raspberry pi with a camera attachment. Then I run motion separately for a nicer interface on top of all the cameras. The quality of the camera is poor since it is $10 compared to nicer smart home account-locked ones.
+I made a cat camera, using [rtsp-simple-server](https://github.com/bluenviron/mediamtx) (now known as mediamtx) and using a Raspberry Pi with a camera attachment. Then I run motion separately for a nicer interface on top of all the cameras. The quality of the camera is poor since it is $10 compared to nicer smart home account-locked ones.
 Setup is very simple.
 
-## Some problems I fixed in the past year:
+## Some problems I fixed in the past year
 
 ## Grafana
 
-- Moving Grafana Dashboard requires copying JSON and changing the datasource ID.
+- Moving a Grafana dashboard requires copying JSON and changing the datasource ID.
 - Public dashboards don't allow you to use variables BRUH: [github discussion](https://github.com/grafana/grafana/discussions/49253)
 
 ## Docker
 
-- Pin a container to a specific version or you will run into issues with watchtower. ex: I was not ready to update grafana to v10 and my dashboards all broke.
-- Editing daemon.json allows you to change the docker defaults such as sending logs to rsyslog instead of to stdout/stderr.
+- Pin a container to a specific version or you will run into issues with watchtower. ex: I was not ready to update Grafana to v10 and my dashboards all broke.
+- Editing daemon.json allows you to change the Docker defaults such as sending logs to rsyslog instead of to stdout/stderr.
 
 ## Ansible
 
-When using `become:yes` in an ansible playbook, you are saying to become root on the server, which might have a different python interpreter (which might have different compatible packages) than the user.
+When using `become:yes` in an Ansible playbook, you are saying to become root on the server, which might have a different Python interpreter (which might have different compatible packages) than the user.
 
-The error i was getting: Please read the module documentation and install it in the appropriate location. If the required library is installed, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter, for example via `pip install docker` (Python >= 3.6) or `pip install docker==4.4.4` (Python 2.7) or `pip install docker-py` (Python 2.6). The error was: No module named 'docker
+The error I was getting: Please read the module documentation and install it in the appropriate location. If the required library is installed, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter, for example via `pip install docker` (Python >= 3.6) or `pip install docker==4.4.4` (Python 2.7) or `pip install docker-py` (Python 2.6). The error was: No module named 'docker
 
 ## Postgres
 
-- In PostgreSQL, you can create user defined functions(UDF's). As an example, I created a function to validate JSON. See this [Stack Overflow post](https://stackoverflow.com/questions/30187554/how-to-verify-a-string-is-valid-json-in-postgresql) for guidance.
+- In PostgreSQL, you can create user-defined functions (UDFs). As an example, I created a function to validate JSON. See this [Stack Overflow post](https://stackoverflow.com/questions/30187554/how-to-verify-a-string-is-valid-json-in-postgresql) for guidance.
 
-- When using postgres in a docker container with a bridge network, you need to change the pg_hba.conf to allow connections outside the container. [Stack Overflow post](https://stackoverflow.com/questions/30187554/how-to-verify-a-string-is-valid-json-in-postgresql) for guidance.
+- When using Postgres in a Docker container with a bridge network, you need to change the pg_hba.conf to allow connections outside the container.
 
 ## Dagster
 
@@ -102,26 +104,26 @@ For the deployment of Dagster, four Docker containers are created using Ansible:
 - Dagster daemon: A long-running process responsible for running sensors and managing asset materialization queues.
 - Dagit: This container provides Dagster&#39;s user interface, allowing manual inspection of pipelines and running backfills.
 
-There are many breaking changes in dagster: [https://dagster.slack.com/archives/C01U954MEER/p1681757224224769](https://dagster.slack.com/archives/C01U954MEER/p1681757224224769)
+There are many breaking changes in Dagster: [https://dagster.slack.com/archives/C01U954MEER/p1681757224224769](https://dagster.slack.com/archives/C01U954MEER/p1681757224224769)
 
-## Some scraped Projects
+## Some scrapped projects
 
 ## Spotify API tools
 
-Spotify limit the number of tracks you can get from their recently played API to 50.
-If you want to know more, refer to this [Stack Overflow post](https://stackoverflow.com/questions/56061606/spotify-api-recently-played-paging). Lastfm lets you do this search however, most people don't want to sign up for another platform :)
+Spotify limits the number of tracks you can get from their recently played API to 50.
+If you want to know more, refer to this [Stack Overflow post](https://stackoverflow.com/questions/56061606/spotify-api-recently-played-paging). Last.fm lets you do this search; however, most people don't want to sign up for another platform :)
 
 You can also do a personal data request to get full history!
 
 ## RFID
 
-- You can't use a flipper zero to do RFID scanning in store: [Support for 860 - 960 MHz UHF RFID tags (ISO/ IEC 18000-63 / EPC UHF Gen2) · Issue #1285 · flipperdevices/flipperzero-firmware](https://github.com/flipperdevices/flipperzero-firmware/issues/1285)
+- You can't use a Flipper Zero to do RFID scanning in store: [Support for 860 - 960 MHz UHF RFID tags (ISO/ IEC 18000-63 / EPC UHF Gen2) · Issue #1285 · flipperdevices/flipperzero-firmware](https://github.com/flipperdevices/flipperzero-firmware/issues/1285)
 
-## setup laptop running debain based linux so it doesn't sleep
+## Set up a laptop running Debian-based Linux so it doesn't sleep
 
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
 
-I also ran into high memory usage, where I could hear the fan running, but device was idle. This was the issue for me:
+I also ran into high memory usage, where I could hear the fan running, but the device was idle. This was the issue for me:
 https://discussion.fedoraproject.org/t/systemd-logind-eats-cpu-when-closing-laptop-lid/67805/2

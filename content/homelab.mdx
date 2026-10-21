@@ -1,16 +1,18 @@
 ---
-title: HomeLab 2025
+title: Homelab 2025
 summary: "What does my homelab look like in 2025?"
 publishedAt: "2025-02-24"
 tags: "homelab"
+domain: infra
+status: settled
 ---
 
-## My Homelab in early 2025
+## My homelab in early 2025
 
 My homelab setup has remained stable since last year, with a few software changes on simplification and utility. <br/>
 The main hardware I use is repurposed Dell Optiplex machines (9020m and 7060m).
 
-## **Hardware Configuration**
+## Hardware configuration
 
 - **Dell 9020m**: i3-....
 - **Dell 7060m**: i5-8500T, 16GB, 256GB
@@ -24,24 +26,24 @@ Power consumption is under 20W on average for both machines.
 	height="300"
 />
 
-## **Network Configuration**
+## Network configuration
 
 I upgraded from a thrifted OpenWRT router to a new router, though the performance gain was negligible for my usage. I should have consulted resources like WiiSFi before making this purchase ;\_;
 
 ## Software
 
-### **New Additions**
+### New additions
 
 My software stack has evolved with several new additions that enhance functionality:
 
-- **Beszel**: A lightweight communication tool for self-hosting
-- **Glance**: A quick file viewer that supports various formats
+- **Beszel**: A lightweight server monitoring hub
+- **Glance**: A self-hosted dashboard for feeds and widgets
 - **Healthchecks**: For monitoring and alerting on my scheduled tasks
 - **Immich**: Self-hosted photo and video backup solution
 - **Infisical**: Secret management solution (though I'm still using .env files for now)
 - **Memos**: A lightweight note-taking service
 
-### **Retired Services**
+### Retired services
 
 I've removed several services to reduce complexity and focus on what I actually use:
 
@@ -54,16 +56,16 @@ I've removed several services to reduce complexity and focus on what I actually 
 
 The main reason for ditching these services was that they either added unnecessary complexity to my setup or I simply wasn't using them regularly enough to justify their maintenance.
 
-For the complete configuration details, check out my Ansible code: ansible-compose
+For the complete configuration details, check out my Ansible code: [ansible-compose](https://github.com/notedwin/ansible-compose).
 
-## **Why Spend Time on a Homelab?**
+## Why spend time on a homelab?
 
 For me, tinkering with hardware and software helps me become better at making tradeoffs between money, time, and learning.
 
 I've learned that:
 
-- Spending 20 hours to save $10 is a poor investment of time
-- Spending 40 hours building a project that won't see regular use is equally unproductive
+- Spending 20 hours to save $10 is a poor investment of time.
+- Spending 40 hours building a project that won't see regular use is equally unproductive.
 
 My homelab journey has evolved through distinct phases:
 
@@ -73,7 +75,7 @@ My homelab journey has evolved through distinct phases:
 
 Building things from hardware to final product has helped me understand new concepts while building upon my existing knowledge base.
 
-## **Future Plans**
+## Future plans
 
 Do I want a small rack? Yes. Does a full Ubiquiti setup sound cool? Absolutely. <br/>
 Do I want to spend a fortune? Not really.

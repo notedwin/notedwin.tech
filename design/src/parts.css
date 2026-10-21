@@ -1,0 +1,25 @@
+/* CSS for the package's React parts (DitherPhoto, DomainMark, ThemeToggle), appended to components.css.
+   Everything else comes from the artifact's bundle.css above. */
+
+/* DitherPhoto: a plate with the dither canvas over the original, which fades in on hover or focus.
+   Size the plate (aspect-ratio or a fixed box) where it's used. */
+.ne-photo { position: relative; overflow: hidden; }
+.ne-photo::before, .ne-photo::after { content: none; }
+.ne-photo canvas, .ne-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ne-photo canvas { image-rendering: pixelated; opacity: var(--dither-opacity); }
+.ne-photo img { object-fit: cover; opacity: 0; transition: opacity var(--dur-base) var(--ease-out); }
+.ne-photo:hover img, .ne-photo:focus-visible img { opacity: 1; }
+
+/* DomainMark: the domain word after its square swatch. */
+.ne-dom { display: inline-flex; align-items: center; gap: 6px; }
+.ne-dom::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
+
+/* ThemeToggle renders both labels; show the one naming the theme it switches to. */
+.ne-theme [data-when="light"] { display: none; }
+:root[data-theme="light"] .ne-theme [data-when="dark"] { display: none; }
+:root[data-theme="light"] .ne-theme [data-when="light"] { display: inline; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .ne-theme [data-when="dark"] { display: none; }
+  :root:not([data-theme]) .ne-theme [data-when="light"] { display: inline; }
+}
+.ne-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

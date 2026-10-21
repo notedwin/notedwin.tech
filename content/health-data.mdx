@@ -1,17 +1,21 @@
 ---
-title: "iOS Data Access"
+title: "iOS data access"
 publishedAt: "2023-05-25"
 summary: "Accessing health and screen time data on iOS devices."
 tags: "iOS, Health, Screen Time"
+domain: data
+status: settled
+updated: "2024-02-10"
+cover: "/assets/health.png"
 ---
 
 # Update: 2024-02-10
 
-I have 2 small library to extract health and screen time data.
+I have 2 small libraries to extract health and screen time data.
 [health-data](https://github.com/notedwin/manzana-health)
 [screen-tyme](https://github.com/notedwin/screen_thyme)
 
-screen time is a complicated mess because of how apple locks down parts of the operating system with SIP.
+Screen time is a complicated mess because of how Apple locks down parts of the operating system with SIP.
 https://gist.github.com/0xdevalias/38cfc92278f85ae89a46f0c156208fd5
 
 > TLDR: This presentation sums up my findings:
@@ -23,12 +27,12 @@ The best way to maintain a healthy balance is to become aware of your usage and 
 
 My goal with this blog post is to show you the ways I set up personal health dashboards to make better decisions about my screen time and overall health.
 
-## Acessing Screen time
+## Accessing screen time
 
-The suggested way to access screentime data is using a Swift library but I don't want to learn Swift and Xcode to get access to my screen time.
+The suggested way to access screen time data is using a Swift library, but I don't want to learn Swift and Xcode to get access to my screen time.
 
 After a bit of research, I was able to find where the screen time data is stored on Apple devices.
-There is a SQLite database called KnowledgeC.db, that stores various types of data, including screen time information.
+There is a SQLite database called KnowledgeC.db that stores various types of data, including screen time information.
 
 ```bash
 ~/Library/Application Support/Knowledge/knowledgeC.db
@@ -36,10 +40,10 @@ There is a SQLite database called KnowledgeC.db, that stores various types of da
 
 I did some data analysis with Python and Pandas to find out what tables I want to export to Postgres. There are 2 reasons for exporting the data:
 
-- Apple only stores screen time data for the past 2 weeks, I want to view long-term trends.
+- Apple only stores screen time data for the past 2 weeks; I want to view long-term trends.
 - The whole database is comprised of 20+ tables which have data updated every second for things like iCloud syncing which are not relevant to my use case.
 
-Here is a picture of my Grafana dashboard that shows me how much time I spend on VSCode vs. Youtube, etc.
+Here is a picture of my Grafana dashboard that shows me how much time I spend on VS Code vs. YouTube, etc.
 
 <Image
 	src="/assets/grafana.png"
@@ -48,9 +52,9 @@ Here is a picture of my Grafana dashboard that shows me how much time I spend on
 	height="300"
 />
 
-## Accessing Health Data
+## Accessing health data
 
-The screen time data was easily accessible after disabling SIP. However, health data was a difficult to understand as there is no official documentation on how to access the data.
+The screen time data was easily accessible after disabling SIP. However, health data was difficult to understand as there is no official documentation on how to access the data.
 
 <Image
 	src="/assets/health.png"
@@ -59,11 +63,11 @@ The screen time data was easily accessible after disabling SIP. However, health 
 	height="300"
 />
 
-The only suggested way to get health data from iOS is only possible through the Health app, which requires manual export and provides data in XML format that is not easily parsed. There is a bunch of third-party applications but they all have poor ratings
+The only suggested way to get health data from iOS is through the Health app, which requires manual export and provides data in XML format that is not easily parsed. There are a bunch of third-party applications, but they all have poor ratings.
 
 The only other way to get the health data is by manually backing up the phone and extracting the data from the backup. The backup is also encrypted, so you need to know the password to decrypt it.
 
-To decrypt the backup, you can use this great tool:[https://github.com/jsharkey13/iphone_backup_decrypt](https://github.com/jsharkey13/iphone_backup_decrypt)
+To decrypt the backup, you can use this great tool: [https://github.com/jsharkey13/iphone_backup_decrypt](https://github.com/jsharkey13/iphone_backup_decrypt)
 
 For a longer post on this topic, check out: [How to Decrypt an Encrypted Apple iTunes iPhone Backup](https://stackoverflow.com/questions/1498342/how-to-decrypt-an-encrypted-apple-itunes-iphone-backup)
 
@@ -88,15 +92,15 @@ backup.extract_file(relative_path=RelativePath.HEALTH,
                     output_filename="./output/health.sqlite")
 ```
 
-The blogposts mention some tables but after doing some analysis it looks like the table schema has changed in the latest iOS version. So sadly, that is the end of my research for now as I spent a couple of days trying to do something that apple health app already does.
+The blog posts mention some tables, but after doing some analysis it looks like the table schema has changed in the latest iOS version. So sadly, that is the end of my research for now as I spent a couple of days trying to do something that the Apple Health app already does.
 
 ## Conclusion
 
-After all this research and little output I felt a bit discouraged and like these guys with no replies: [Best Way to Export Health/Workout Data](https://www.reddit.com/r/AppleWatch/comments/ysq39o/best_way_to_export_healthworkout_data_for/) and this [guy](https://developer.apple.com/forums/thread/725411).
+After all this research and little output, I felt a bit discouraged and like these guys with no replies: [Best Way to Export Health/Workout Data](https://www.reddit.com/r/AppleWatch/comments/ysq39o/best_way_to_export_healthworkout_data_for/) and this [guy](https://developer.apple.com/forums/thread/725411).
 
-For now, The health app and small screen time data pipeline using Dagster and Grafana will do!
+For now, the Health app and a small screen time data pipeline using Dagster and Grafana will do!
 
-## Resources:
+## Resources
 
 - [Spelunking macOS Screen Time App Usage with R](https://rud.is/b/2019/10/28/spelunking-macos-screentime-app-usage-with-r/)
 - [Using the KnowledgeCDB Database on macOS and iOS to Determine Precise User and Application Usage](https://www.mac4n6.com/blog/2018/8/5/knowledge-is-power-using-the-knowledgecdb-database-on-macos-and-ios-to-determine-precise-user-and-application-usage)
@@ -105,8 +109,8 @@ For now, The health app and small screen time data pipeline using Dagster and Gr
 
 stop reading
 
-<Callout emoji="💡">
-	I’m wierdcore. I’m abstract-pilled. I have more original thoughts than you. My
+<Callout>
+	I’m weirdcore. I’m abstract-pilled. I have more original thoughts than you. My
 	neuroplasticity and cognitive security are in perfect harmony. I think in
 	different dimensions than you. I know the shortcuts to the places you don’t
 	even know exist. I can tell you things about yourself that you don’t see. I

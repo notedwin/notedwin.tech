@@ -1,25 +1,27 @@
 ---
-title: "Attack Map: Adding Nginx Logs"
+title: "Attack Map: Adding NGINX logs"
 publishedAt: "2022-10-17"
-summary: "Building upon the attack map: SSH article, this post will cover how to get process and use NGINX logs."
+summary: "Building upon the attack map: SSH article, this post will cover how to get, process and use NGINX logs."
 tags: "attack-map, featured"
+domain: infra
+status: settled
 ---
 
-> Building upon the attack map: SSH article, this post will cover how to get process and use NGINX logs.
+> Building upon the attack map: SSH article, this post will cover how to get, process and use NGINX logs.
 
-### Intro
+## Intro
 
 > The beginning is a tangent as to how I decided to ingest NGINX logs
 
-As a data engineer, I wanted metrics to show the amount of brute-force SSH requests I get in a day. I could get the data from Redis but it required N (number of SSH attempts) searches which didn’t make sense in my head. I knew that some 8 lines of SQL could do the job. I could also see what username was attempted the most in 5 more lines of SQL.
+As a data engineer, I wanted metrics to show the amount of brute-force SSH requests I get in a day. I could get the data from Redis, but it required N (number of SSH attempts) searches which didn’t make sense in my head. I knew that some 8 lines of SQL could do the job. I could also see what username was attempted the most in 5 more lines of SQL.
 
-However, college Edwin is a dummy. He used a no-SQL database
+However, college Edwin is a dummy. He used a NoSQL database.
 
 > NOOOOO he fell for the meme!!
 
 <Image src="/assets/attack-map/no.gif" alt="bruh" width={640} height={500} />
 
-I wanted to sync the data in the Redis database with the SSH attempts to a SQL database. However, the information stored in Redis was sparse, the log files contained more information so I against it. I would send the new logs to Postgres, this took 30 lines of python code:
+I wanted to sync the data in the Redis database with the SSH attempts to a SQL database. However, the information stored in Redis was sparse; the log files contained more information, so I decided against it. I would send the new logs to Postgres; this took 30 lines of Python code:
 
 ```python
 import redis
@@ -49,7 +51,7 @@ move_data_2_postgres():
       )
 ```
 
-### Nginx Logs
+## NGINX logs
 
 **The main purpose of monitoring NGINX logs was to see malicious traffic and see how many visitors I get!**
 
@@ -59,19 +61,19 @@ This process could be broken down into 3 main steps:
 - Process them into PostgreSQL
 - Visualize the data
 
-#### Where the hell are the NGINX logs?
+### Where the hell are the NGINX logs?
 
-These logs are stored at /var/log/nginx/access.log. Let’s get a stream of the IP’s coming in:
+These logs are stored at /var/log/nginx/access.log. Let’s get a stream of the IPs coming in:
 
 ```bash
 tail -Fn0 /var/log/nginx/access.log | grep --line-buffered -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
 ```
 
-Let use Rsyslog to send NGINX logs directly to PostgreSQL as Rsyslog has a Postgres module but not a Redis one.
+Let’s use Rsyslog to send NGINX logs directly to PostgreSQL as Rsyslog has a Postgres module but not a Redis one.
 
 > In hindsight, this makes sense since using Redis to store logs is a horrible idea!
 
-This took 20 lines of configuration. I also had to change the rotation schedule from daily to when the files reached 100MB, incase I wanted to process data older than 2 days.
+This took 20 lines of configuration. I also had to change the rotation schedule from daily to when the files reached 100MB, in case I wanted to process data older than 2 days.
 
 On my server I did this:
 
@@ -136,9 +138,9 @@ if( $syslogtag == 'nginx:')  then {
 }
 ```
 
-We have a table fro NGINX access logs now!
+We have a table for NGINX access logs now!
 
-After getting the logs into a SQL database I could find out metrics so easily since I am now a SQL wizard.
+After getting the logs into a SQL database I could find out metrics easily since I am now a SQL wizard.
 
 ```sql
 select id,
@@ -151,31 +153,31 @@ log_line ->> 'request'
 from accesslog
 ```
 
-you can see the SSH and HTTP data from 2022-09 to 2023-01 on:
+You can see the SSH and HTTP data from 2022-09 to 2023-01 on:
 
 [map.notedwin.com](http://map.notedwin.com)
 
 <Image src="/assets/attack-map/map.png" alt="map" width={640} height={500} />
 
-#### Wait why do I see a Grafana map and not that janky javascript map like before?
+### Wait, why do I see a Grafana map and not that janky JavaScript map like before?
 
-My raspberry pi’s SD card blew up (not in a literal sense, it stopped working!), I had to migrate to a new server, aka my gaming desktop and I decided to only run things on docker. I didn’t want to dockerize the attack map or change the javascript to accept this NGINX logs, so I switched to Grafana!
+My Raspberry Pi’s SD card blew up (not in a literal sense, it stopped working!), so I had to migrate to a new server, aka my gaming desktop, and I decided to only run things on Docker. I didn’t want to dockerize the attack map or change the JavaScript to accept these NGINX logs, so I switched to Grafana!
 
-### What I learned
+## What I learned
 
 - I created an application to ingest log data, enable easy queries and allow for visualization.
-- I learned that storing data is not as straight forward as I thought. Well maybe it is now, ALWAYS use SQL unless you have a good reason not to!
-- I ran into some roadbumps upgrading Ubuntu from 20.10 to 22.04, having SSL certs expiring and pointing to my old domain, to almost losing all my data due to config files being deleted by upgrading versions of Ubuntu.
+- I learned that storing data is not as straightforward as I thought. Well, maybe it is now: ALWAYS use SQL unless you have a good reason not to!
+- I ran into some road bumps upgrading Ubuntu from 20.10 to 22.04, having SSL certs expiring and pointing to my old domain, to almost losing all my data due to config files being deleted by upgrading versions of Ubuntu.
 
 Resources:
 
 - [Nginx to SQL](https://www.shubhamdipt.com/blog/send-nginx-logs-to-sql-database/)
 
-How to migrate from one postgres database to another:
+How to migrate from one Postgres database to another:
 
 - [Migrate from one postgres database to another](https://stackoverflow.com/questions/3049864/transfer-data-between-databases-with-postgresql)
 - [Schema dump](https://stackoverflow.com/questions/808735/postgresql-how-to-create-a-copy-of-a-database-or-schema)
-- [Set up logical reploication](https://www.postgresql.org/docs/current/logical-replication-quick-setup.html)
+- [Set up logical replication](https://www.postgresql.org/docs/current/logical-replication-quick-setup.html)
 - [HELP](https://eradman.com/posts/postgresql-native-logical.html)
 
 ```ruby

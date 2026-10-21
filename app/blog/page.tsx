@@ -1,44 +1,29 @@
-import Link from "next/link";
-import { formatDate, getBlogPosts } from "app/lib/posts";
+import type { Metadata } from "next";
+import { PageHead } from "app/components/ne";
+import { PostCard } from "app/components/post-card";
+import { getBlogPosts } from "app/lib/posts";
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "Blog",
-	description: "Nextfolio Blog",
+	description: "Everything I've written, newest first: homelab, networking, data and a few detours.",
 };
 
+// Every post as a card, newest first, in the same grid as the home page.
 export default function BlogPosts() {
-	let allBlogs = getBlogPosts();
+	let posts = getBlogPosts();
+	let first = posts.at(-1)!.metadata.publishedAt.slice(0, 4);
+	let last = posts[0].metadata.publishedAt.slice(0, 4);
 
 	return (
-		<section>
-			<div>
-				{allBlogs
-					.sort((a, b) => {
-						if (
-							new Date(a.metadata.publishedAt) >
-							new Date(b.metadata.publishedAt)
-						) {
-							return -1;
-						}
-						return 1;
-					})
-					.map((post) => (
-						<Link
-							key={post.slug}
-							className="flex flex-col space-y-1 mb-5 transition-opacity duration-200 hover:opacity-80"
-							href={`/blog/${post.slug}`}
-						>
-							<div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
-								<h2 className="text-black dark:text-white font-bold text-xl">
-									{post.metadata.title}
-								</h2>
-								<p className="text-neutral-600 dark:text-neutral-400 tabular-nums text-sm">
-									{formatDate(post.metadata.publishedAt, false)}
-								</p>
-							</div>
-						</Link>
-					))}
-			</div>
-		</section>
+		<main id="main">
+			<PageHead title="Blog" note={`${posts.length} posts · ${first} → ${last}`} />
+			<ul className="post-grid">
+				{posts.map((post) => (
+					<li key={post.slug}>
+						<PostCard post={post} heading="h2" />
+					</li>
+				))}
+			</ul>
+		</main>
 	);
 }

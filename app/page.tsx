@@ -1,42 +1,57 @@
-import Image from "next/image";
-import { socialLinks } from "./config";
-import Cube from "./components/cube";
+import Link from "next/link";
+import { Cube } from "./components/cube";
+import { CommitLine } from "./components/commit-line";
+import { SectionHead } from "./components/ne";
+import { PostCard } from "./components/post-card";
+import { getBlogPosts, getCardImage } from "./lib/posts";
 
 export default function Page() {
+	// The six newest posts that have an image, for the grid's dithered header plates.
+	let recent = getBlogPosts()
+		.filter((post) => getCardImage(post))
+		.slice(0, 6);
+
 	return (
-		<section>
-			<a href={socialLinks.github} target="_blank">
+		<main id="main" className="home">
+			<section className="intro" aria-label="intro">
+				<div>
+					<h1 className="intro__lede">
+						Hey, I’m Edwin, currently doing data and ML things at{" "}
+						<a className="ne-link" href="https://mcdonalds.com" rel="noopener noreferrer">
+							McD
+						</a>{" "}
+						🍟
+					</h1>
+					<p className="intro__lede intro__lede--muted">
+						In my free time, I’m either cycling or building pet projects on my{" "}
+						<Link className="ne-link" href="/blog/homelab">
+							personal cloud
+						</Link>
+						.
+					</p>
+					<CommitLine className="intro__commit" />
+				</div>
 				<Cube />
-				{/* <Image
-					src="/profile.png"
-					alt="Profile photo"
-					className="rounded-full bg-gray-100 block lg:mt-5 mt-0 lg:mb-5 mb-10 mx-auto sm:float-right sm:ml-5 sm:mb-5 grayscale hover:grayscale-0"
-					unoptimized
-					width={160}
-					height={160}
-					priority
-				/> */}
-			</a>
-			<h1 className="mb-8 text-2xl font-medium tracking-tight">Hey!</h1>
-			<div className="prose prose-neutral dark:prose-invert">
-				<p>
-					im Edwin, a data engineer at{" "}
-					<a
-						href="https://mcdonalds.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						mcd
-					</a>
-					.
-					<br />
-					In my free time, I am either building out my{" "}
-					<a href="/blog/homelab" target="_blank" rel="noopener noreferrer">
-						homelab
-					</a>{" "}
-					or riding my bike.
-				</p>
-			</div>
-		</section>
+			</section>
+
+			<section className="home-section" aria-labelledby="blog">
+				<SectionHead
+					id="blog"
+					title="blog"
+					note={
+						<Link className="sh-link" href="/blog">
+							all posts →
+						</Link>
+					}
+				/>
+				<ul className="post-grid">
+					{recent.map((post) => (
+						<li key={post.slug}>
+							<PostCard post={post} />
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
 	);
 }

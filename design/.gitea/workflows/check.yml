@@ -1,0 +1,35 @@
+# Checks every push and pull request. Paths assume design/ is the repository root.
+name: design
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8.11.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v6
+      - run: pnpm install --frozen-lockfile
+      # Generated CSS and Python data match src/tokens.json; contrast and colour-vision hold.
+      - run: pnpm check
+      - run: pnpm exec tsup
+      - run: pnpm exec playwright install --with-deps chromium
+      # Perspective 5.5 renders with both themes, no console errors; screenshots as artifacts.
+      - run: pnpm check:perspective
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: perspective-reference
+          path: checks/out/*.png
+      - run: uv build --directory python
+
