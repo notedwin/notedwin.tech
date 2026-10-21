@@ -1,6 +1,7 @@
 import { Feed } from "feed";
 import { getBlogPosts } from "app/lib/posts";
 import { metaData } from "app/config";
+import { postDescription } from "app/lib/seo";
 import { NextResponse } from "next/server";
 
 export async function generateStaticParams() {
@@ -34,9 +35,7 @@ export async function GET(
     description: metaData.description,
     id: BaseUrl,
     link: BaseUrl,
-    copyright: `All rights reserved ${new Date().getFullYear()}, ${
-      metaData.title
-    }`,
+    copyright: `All rights reserved ${new Date().getFullYear()}, ${metaData.name}`,
     generator: "Feed for Node.js",
     feedLinks: {
       json: `${BaseUrl}feed.json`,
@@ -57,7 +56,8 @@ export async function GET(
       title: post.metadata.title,
       id: postUrl,
       link: postUrl,
-      description: post.metadata.summary,
+      description: postDescription(post),
+      author: [{ name: metaData.name, link: metaData.baseUrl }],
       category: categories.map((tag) => ({
         name: tag,
         term: tag,

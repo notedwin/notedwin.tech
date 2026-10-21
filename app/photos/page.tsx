@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "app/lib/seo";
 import { DitherPhoto } from "app/components/dither";
 import { PageHead } from "app/components/ne";
 import { photos } from "./photo-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: "Photos",
 	description: "Photos I've taken, printed in the site's dither. Hover or focus one for color.",
-};
+	path: "/photos",
+});
 
 export default function Photos() {
 	return (

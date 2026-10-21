@@ -3,8 +3,32 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CustomMDX } from "app/components/mdx";
 import { Meta, Status, Tag } from "app/components/ne";
-import { getBlogPosts, getTags, isoDate } from "app/lib/posts";
+import { getBlogPosts, getTags, isoDate, type Post } from "app/lib/posts";
 import { metaData } from "app/config";
+import { absoluteUrl, feedTypes, jsonLd, ogImageUrl, person, postDescription } from "app/lib/seo";
+
+// Who wrote it, when, and what it is about, so search and AI tools can quote it with attribution.
+function postJsonLd(post: Post) {
+	let { title, publishedAt, updated, image } = post.metadata;
+	let url = absoluteUrl(`/blog/${post.slug}`);
+	return jsonLd({
+		"@type": "BlogPosting",
+		"@id": `${url}#post`,
+		headline: title,
+		description: postDescription(post),
+		datePublished: publishedAt,
+		dateModified: updated || publishedAt,
+		image: image ? absoluteUrl(image) : ogImageUrl(title),
+		url,
+		mainEntityOfPage: url,
+		inLanguage: "en",
+		keywords: getTags(post).join(", "),
+		wordCount: post.content.split(/\s+/).length,
+		author: person,
+		publisher: { "@id": person["@id"] },
+		isPartOf: { "@type": "Blog", "@id": absoluteUrl("/blog#blog"), name: metaData.siteName, url: absoluteUrl("/blog") },
+	});
+}
 
 export async function generateStaticParams() {
 	return getBlogPosts().map((post) => ({ slug: post.slug }));
@@ -17,19 +41,28 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 		return;
 	}
 
-	let { title, publishedAt: publishedTime, summary: description, image } = post.metadata;
-	let ogImage = image ? image : `${metaData.baseUrl}/og?title=${encodeURIComponent(title)}`;
+	let { title, publishedAt, updated, image } = post.metadata;
+	let description = postDescription(post);
+	let ogImage = image ? absoluteUrl(image) : ogImageUrl(title);
+	let path = `/blog/${post.slug}`;
 
 	return {
 		title,
 		description,
+		keywords: getTags(post),
+		alternates: { canonical: path, types: feedTypes },
 		openGraph: {
 			title,
 			description,
 			type: "article",
-			publishedTime,
-			url: `${metaData.baseUrl}/blog/${post.slug}`,
-			images: [{ url: ogImage }],
+			publishedTime: publishedAt,
+			modifiedTime: updated || publishedAt,
+			authors: [metaData.baseUrl],
+			tags: getTags(post),
+			url: path,
+			siteName: metaData.siteName,
+			locale: "en_US",
+			images: [image ? { url: ogImage, alt: title } : { url: ogImage, width: 1200, height: 630, alt: title }],
 		},
 		twitter: {
 			card: "summary_large_image",
@@ -53,28 +86,7 @@ export default async function Blog({ params }) {
 
 	return (
 		<main id="main" data-mode="workbench" data-domain={domain}>
-			<script
-				type="application/ld+json"
-				suppressHydrationWarning
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
-						"@context": "https://schema.org",
-						"@type": "BlogPosting",
-						headline: title,
-						datePublished: publishedAt,
-						dateModified: updated || publishedAt,
-						description: summary,
-						image: post.metadata.image
-							? `${metaData.baseUrl}${post.metadata.image}`
-							: `/og?title=${encodeURIComponent(title)}`,
-						url: `${metaData.baseUrl}/blog/${post.slug}`,
-						author: {
-							"@type": "Person",
-							name: metaData.name,
-						},
-					}),
-				}}
-			/>
+			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: postJsonLd(post) }} />
 			<header className="post-head">
 				<p className="t-label post-head__kicker">
 					<Link href="/blog">blog</Link> · {isoDate(publishedAt)}

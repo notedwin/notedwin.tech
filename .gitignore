@@ -51,3 +51,5 @@ tsconfig.tsbuildinfo
 
 # Local writing skill (voice and interview-derived material)
 .claude/skills/notedwin-writing/
+
+.lighthouseci/

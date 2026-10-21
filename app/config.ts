@@ -1,9 +1,11 @@
 export const metaData = {
 	baseUrl: "https://notedwin.com",
-	title: "notedwin's blog",
-	name: "Edwin Z.",
+	title: "notedwin: homelab, data and ML notes",
+	siteName: "notedwin",
+	name: "Edwin Zamudio",
 	ogImage: "/opengraph-image.png",
-	description: "blog about data engineering, home labs, and other tech stuff",
+	description:
+		"Edwin's notes on running a homelab, data engineering and ML: what I built, what it cost and what broke.",
 };
 
 export const socialLinks = {

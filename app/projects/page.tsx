@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "app/lib/seo";
 import { DomainMark, PageHead, Status } from "app/components/ne";
 import { projects } from "./project-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: "Projects",
 	description: "Things I've built: homelab config, data tools and small sites.",
-};
+	path: "/projects",
+});
 
 export default function Projects() {
 	let sorted = [...projects].sort((a, b) => b.year - a.year);

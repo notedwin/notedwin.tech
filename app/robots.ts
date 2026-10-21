@@ -1,12 +1,10 @@
+import type { MetadataRoute } from "next";
 import { metaData } from "./config";
 
-export default function robots() {
-  return {
-    rules: [
-      {
-        userAgent: "*",
-      },
-    ],
-    sitemap: `${metaData.baseUrl}/sitemap.xml`,
-  };
+// Every crawler, search and AI alike, may read everything.
+export default function robots(): MetadataRoute.Robots {
+	return {
+		rules: [{ userAgent: "*", allow: "/" }],
+		sitemap: `${metaData.baseUrl}/sitemap.xml`,
+	};
 }
