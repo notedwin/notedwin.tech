@@ -8,12 +8,16 @@ const old_urls = [
 	"/haxml",
 	"/health-data",
 	"/local_setup",
+	"/blog/homelab-2023",
+	"/blog/homelab",
 ];
 
 // Old paths whose post slug differs from the path.
 const renamed: Record<string, string> = {
 	"/attack_map": "/blog/attack-map",
-	"/homelab-2024": "/blog/homelab-2023",
+	"/homelab-2024": "/blog/homelab-2024",
+	"/blog/homelab-2023": "/blog/homelab-2024",
+	"/blog/homelab": "/blog/homelab-2025",
 };
 
 const redirects = old_urls.map((url) => ({

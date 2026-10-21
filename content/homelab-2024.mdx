@@ -1,0 +1,77 @@
+---
+title: "Homelab 2024: a $10 thrift-store router and a cat cam"
+summary: "A 2013 mini PC, a thrift-store router running OpenWRT, and a $10 camera pointed at my cat. What I ran in 2024 and what broke."
+publishedAt: "2024-06-01"
+updated: "2026-10-20"
+tags: "homelab"
+domain: infra
+status: settled
+---
+
+Part of a yearly series: **2024** · [2025](/blog/homelab-2025) · [2026](/blog/homelab-2026)
+
+In mid-2024 my homelab was a mini PC from 2013 with 8GB of RAM, a $10 router from a thrift store, and a $10 camera pointed at my cat. Five years into self-hosting, the main thing I'd learned is that the issue is always DNS :troll:
+
+## What ran on it
+
+The server ran Ubuntu 20.04 on a 500GB SSD. Everything was deployed with Ansible from [one repo](https://github.com/notedwin/ansible-compose):
+
+- **AdGuard:** ad blocking for every device on the network
+- **Caddy:** web server, with HTTPS for each service
+- **Tailscale:** a VPN to reach the server from anywhere, free for up to 50(!!) devices. I could self-host Headscale instead, but I don't care for self-hosting everything.
+- **Dagster, Postgres, Grafana:** pipelines and dashboards for my own data
+- **Motioneye:** the cat cam
+- **Filestash, Portainer, homepage, etc.**
+
+I self-host because I like owning and managing my services, and it doesn't take too much work. The catch is security: you don't want people breaking into your home network through a faulty config and seeing you butt naked. My first project was [mapping who tried](/blog/attack-map).
+
+## A $10 router that wasn't supposed to run OpenWRT
+
+Every time a phone or TV loads anything, it first asks a DNS server where that website lives. AdGuard is my DNS server, so when the question is about an ad or a tracker, it answers "nowhere" and the ad never loads.
+
+Some smart devices ignore the DNS server your router hands out and ask Google's directly ([here's how](https://labzilla.io/blog/force-dns-pihole)). The fix is a router that catches those requests and sends them to AdGuard anyway. That needs OpenWRT, open-source router firmware, and the router I'd bought for my apartment didn't support it.
+
+At a thrift store I found an AC1900 router for $10, a Linksys EA7400 v2. It wasn't on OpenWRT's list, but its model number was close to the EA7450, which is. Instead of opening it up to check the chips, I looked up its FCC ID. Every wireless device sold in the US is tested by the FCC, and the photos of its insides are usually public. Same CPU, same wireless chips. It worked.
+
+I also wanted to try eBPF on the router to watch my own traffic. OpenWRT doesn't support it without a custom kernel and compiling your own firmware, so that's where that ended.
+
+## Cat cam
+
+A Raspberry Pi with a camera attachment, streaming through [rtsp-simple-server](https://github.com/bluenviron/mediamtx) (now mediamtx), with Motion on top for a nicer interface. The quality is poor, since it cost $10 instead of being one of the nicer account-locked smart cameras. Setup is very simple.
+
+## What broke this year
+
+- **Docker:** pin your container versions, or Watchtower will update them for you. I wasn't ready for Grafana 10, and all my dashboards broke.
+- **Grafana:** moving a dashboard means copying JSON and changing the datasource ID by hand. Public dashboards [don't support variables](https://github.com/grafana/grafana/discussions/49253), BRUH.
+- **Postgres in Docker:** on a bridge network, you have to edit `pg_hba.conf` to allow connections from outside the container.
+- **Dagster:** four containers (Postgres, user code, the daemon, the UI), and [a lot of breaking changes](https://dagster.slack.com/archives/C01U954MEER/p1681757224224769).
+- **Ansible:** `become: yes` runs as root, and root can have a different Python than your user. The error doesn't say that:
+
+```text
+Please read the module documentation and install it in the appropriate location. If the required library is installed, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter, for example via `pip install docker` (Python >= 3.6) or `pip install docker==4.4.4` (Python 2.7) or `pip install docker-py` (Python 2.6). The error was: No module named 'docker'
+```
+
+- **A Debian laptop as a server:** stop it from sleeping, and watch for [systemd-logind eating CPU](https://discussion.fedoraproject.org/t/systemd-logind-eats-cpu-when-closing-laptop-lid/67805/2) when the lid is closed:
+
+```bash
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+```
+
+## What I gave up on
+
+- **Spotify history:** the recently played API only returns your last 50 tracks ([why](https://stackoverflow.com/questions/56061606/spotify-api-recently-played-paging)). Last.fm keeps everything, but nobody wants another account. A personal data request gets you the full history.
+- **RFID:** a Flipper Zero [can't read the UHF tags](https://github.com/flipperdevices/flipperzero-firmware/issues/1285) stores use.
+
+## Looking back (2026)
+
+AdGuard, Caddy, Tailscale and Postgres are still running. Motioneye, OpenWRT, Dagster, Grafana, Filestash and homepage were gone by [2025](/blog/homelab-2025), and Portainer too. Grafana snuck back in October 2026.
+
+{/* src: content/homelab-2025.mdx retired list; homelab repo server/ (adguard, caddy, postgres), general-setup (tailscale), monitoring (Grafana, 2026-10-19); no Portainer in repo, ADR 0016 */}
+
+I followed my own Docker advice for everything except AdGuard, which stayed on `latest` because it had never broken. Then it broke, and [no device in the house could load a website](/blog/homelab-2026). The issue really is always DNS.
+
+{/* src: interview round 2 Q9–Q10; homelab commits 2026-09-29 */}
+
+OpenWRT is gone too. I'm on UniFi now, and I don't really count the networking as part of the homelab anymore.
+
+{/* src: interview round 1 */}
