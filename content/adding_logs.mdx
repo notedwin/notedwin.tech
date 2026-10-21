@@ -1,13 +1,11 @@
 ---
-title: "Attack Map: Adding NGINX logs"
+title: "Attack map, part 2: NGINX logs into Postgres with rsyslog"
 publishedAt: "2022-10-17"
-summary: "Building upon the attack map: SSH article, this post will cover how to get, process and use NGINX logs."
+summary: "I sent NGINX access logs into Postgres with rsyslog (about 20 lines of config) so I could count visitors and malicious requests in SQL instead of searching Redis once per attempt."
 tags: "attack-map, featured"
 domain: infra
 status: settled
 ---
-
-> Building upon the attack map: SSH article, this post will cover how to get, process and use NGINX logs.
 
 ## Intro
 
@@ -153,9 +151,7 @@ log_line ->> 'request'
 from accesslog
 ```
 
-You can see the SSH and HTTP data from 2022-09 to 2023-01 on:
-
-[map.notedwin.com](http://map.notedwin.com)
+The SSH and HTTP data from 2022-09 to 2023-01 was on map.notedwin.com, which is offline as of 2026. The screenshot below is what it showed.
 
 <Image src="/assets/attack-map/map.webp" alt="map" width={640} height={500} />
 
