@@ -209,6 +209,28 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-4) var(--space-6);
 	}
+	/* Home shows four chosen posts, two by two at every width. From 768px up each card lays its
+	   plate beside the meta and title, so both rows fit the first screen. */
+	.post-grid--home {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	@media (min-width: 768px) {
+		.post-grid--home .post-card {
+			display: grid;
+			grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+			grid-template-rows: auto 1fr;
+			column-gap: var(--space-4);
+		}
+		.post-grid--home .post-card__plate {
+			grid-row: 1 / span 2;
+		}
+		.post-grid--home .post-card__meta {
+			margin-top: 0;
+		}
+		.post-grid--home .post-card__title {
+			-webkit-line-clamp: 3;
+		}
+	}
 	.post-card {
 		display: block;
 		text-decoration: none;
@@ -689,23 +711,41 @@
 		--dither-opacity: 0.65;
 	}
 
-	/* Code colors: shiki's css-variables theme on the sunk ground (no ember). Text and keywords in ink,
-	   keywords at 600; functions in infra-ink; comments muted. */
+	/* Code colors: shiki's css-variables theme on the sunk ground. Graphite highlights in sage, like
+	   Nord: keywords in flame-body, functions in infra-ink, strings in signal-live. Smoke highlights
+	   in orange: keywords and functions in ember-ink, strings in signal-warn's amber. Comments are
+	   ink-muted in both (ink-faint is under 4.5:1 on ground-sunk). Keywords at 600. */
 	:root {
 		--shiki-foreground: var(--ink);
 		--shiki-background: var(--ground-sunk);
-		--shiki-token-constant: var(--ink);
-		--shiki-token-string: var(--ink);
-		--shiki-token-string-expression: var(--ink);
-		--shiki-token-comment: var(--ink-muted);
-		--shiki-token-keyword: var(--ink);
-		--shiki-token-parameter: var(--ink);
+		--shiki-token-keyword: var(--flame-body);
 		--shiki-token-function: var(--infra-ink);
-		--shiki-token-punctuation: var(--ink);
+		--shiki-token-string: var(--signal-live);
+		--shiki-token-string-expression: var(--signal-live);
+		--shiki-token-constant: var(--ash-100);
+		--shiki-token-parameter: var(--ink);
+		--shiki-token-punctuation: var(--ink-muted);
+		--shiki-token-comment: var(--ink-muted);
 		--shiki-token-link: var(--link);
 		--shiki-token-inserted: var(--signal-live);
 		--shiki-token-deleted: var(--signal-error);
 		--shiki-token-changed: var(--signal-warn);
+	}
+	@media (prefers-color-scheme: light) {
+		:root:not([data-theme="dark"]) {
+			--shiki-token-keyword: var(--ember-ink);
+			--shiki-token-function: var(--ember-ink);
+			--shiki-token-string: var(--signal-warn);
+			--shiki-token-string-expression: var(--signal-warn);
+			--shiki-token-constant: var(--signal-warn);
+		}
+	}
+	:root[data-theme="light"] {
+		--shiki-token-keyword: var(--ember-ink);
+		--shiki-token-function: var(--ember-ink);
+		--shiki-token-string: var(--signal-warn);
+		--shiki-token-string-expression: var(--signal-warn);
+		--shiki-token-constant: var(--signal-warn);
 	}
 
 	.ne-prose pre [style*="--shiki-token-keyword"] {

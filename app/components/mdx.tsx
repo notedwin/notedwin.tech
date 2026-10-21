@@ -13,7 +13,8 @@ import { proseSizes } from "app/lib/image-sizes";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
-// Code colors come from --shiki-* variables mapped to tokens in global.css, so both themes work.
+// Code colors come from --shiki-* variables mapped to tokens in global.css: sage on graphite,
+// orange on smoke.
 const codeTheme = createCssVariablesTheme({ name: "notedwin", variablePrefix: "--shiki-" });
 
 function CustomLink(props) {
@@ -187,7 +188,8 @@ export function CustomMDX(props) {
 				// Posts are our own files and use JSX props like width={640}.
 				blockJS: false,
 				mdxOptions: {
-					remarkPlugins: [remarkMath, remarkLeadImage, remarkKatexStyles],
+					// Only $$…$$ is math: posts use single $ for prices ("$10 router … $10 camera").
+					remarkPlugins: [[remarkMath, { singleDollarTextMath: false }], remarkLeadImage, remarkKatexStyles],
 					rehypePlugins: [rehypeKatex, [rehypeShiki, { theme: codeTheme, inline: "tailing-curly-colon" }]],
 				},
 			}}
