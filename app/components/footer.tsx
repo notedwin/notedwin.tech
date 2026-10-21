@@ -1,67 +1,35 @@
-"use client";
+import { socialLinks } from "app/config";
 
-import React from "react";
-import {
-	FaGithub,
-	FaSpotify,
-	FaRss,
-	FaLinkedinIn,
-	FaPhotoFilm,
-} from "react-icons/fa6";
-import { BsSubstack } from "react-icons/bs";
-import { metaData, socialLinks } from "app/config";
+// Bump on every redesign (design system: README → Name and header).
+export const SITE_VERSION = { v: 7, date: "2026-10-20" };
 
-const YEAR = new Date().getFullYear();
-
-function SocialLink({ href, icon: Icon }) {
-	return (
-		<a
-			href={href}
-			target="_blank"
-			rel="noopener noreferrer"
-			className="hover:text-orange-500"
-		>
-			<Icon />
-		</a>
-	);
-}
-
-function SocialLinks() {
-	return (
-		<div className="flex text-2xl gap-3.5 float-right transition-opacity duration-300 hover:opacity-90">
-			<SocialLink href={socialLinks.github} icon={FaGithub} />
-			<SocialLink href={socialLinks.spotify} icon={FaSpotify} />
-			<SocialLink href={socialLinks.linkedin} icon={FaLinkedinIn} />
-			<SocialLink href={socialLinks.substack} icon={BsSubstack} />
-			<SocialLink href={socialLinks.arena} icon={FaPhotoFilm} />
-			<a href="/rss.xml" target="_self" className="hover:text-orange-500">
-				<FaRss />
-			</a>
-		</div>
-	);
-}
+const links = [
+	{ href: socialLinks.github, name: "github" },
+	{ href: socialLinks.linkedin, name: "linkedin" },
+	{ href: socialLinks.substack, name: "substack" },
+	{ href: socialLinks.arena, name: "are.na" },
+	{ href: socialLinks.spotify, name: "spotify" },
+	{ href: "/rss.xml", name: "rss" },
+];
 
 export default function Footer() {
 	return (
-		<small className="block lg:mt-24 mt-16 text-[#1C1C1C] dark:text-[#D4D4D4]">
-			<time>© {YEAR}</time>{" "}
-			<a
-				className="no-underline"
-				href={socialLinks.github}
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				{metaData.title}
-			</a>
-			<style jsx>{`
-				@media screen and (max-width: 480px) {
-					article {
-						padding-top: 2rem;
-						padding-bottom: 4rem;
-					}
-				}
-			`}</style>
-			<SocialLinks />
-		</small>
+		<footer className="site-footer">
+			<p className="t-body-sm">thanks for reading.</p>
+			<p className="site-footer__links">
+				{links.map(({ href, name }, i) => (
+					<span key={name}>
+						{i > 0 && <span aria-hidden="true"> · </span>}
+						<a href={href} {...(href.startsWith("http") && { rel: "me noopener noreferrer" })}>
+							{name}
+						</a>
+					</span>
+				))}
+				<span aria-hidden="true"> · </span>
+				<span>
+					v{SITE_VERSION.v} · {SITE_VERSION.date}
+				</span>
+			</p>
+		</footer>
 	);
 }

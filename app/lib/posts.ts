@@ -1,91 +1,105 @@
 import fs from "fs";
 import path from "path";
 
+export type Domain = "infra" | "data" | "play";
+export type Status = "seed" | "growing" | "settled" | "live";
+
 type Metadata = {
-  title: string;
-  publishedAt: string;
-  summary: string;
-  tags: string;
-  image?: string;
+	title: string;
+	publishedAt: string;
+	summary: string;
+	tags: string;
+	domain: Domain;
+	status: Status;
+	updated?: string;
+	image?: string;
+	// The home grid's card image, when the post's first image doesn't print well.
+	cover?: string;
+	// The one start-here entry, marked ★ on the blog.
+	start?: boolean;
 };
 
+export type Post = { metadata: Metadata; slug: string; content: string };
+
+// Returns null for files without frontmatter: those are drafts and stay unpublished.
 function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
-  let match = frontmatterRegex.exec(fileContent);
-  let frontMatterBlock = match![1];
-  let content = fileContent.replace(frontmatterRegex, "").trim();
-  let frontMatterLines = frontMatterBlock.trim().split("\n");
-  let metadata: Partial<Metadata> = {};
+	let match = /^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/.exec(fileContent);
+	if (!match) {
+		return null;
+	}
+	let raw: Record<string, string> = {};
+	let key: string | null = null;
+	for (let line of match[1].split("\n")) {
+		let field = /^([A-Za-z_][\w-]*):\s*(.*)$/.exec(line);
+		if (field) {
+			key = field[1];
+			raw[key] = field[2];
+		} else if (key && /^\s+\S/.test(line)) {
+			// Indented continuation of a multi-line value.
+			raw[key] = `${raw[key]} ${line.trim()}`.trim();
+		}
+	}
+	let metadata = Object.fromEntries(
+		Object.entries(raw).map(([k, v]) => [k, v.trim().replace(/^['"]/, "").replace(/['"]$/, "")])
+	) as Record<string, string>;
+	let content = fileContent.slice(match[0].length).trim();
 
-  frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(": ");
-    let value = valueArr.join(": ").trim();
-    value = value.replace(/^['"](.*)['"]$/, "$1"); 
-    metadata[key.trim() as keyof Metadata] = value;
-  });
-
-  return { metadata: metadata as Metadata, content };
+	return {
+		metadata: {
+			...metadata,
+			domain: (metadata.domain || "infra") as Domain,
+			status: (metadata.status || "settled") as Status,
+			start: metadata.start === "true",
+		} as Metadata,
+		content,
+	};
 }
 
-function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
+function getMDXData(dir: string): Post[] {
+	return fs
+		.readdirSync(dir)
+		.filter((file) => path.extname(file) === ".mdx")
+		.flatMap((file) => {
+			let parsed = parseFrontmatter(fs.readFileSync(path.join(dir, file), "utf-8"));
+			return parsed ? [{ ...parsed, slug: path.basename(file, ".mdx") }] : [];
+		});
 }
 
-function readMDXFile(filePath: string) {
-  let rawContent = fs.readFileSync(filePath, "utf-8");
-  return parseFrontmatter(rawContent);
+// Newest first.
+export function getBlogPosts(): Post[] {
+	return getMDXData(path.join(process.cwd(), "content")).sort((a, b) =>
+		b.metadata.publishedAt.localeCompare(a.metadata.publishedAt)
+	);
 }
 
-function getMDXData(dir: string) {
-  let mdxFiles = getMDXFiles(dir);
-  return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
-
-    return {
-      metadata,
-      slug,
-      content,
-    };
-  });
+// Up to 3 topic tags; "featured" is a flag, not a topic.
+export function getTags(post: Post) {
+	return (post.metadata.tags || "")
+		.split(",")
+		.map((t) => t.trim())
+		.filter((t) => t && t.toLowerCase() !== "featured")
+		.slice(0, 3);
 }
 
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), "content"));
+// The image for a post's card: its `cover`, else the first image the post shows.
+export function getCardImage(post: Post) {
+	return post.metadata.cover || /<Image[\s\S]*?src="([^"]+)"/.exec(post.content)?.[1];
 }
 
-export function formatDate(date: string, includeRelative = false) {
-  let currentDate = new Date();
-  if (!date.includes("T")) {
-    date = `${date}T00:00:00`;
-  }
-  let targetDate = new Date(date);
+// ISO dates everywhere (design system: dates are ISO).
+export function isoDate(date: string) {
+	return date.slice(0, 10);
+}
 
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-  let daysAgo = currentDate.getDate() - targetDate.getDate();
-
-  let formattedDate = "";
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`;
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`;
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`;
-  } else {
-    formattedDate = "Today";
-  }
-
-  let fullDate = targetDate.toLocaleString("en-us", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  if (!includeRelative) {
-    return fullDate;
-  }
-
-  return `${fullDate} (${formattedDate})`;
+// The distance between two stops on the trail, when it's large enough to be part of the story.
+export function distance(newer: string, older: string) {
+	let days = (Date.parse(newer) - Date.parse(older)) / 86_400_000;
+	if (days < 180) {
+		return null;
+	}
+	if (days < 365) {
+		return `+${Math.round(days / 30)} months`;
+	}
+	let years = Math.round(days / 365);
+	return `+${years} year${years > 1 ? "s" : ""}`;
 }

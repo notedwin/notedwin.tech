@@ -1,35 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { CustomMDX } from "app/components/mdx";
-import { formatDate, getBlogPosts } from "app/lib/posts";
+import { Meta, Status, Tag } from "app/components/ne";
+import { getBlogPosts, getTags, isoDate } from "app/lib/posts";
 import { metaData } from "app/config";
 
 export async function generateStaticParams() {
-	let posts = getBlogPosts();
-
-	return posts.map((post) => ({
-		slug: post.slug,
-	}));
+	return getBlogPosts().map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({
-	params,
-}): Promise<Metadata | undefined> {
+export async function generateMetadata({ params }): Promise<Metadata | undefined> {
 	const { slug } = await params;
 	let post = getBlogPosts().find((post) => post.slug === slug);
 	if (!post) {
 		return;
 	}
 
-	let {
-		title,
-		publishedAt: publishedTime,
-		summary: description,
-		image,
-	} = post.metadata;
-	let ogImage = image
-		? image
-		: `${metaData.baseUrl}/og?title=${encodeURIComponent(title)}`;
+	let { title, publishedAt: publishedTime, summary: description, image } = post.metadata;
+	let ogImage = image ? image : `${metaData.baseUrl}/og?title=${encodeURIComponent(title)}`;
 
 	return {
 		title,
@@ -40,11 +29,7 @@ export async function generateMetadata({
 			type: "article",
 			publishedTime,
 			url: `${metaData.baseUrl}/blog/${post.slug}`,
-			images: [
-				{
-					url: ogImage,
-				},
-			],
+			images: [{ url: ogImage }],
 		},
 		twitter: {
 			card: "summary_large_image",
@@ -63,8 +48,11 @@ export default async function Blog({ params }) {
 		notFound();
 	}
 
+	let { title, summary, publishedAt, updated, domain, status } = post.metadata;
+	let tags = getTags(post);
+
 	return (
-		<section>
+		<main id="main" data-mode="workbench" data-domain={domain}>
 			<script
 				type="application/ld+json"
 				suppressHydrationWarning
@@ -72,13 +60,13 @@ export default async function Blog({ params }) {
 					__html: JSON.stringify({
 						"@context": "https://schema.org",
 						"@type": "BlogPosting",
-						headline: post.metadata.title,
-						datePublished: post.metadata.publishedAt,
-						dateModified: post.metadata.publishedAt,
-						description: post.metadata.summary,
+						headline: title,
+						datePublished: publishedAt,
+						dateModified: updated || publishedAt,
+						description: summary,
 						image: post.metadata.image
 							? `${metaData.baseUrl}${post.metadata.image}`
-							: `/og?title=${encodeURIComponent(post.metadata.title)}`,
+							: `/og?title=${encodeURIComponent(title)}`,
 						url: `${metaData.baseUrl}/blog/${post.slug}`,
 						author: {
 							"@type": "Person",
@@ -87,17 +75,43 @@ export default async function Blog({ params }) {
 					}),
 				}}
 			/>
-			<h1 className="title mb-3 font-medium text-2xl tracking-tight">
-				{post.metadata.title}
-			</h1>
-			<div className="flex justify-between items-center mt-2 mb-8 text-medium">
-				<p className="text-sm text-neutral-600 dark:text-neutral-400">
-					{formatDate(post.metadata.publishedAt)}
+			<header className="post-head">
+				<p className="t-label post-head__kicker">
+					<Link href="/blog">blog</Link> · {isoDate(publishedAt)}
 				</p>
+				<h1 className="post-head__title">{title}</h1>
+				{summary && <p className="post-head__summary">{summary}</p>}
+			</header>
+			<div className="workbench-page">
+				<aside className="rail" aria-label="about this post">
+					<div className="ne-meta-list ne-meta-list--stack">
+						<Meta k="domain">{domain}</Meta>
+						<span className="ne-meta">
+							<span className="ne-meta__key">status</span>
+							<Status state={status} />
+						</span>
+						<Meta k="published">{isoDate(publishedAt)}</Meta>
+						{updated && <Meta k="updated">{isoDate(updated)}</Meta>}
+					</div>
+					{tags.length > 0 && (
+						<p className="rail__tags">
+							{tags.map((t) => (
+								<Tag key={t} domain={domain}>
+									{t}
+								</Tag>
+							))}
+						</p>
+					)}
+				</aside>
+				<article className="ne-prose">
+					<CustomMDX source={post.content} />
+				</article>
 			</div>
-			<article className="prose prose-quoteless prose-neutral dark:prose-invert">
-				<CustomMDX source={post.content} />
-			</article>
-		</section>
+			<p className="post-foot">
+				<Link className="more-link" href="/blog">
+					← all posts
+				</Link>
+			</p>
+		</main>
 	);
 }
