@@ -8,12 +8,20 @@ const sizes = "(max-width: 767px) calc((100vw - 50px) / 2), 245px";
 
 // A post as a card: a small dithered header plate (its image, or a data plate), date, title.
 // `heading` is the title's level: h2 directly under a page h1, h3 inside a section.
-export function PostCard({ post, heading: Title = "h3" }: { post: Post; heading?: "h2" | "h3" }) {
+export function PostCard({
+	post,
+	heading: Title = "h3",
+	sizes: plateSizes = sizes,
+}: {
+	post: Post;
+	heading?: "h2" | "h3";
+	sizes?: string;
+}) {
 	let image = getCardImage(post);
 	return (
 		<Link className="post-card" href={`/blog/${post.slug}`}>
 			{image ? (
-				<DitherPhoto src={image} alt="" sizes={sizes} className="post-card__plate" />
+				<DitherPhoto src={image} alt="" sizes={plateSizes} className="post-card__plate" />
 			) : (
 				<FieldPlate seed={post.slug} className="post-card__plate" />
 			)}
