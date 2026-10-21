@@ -16,8 +16,8 @@ export const projects: Project[] = [
 	{
 		title: "Homelab",
 		year: 2020,
-		description: "Ansible and Compose config for the servers in my apartment.",
-		url: "https://github.com/notedwin/ansible-compose",
+		description: "The servers in my apartment, written up once a year.",
+		url: "/blog/homelab-2026",
 		domain: "infra",
 		status: "growing",
 		image: "/photos/10.webp",
