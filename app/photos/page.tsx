@@ -6,27 +6,25 @@ import { photos } from "./photo-data";
 
 export const metadata: Metadata = pageMetadata({
 	title: "Photos",
-	description: "Photos I've taken, printed in the site's dither. Hover or focus one for color.",
+	description: "Photos I've taken, printed in the site's dither. Hover or tap one for color.",
 	path: "/photos",
 });
 
 export default function Photos() {
 	return (
 		<main id="main">
-			<PageHead title="Photos" note={`${photos.length} plates · hover for color`} />
+			<PageHead title="Photos" note={`${photos.length} photos`} />
 			<div className="photo-grid">
-				{photos.map((photo, i) => (
+				{photos.map((photo) => (
 					<figure className="ne-fig" key={photo.src}>
 						<DitherPhoto
 							src={photo.src}
-							alt={photo.alt}
+							alt={photo.description}
 							sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 260px"
 							className="ratio-3-2"
 						/>
 						<figcaption>
-							<span>
-								<b>fig:{String(i + 1).padStart(2, "0")}</b> · {photo.alt}
-							</span>
+							<span>{photo.alt}</span>
 							{photo.href && (
 								<a href={photo.href} rel="noopener noreferrer">
 									↗ link
