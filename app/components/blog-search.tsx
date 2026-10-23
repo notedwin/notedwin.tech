@@ -107,7 +107,7 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 					))}
 				</div>
 			</div>
-			<p className="t-label blog-search__status" role="status">
+			<p className="t-meta blog-search__status" role="status">
 				{status}
 			</p>
 			{searching && shown.length === 0 ? (

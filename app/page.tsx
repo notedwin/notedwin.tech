@@ -5,11 +5,8 @@ import { feedTypes, jsonLd, person } from "./lib/seo";
 import { Cube } from "./components/cube";
 import { CommitLine } from "./components/commit-line";
 import { SectionHead } from "./components/ne";
-import { PostCard } from "./components/post-card";
+import { PostCard, pairSizes } from "./components/post-card";
 import { getBlogPosts, type Post } from "./lib/posts";
-
-// Phones: two stacked cards per row. From 768px: the plate is 2/5 of a 379px card, beside the text.
-const homeCardSizes = "(max-width: 767px) calc((100vw - 50px) / 2), 145px";
 
 // The posts the home grid shows, in this order.
 const homeSlugs = ["homelab-2026", "homelab-2025", "attack-map", "haxml"];
@@ -36,6 +33,7 @@ const siteJsonLd = jsonLd({
 
 export default function Page() {
 	let posts = getBlogPosts();
+	let start = posts.find((post) => post.metadata.start);
 	let picked = homeSlugs
 		.map((slug) => posts.find((post) => post.slug === slug))
 		.filter((post): post is Post => post !== undefined);
@@ -60,6 +58,9 @@ export default function Page() {
 						.
 					</p>
 					<CommitLine className="intro__commit" />
+					<Link className="more-link" href="/projects">
+						projects →
+					</Link>
 				</div>
 				<Cube />
 			</section>
@@ -69,15 +70,25 @@ export default function Page() {
 					id="blog"
 					title="blog"
 					note={
-						<Link className="sh-link" href="/blog">
-							all posts →
-						</Link>
+						<>
+							{start && (
+								<>
+									<Link className="sh-link" href={`/blog/${start.slug}`}>
+										★ start here
+									</Link>
+									{" · "}
+								</>
+							)}
+							<Link className="sh-link" href="/blog">
+								all posts →
+							</Link>
+						</>
 					}
 				/>
-				<ul className="post-grid post-grid--home">
+				<ul className="post-grid post-grid--pair">
 					{picked.map((post) => (
 						<li key={post.slug}>
-							<PostCard post={post} sizes={homeCardSizes} />
+							<PostCard post={post} sizes={pairSizes} />
 						</li>
 					))}
 				</ul>

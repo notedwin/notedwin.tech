@@ -5,14 +5,15 @@ import { ditherField, mix, onThemeChange, tok } from "./ink";
 
 // The home page's eye-grabber, from the design system's Cube component. Each face is a
 // 52px value field in the photo dither on a fixed graphite base. Three inks, two faces each, on
-// opposite sides (front/back, right/left, top/bottom), so every corner shows all three: sage, a
-// subdued ember, and the page's own ground, which follows the theme.
+// opposite sides (front/back, right/left, top/bottom), so every corner shows all three: sage, an
+// ember mixed 60% toward the base (a glow, not a signal), and the page's own ground, which follows
+// the theme.
 const BASE = "#2b302f"; // graphite ground-sunk, fixed by the Cube spec
 const FACES: [(x: number, y: number) => number, () => string][] = [
 	[(x, y) => 0.25 + 0.6 * (1 - y), () => tok("--ash-300")],
 	[(x) => 0.3 + 0.5 * x, () => tok("--ash-300")],
-	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), () => mix(tok("--flame-shadow"), BASE, 0.35)],
-	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), () => mix(tok("--flame-shadow"), BASE, 0.35)],
+	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), () => mix(tok("--flame-shadow"), BASE, 0.6)],
+	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), () => mix(tok("--flame-shadow"), BASE, 0.6)],
 	[(x, y) => 0.85 - 0.6 * y, () => tok("--ground")],
 	[(x, y) => 0.45 + 0.35 * Math.cos(x * 4 + y * 3), () => tok("--ground")],
 ];
