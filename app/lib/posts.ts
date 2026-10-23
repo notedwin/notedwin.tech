@@ -103,3 +103,28 @@ export function distance(newer: string, older: string) {
 	let years = Math.round(days / 365);
 	return `+${years} year${years > 1 ? "s" : ""}`;
 }
+
+// Posts that continue one another, oldest first. A post in a series is read next by its sibling.
+const series = [
+	["homelab-2024", "homelab-2025", "homelab-2026"],
+	["attack-map", "aws"],
+	["health-data", "caddy-tailscale"],
+];
+
+// Up to two posts to read after this one: the next in its series (else the one before), then the
+// start-here post, then the newest in the same domain, then the newest overall.
+export function readNext(post: Post, posts: Post[] = getBlogPosts()): Post[] {
+	let others = posts.filter((p) => p.slug !== post.slug);
+	let bySlug = (slug?: string) => others.find((p) => p.slug === slug);
+	let run = series.find((s) => s.includes(post.slug)) ?? [];
+	let i = run.indexOf(post.slug);
+	let candidates = [
+		bySlug(run[i + 1]),
+		bySlug(run[i - 1]),
+		others.find((p) => p.metadata.start),
+		others.find((p) => p.metadata.domain === post.metadata.domain),
+		others[0],
+		others[1],
+	];
+	return [...new Set(candidates.filter((p): p is Post => p !== undefined))].slice(0, 2);
+}

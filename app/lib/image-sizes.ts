@@ -1,11 +1,9 @@
 // `sizes` for images in a post, from the prose column's rendered width at each breakpoint:
 // - below 768px: the viewport minus the .ne-col gutters (2 × space-4) and its two hairline rails
-// - 768–1023px: the 66ch measure at body size (709px)
-// - 1024px and up: the column beside the rail (880 − 2 × space-12 − rails − rail − space-6 = 558px)
-// Keep in step with --measure, --column, --rail and the .ne-col padding.
+// - 768px and up: the prose measure (50ch) at body size (537px)
+// Keep in step with the .ne-prose max-width and the .ne-col padding.
 const GUTTERS = 34;
-const MEASURE = 709;
-const BESIDE_RAIL = 558;
+const MEASURE = 537;
 const GAP = 16; // .image-grid gap (space-4)
 
 // cols: grid columns sharing the width; max: the image's own width, which it never grows past.
@@ -19,8 +17,7 @@ export function proseSizes({ cols = 1, max = Infinity }: { cols?: number; max?: 
 	let slots: [string, string][] = [
 		[`(max-width: ${fluidEnd}px)`, fluid],
 		["(max-width: 767px)", `${max}px`],
-		["(max-width: 1023px)", `${cell(MEASURE)}px`],
-		["", `${cell(BESIDE_RAIL)}px`],
+		["", `${cell(MEASURE)}px`],
 	];
 	if (fluidEnd === 767) slots.splice(1, 1);
 	// Drop a slot when the next one gives the same width.
