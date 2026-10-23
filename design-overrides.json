@@ -1,0 +1,521 @@
+{
+	"register": "reading",
+	"css": [
+		"app/**/*.css"
+	],
+	"markup": [
+		"app/**/*.tsx"
+	],
+	"allow": [
+		{
+			"check": "override",
+			"selector": ".ne-commit a:hover",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-commit code a",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-nav a",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-theme",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-nav a[aria-current]",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-commit, .ne-sh span",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-commit code",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose, .intro__lede, .post-head__summary, .page-head__lede",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ":root:not([data-theme=\"dark\"]) :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede)",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ":root[data-theme=\"light\"] :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede)",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-link",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".row-meta .ne-status",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-plate--clean::before, .prose-plate::before, .prose-plate::after, .video-plate::before, .video-plate::after, .image-grid__cell::before, .image-grid__cell::after",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "type",
+			"selector": ".page-head h1",
+			"detail": "44/48px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".home-section > .ne-sh",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".post-card:hover .ne-photo img, .post-card:focus-visible .ne-photo img",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "type",
+			"selector": ".post-card__title",
+			"detail": "16/24px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "type",
+			"selector": ".post-card__title .star",
+			"detail": "16/24px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-fig figcaption",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "override",
+			"selector": ".photo-grid .ne-photo[data-drawn]:focus img",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-fig figcaption a",
+			"detail": "restyles a system class",
+			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
+		},
+		{
+			"check": "type",
+			"selector": ".post-head__title",
+			"detail": "44/48px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".read-next > .ne-sh",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose > * + *",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose h2, .ne-prose h3, .ne-prose h4, .ne-prose h5, .ne-prose h6",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose h2",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose h3",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "type",
+			"selector": ".ne-prose h3",
+			"detail": "21/28px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose h4, .ne-prose h5, .ne-prose h6",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose h2 + *, .ne-prose h3 + *, .ne-prose h4 + *",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose .anchor",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose .anchor::after",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose :is(h2, h3, h4, h5, h6):hover .anchor, .ne-prose .anchor:focus-visible",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose a:not(.anchor)",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose a:not(.anchor):hover",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose strong",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose ul, .ne-prose ol",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose ul",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose ol",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose li + li, .ne-prose li > ul, .ne-prose li > ol",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose li",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose li::marker",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose blockquote",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose hr",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose :not(pre) > code",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose pre",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose pre code",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose img",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".table-wrap, .ne-prose > table",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose table",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose th",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose td",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose td.wrap",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose :is(th, td).num",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose .katex-display",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "type",
+			"selector": ".results__label",
+			"detail": "15/32px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ":root",
+			"detail": "redefines --dither-ink",
+			"reason": "dither default becomes 90% in the system (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ":root",
+			"detail": "redefines --dither-opacity",
+			"reason": "dither default becomes 90% in the system (defaults phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root",
+			"detail": "--shiki-token-keyword: flame-body as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root",
+			"detail": "--shiki-token-string: signal-live as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root",
+			"detail": "--shiki-token-string-expression: signal-live as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root",
+			"detail": "--shiki-token-constant: ash-100 as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root:not([data-theme=\"dark\"])",
+			"detail": "--shiki-token-keyword: ember-ink spends the ember budget on code",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root:not([data-theme=\"dark\"])",
+			"detail": "--shiki-token-function: ember-ink spends the ember budget on code",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root:not([data-theme=\"dark\"])",
+			"detail": "--shiki-token-string: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root:not([data-theme=\"dark\"])",
+			"detail": "--shiki-token-string-expression: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root:not([data-theme=\"dark\"])",
+			"detail": "--shiki-token-constant: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root[data-theme=\"light\"]",
+			"detail": "--shiki-token-keyword: ember-ink spends the ember budget on code",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root[data-theme=\"light\"]",
+			"detail": "--shiki-token-function: ember-ink spends the ember budget on code",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root[data-theme=\"light\"]",
+			"detail": "--shiki-token-string: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root[data-theme=\"light\"]",
+			"detail": "--shiki-token-string-expression: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "ink",
+			"selector": ":root[data-theme=\"light\"]",
+			"detail": "--shiki-token-constant: signal-warn as text",
+			"reason": "code palette moves into the system, ash plus violet strings (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose pre [style*=\"--shiki-token-keyword\"]",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-prose .table-wrap--wide",
+			"detail": "restyles a system class",
+			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".intro .ne-stage",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "type",
+			"selector": ".page-head h1, .post-head__title",
+			"detail": "33/38px is not a type style",
+			"reason": "type tokens: h1 44/48 and 33/38, h3 21, title-sm 16/24 (tokens phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-header",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-header__right",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		},
+		{
+			"check": "override",
+			"selector": ".ne-nav",
+			"detail": "restyles a system class",
+			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
+		}
+	],
+	"pages": [
+		"/",
+		"/blog",
+		"/blog/attack-map",
+		"/blog/haxml",
+		"/blog/local_setup",
+		"/projects",
+		"/photos"
+	],
+	"emberBudget": 3,
+	"allowPages": [
+		{
+			"check": "ember",
+			"theme": "light",
+			"route": "/blog/attack-map",
+			"reason": "code palette without ember (tokens phase)"
+		},
+		{
+			"check": "ember",
+			"theme": "light",
+			"route": "/blog/haxml",
+			"reason": "code palette without ember (tokens phase)"
+		},
+		{
+			"check": "ember",
+			"theme": "light",
+			"route": "/blog/local_setup",
+			"reason": "code palette without ember (tokens phase)"
+		}
+	]
+}
