@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CustomMDX } from "app/components/mdx";
-import { Meta, Status, Tag } from "app/components/ne";
-import { getBlogPosts, getTags, isoDate, type Post } from "app/lib/posts";
+import { SectionHead } from "app/components/ne";
+import { PostCard, pairSizes } from "app/components/post-card";
+import { getBlogPosts, getTags, isoDate, readNext, type Post } from "app/lib/posts";
 import { metaData } from "app/config";
 import { absoluteUrl, feedTypes, jsonLd, ogImageUrl, person, postDescription } from "app/lib/seo";
 
@@ -81,49 +82,51 @@ export default async function Blog({ params }) {
 		notFound();
 	}
 
-	let { title, summary, publishedAt, updated, domain, status } = post.metadata;
-	let tags = getTags(post);
+	let { title, summary, publishedAt, updated, domain } = post.metadata;
+	let next = readNext(post);
 
 	return (
-		<main id="main" data-mode="workbench" data-domain={domain}>
+		<main id="main" data-domain={domain}>
 			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: postJsonLd(post) }} />
 			<header className="post-head">
-				<p className="t-label post-head__kicker">
-					<Link href="/blog">blog</Link> · {isoDate(publishedAt)}
-				</p>
 				<h1 className="post-head__title">{title}</h1>
 				{summary && <p className="post-head__summary">{summary}</p>}
-			</header>
-			<div className="workbench-page">
-				<aside className="rail" aria-label="about this post">
-					<div className="ne-meta-list ne-meta-list--stack">
-						<Meta k="domain">{domain}</Meta>
-						<span className="ne-meta">
-							<span className="ne-meta__key">status</span>
-							<Status state={status} />
-						</span>
-						<Meta k="published">{isoDate(publishedAt)}</Meta>
-						{updated && <Meta k="updated">{isoDate(updated)}</Meta>}
-					</div>
-					{tags.length > 0 && (
-						<p className="rail__tags">
-							{tags.map((t) => (
-								<Tag key={t} domain={domain}>
-									{t}
-								</Tag>
-							))}
-						</p>
+				<p className="t-meta post-head__meta">
+					<time dateTime={publishedAt}>{isoDate(publishedAt)}</time>
+					{updated && (
+						<>
+							{" "}
+							· updated <time dateTime={updated}>{isoDate(updated)}</time>
+						</>
 					)}
-				</aside>
+				</p>
+			</header>
+			<div className="post-body">
 				<article className="ne-prose">
 					<CustomMDX source={post.content} />
 				</article>
 			</div>
-			<p className="post-foot">
-				<Link className="more-link" href="/blog">
-					← all posts
-				</Link>
-			</p>
+			<div className="post-foot">
+				<p className="t-body-sm muted">thanks for reading.</p>
+				<section className="read-next" aria-labelledby="read-next">
+					<SectionHead
+						id="read-next"
+						title="read next"
+						note={
+							<Link className="sh-link" href="/blog">
+								all posts →
+							</Link>
+						}
+					/>
+					<ul className="post-grid post-grid--pair">
+						{next.map((p) => (
+							<li key={p.slug}>
+								<PostCard post={p} sizes={pairSizes} />
+							</li>
+						))}
+					</ul>
+				</section>
+			</div>
 		</main>
 	);
 }
