@@ -11,7 +11,7 @@ export default function NotFound() {
 	return (
 		<main id="main">
 			<PageHead title="Page not found" note="status:404">
-				<p className="page-head__lede">This page doesn’t exist, or it moved. Older posts now live under /blog.</p>
+				<p className="ne-pagehead__lede">This page doesn’t exist, or it moved. Older posts now live under /blog.</p>
 			</PageHead>
 			<p className="stack-links">
 				<Link className="more-link" href="/blog">

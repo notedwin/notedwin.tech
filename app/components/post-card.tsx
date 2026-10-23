@@ -26,7 +26,7 @@ export function PostCard({
 			{image ? (
 				<DitherPhoto src={image} alt="" sizes={plateSizes} className="post-card__plate" />
 			) : (
-				<div className="post-card__plate post-card__plate--plain" data-domain={post.metadata.domain} aria-hidden="true" />
+				<div className="ne-plate ne-plate--plain post-card__plate" data-domain={post.metadata.domain} aria-hidden="true" />
 			)}
 			<p className="t-meta post-card__meta">
 				<time dateTime={post.metadata.publishedAt}>{isoDate(post.metadata.publishedAt)}</time>

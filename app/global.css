@@ -20,20 +20,6 @@
 		color: inherit;
 	}
 
-	.skip-link {
-		position: absolute;
-		left: var(--space-4);
-		top: calc(-1 * var(--space-16));
-		z-index: 10;
-		padding: var(--space-2) var(--space-3);
-		background: var(--ink);
-		color: var(--on-ink);
-		font: 400 14px/20px var(--font-mono);
-	}
-	.skip-link:focus-visible {
-		top: var(--space-4);
-	}
-
 	/* The column runs the full page height so the rails do too. */
 	.site {
 		min-height: 100dvh;
@@ -90,11 +76,9 @@
 		color: var(--ink);
 	}
 
-	/* The site's sans text takes the system's --sans-weight (420 in graphite, 400 in smoke). */
-	.ne-prose,
+	/* The site's own sans text takes the system's --sans-weight (420 in graphite, 400 in smoke). */
 	.intro__lede,
-	.post-head__summary,
-	.page-head__lede {
+	.post-head__summary {
 		font-weight: var(--sans-weight);
 	}
 
@@ -137,36 +121,6 @@
 	.image-grid__cell::before,
 	.image-grid__cell::after {
 		content: none;
-	}
-
-	/* Page heads (inner pages): one h1, a label note on the right, a rule under both. */
-	.page-head {
-		padding-bottom: var(--space-6);
-		margin-bottom: var(--space-8);
-		border-bottom: var(--hairline) solid var(--rule);
-	}
-	.page-head__row {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--space-2) var(--space-6);
-	}
-	.page-head h1 {
-		font: 600 44px/48px var(--font-sans);
-		font-stretch: 90%;
-		letter-spacing: -0.025em;
-		text-wrap: balance;
-	}
-	.page-head__note {
-		color: var(--ink-muted);
-	}
-	.page-head__lede {
-		margin-top: var(--space-4);
-		max-width: 44ch;
-		font-size: 19px;
-		line-height: 31px;
-		color: var(--ink-muted);
 	}
 
 	/* Home */
@@ -289,14 +243,6 @@
 	.post-card__plate {
 		aspect-ratio: 5 / 2;
 	}
-	/* Posts without an image: a plain plate in the post's domain wash. */
-	.post-card__plate--plain {
-		background: var(--domain-wash);
-	}
-	.post-card:hover .ne-photo img,
-	.post-card:focus-visible .ne-photo img {
-		opacity: 1;
-	}
 	.post-card__meta {
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
@@ -407,10 +353,6 @@
 		margin-top: var(--space-4);
 		color: var(--ink-muted);
 	}
-	/* The prose's container spans the column, so wide tables can take its full width. */
-	.post-body {
-		container-type: inline-size;
-	}
 	.post-foot {
 		margin-top: var(--space-16);
 	}
@@ -421,132 +363,6 @@
 		margin-bottom: var(--space-6);
 	}
 
-	/* Prose: body 17/28 at 96% width, about 70 characters a line, every color a token. Instrument
-	   Sans's zero is wide for its letters, so 50ch here is roughly 70 characters of running text. */
-	.ne-prose {
-		min-width: 0;
-		max-width: 50ch;
-		font-size: 17px;
-		line-height: 28px;
-		overflow-wrap: break-word;
-	}
-	.ne-prose > * + * {
-		margin-top: var(--space-6);
-	}
-	.ne-prose h2,
-	.ne-prose h3,
-	.ne-prose h4,
-	.ne-prose h5,
-	.ne-prose h6 {
-		position: relative;
-		scroll-margin-top: var(--space-8);
-		font-weight: 600;
-		text-wrap: balance;
-	}
-	.ne-prose h2 {
-		margin-top: var(--space-12);
-		font-size: 28px;
-		line-height: 34px;
-		font-stretch: 90%;
-		letter-spacing: -0.02em;
-	}
-	.ne-prose h3 {
-		margin-top: var(--space-8);
-		font-size: 21px;
-		line-height: 28px;
-		letter-spacing: -0.01em;
-	}
-	/* h4 and below change face rather than shrink, so they never pass for a bold paragraph. */
-	.ne-prose h4,
-	.ne-prose h5,
-	.ne-prose h6 {
-		margin-top: var(--space-8);
-		font: 600 15px/24px var(--font-mono);
-	}
-	.ne-prose h2 + *,
-	.ne-prose h3 + *,
-	.ne-prose h4 + * {
-		margin-top: var(--space-3);
-	}
-	.ne-prose .anchor {
-		margin-left: var(--space-2);
-		color: var(--ink-muted);
-		text-decoration: none;
-		opacity: 0;
-		transition: opacity var(--dur-fast) var(--ease-out);
-	}
-	.ne-prose .anchor::after {
-		content: "#";
-	}
-	.ne-prose :is(h2, h3, h4, h5, h6):hover .anchor,
-	.ne-prose .anchor:focus-visible {
-		opacity: 1;
-	}
-	.ne-prose a:not(.anchor) {
-		color: var(--link);
-		text-decoration: underline;
-		text-decoration-color: var(--ink-faint);
-		text-decoration-thickness: 1px;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 150ms var(--flick);
-	}
-	.ne-prose a:not(.anchor):hover {
-		text-decoration-color: var(--link);
-	}
-	.ne-prose strong {
-		font-weight: 600;
-	}
-	.ne-prose ul,
-	.ne-prose ol {
-		padding-left: var(--space-6);
-	}
-	.ne-prose ul {
-		list-style: square;
-	}
-	.ne-prose ol {
-		list-style: decimal;
-	}
-	.ne-prose li + li,
-	.ne-prose li > ul,
-	.ne-prose li > ol {
-		margin-top: var(--space-2);
-	}
-	.ne-prose li {
-		text-wrap: pretty;
-	}
-	.ne-prose li::marker {
-		color: var(--ink-muted);
-	}
-	.ne-prose blockquote {
-		padding-left: var(--space-4);
-		border-left: var(--hairline) solid var(--ink-faint);
-		color: var(--ink-muted);
-	}
-	.ne-prose hr {
-		border: 0;
-		border-top: var(--hairline) solid var(--rule);
-		margin: var(--space-12) 0;
-	}
-	.ne-prose :not(pre) > code {
-		padding: 1px var(--space-1);
-		background: var(--ground-sunk);
-		font: 400 0.82em/1 var(--font-mono);
-	}
-	.ne-prose pre {
-		overflow-x: auto;
-		padding: var(--space-4);
-		border: var(--hairline) solid var(--rule);
-		background: var(--ground-sunk) !important;
-		font: 400 13px/20px var(--font-mono);
-		scrollbar-width: thin;
-	}
-	.ne-prose pre code {
-		font: inherit;
-	}
-	.ne-prose img {
-		max-width: 100%;
-		height: auto;
-	}
 	.prose-plate {
 		display: block;
 		width: fit-content;
@@ -560,46 +376,6 @@
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
 		text-wrap: pretty;
-	}
-	.table-wrap,
-	.ne-prose > table {
-		display: block;
-		max-width: 100%;
-		overflow-x: auto;
-	}
-	.ne-prose table {
-		border-collapse: collapse;
-		font-size: 15px;
-		line-height: 24px;
-		font-variant-numeric: tabular-nums;
-	}
-	.ne-prose th {
-		padding: 0 var(--space-3);
-		background: var(--ground-sunk);
-		font: 400 11px/22px var(--font-pixel);
-		text-transform: lowercase;
-		text-align: left;
-		color: var(--ink-muted);
-		white-space: nowrap;
-	}
-	.ne-prose td {
-		padding: var(--space-2) var(--space-3);
-		border-bottom: var(--hairline) solid var(--rule);
-		vertical-align: top;
-		white-space: nowrap;
-	}
-	/* Long text cells wrap so the numbers stay in view; numbers line up on the right. */
-	.ne-prose td.wrap {
-		min-width: 16ch;
-		white-space: normal;
-	}
-	.ne-prose :is(th, td).num {
-		text-align: right;
-	}
-	.ne-prose .katex-display {
-		overflow-x: auto;
-		overflow-y: hidden;
-		padding: var(--space-2) 0;
 	}
 	.callout {
 		display: grid;
@@ -742,19 +518,6 @@
 		justify-content: center;
 	}
 
-	/* Code colours come from the system (code-* tokens); keywords sit at 600. */
-	.ne-prose pre [style*="--shiki-token-keyword"] {
-		font-weight: 600;
-	}
-
-	/* 768px and up: wide tables (6+ columns) run past the prose measure to the column's edge. */
-	@media (min-width: 768px) {
-		.ne-prose .table-wrap--wide {
-			width: 100cqi;
-			max-width: none;
-		}
-	}
-
 	/* Below 768px: intro and photos stack; sections tighten. */
 	@media (max-width: 767px) {
 		.site-header {
@@ -763,10 +526,7 @@
 		.intro {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		/* Phones: no cube and only the first two posts, so home fits one screen with room to breathe. */
-		.intro .ne-stage {
-			display: none;
-		}
+		/* Phones: only the first two posts (the system hides the cube), so home fits one screen. */
 		.site:has(> .home) .site-header {
 			margin: var(--space-4) 0;
 		}
@@ -786,7 +546,6 @@
 		.photo-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
-		.page-head h1,
 		.post-head__title {
 			font-size: 33px;
 			line-height: 38px;
