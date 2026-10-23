@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
 			<body>
-				<a className="skip-link" href="#main">
+				<a className="ne-skip" href="#main">
 					skip to content
 				</a>
 				<div className="ne-col site">

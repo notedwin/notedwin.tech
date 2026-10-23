@@ -101,7 +101,7 @@ export default async function Blog({ params }) {
 					)}
 				</p>
 			</header>
-			<div className="post-body">
+			<div className="ne-prose-frame">
 				<article className="ne-prose">
 					<CustomMDX source={post.content} />
 				</article>
