@@ -80,11 +80,17 @@
 		gap: var(--space-2) var(--space-6);
 		color: var(--ink-muted);
 	}
+	/* Links set apart by space, not dots, so a wrapped line never starts on a separator. */
 	.site-footer__links {
-		font: 400 11px/22px var(--font-pixel);
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--space-6);
+		font: 400 13px/20px var(--font-mono);
 		text-transform: lowercase;
 	}
 	.site-footer__links a {
+		display: inline-block;
+		padding: var(--space-1) 0;
 		text-decoration: underline;
 		text-decoration-color: var(--ink-faint);
 		text-underline-offset: 3px;
@@ -92,6 +98,51 @@
 	}
 	.site-footer__links a:hover {
 		color: var(--ink);
+	}
+
+	/* Nav: 28px hit areas. Commit Mono's 500 and 600 share one file, so the current page is
+	   underlined as well as inked. */
+	.ne-nav a {
+		display: inline-block;
+		padding: var(--space-1) 0;
+	}
+	/* The theme button keeps a 28px target when phones hide its label. */
+	.ne-theme {
+		justify-content: center;
+		min-width: var(--space-8);
+		min-height: 28px;
+	}
+	.ne-nav a[aria-current] {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 6px;
+	}
+
+	/* Departure Mono is for tables, figures and numerals. The commit line and section notes are
+	   meta: Commit Mono 13/20. The message keeps a few characters under zoom instead of collapsing. */
+	.ne-commit,
+	.ne-sh span {
+		font: 400 13px/20px var(--font-mono);
+	}
+	.ne-commit code {
+		min-width: 12ch;
+	}
+
+	/* Light on graphite reads thin: sans text in the dark theme sits a touch heavier (420, from the
+	   variable axis). Only sans elements: Commit Mono would round 420 up to its SemiBold file. */
+	.ne-prose,
+	.intro__lede,
+	.post-head__summary,
+	.page-head__lede {
+		font-weight: 420;
+	}
+	@media (prefers-color-scheme: light) {
+		:root:not([data-theme="dark"]) :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede) {
+			font-weight: 400;
+		}
+	}
+	:root[data-theme="light"] :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede) {
+		font-weight: 400;
 	}
 
 	/* Shared bits */
@@ -156,7 +207,7 @@
 		gap: var(--space-2) var(--space-6);
 	}
 	.page-head h1 {
-		font: 600 44px/44px var(--font-sans);
+		font: 600 44px/48px var(--font-sans);
 		font-stretch: 90%;
 		letter-spacing: -0.025em;
 		text-wrap: balance;
@@ -166,7 +217,7 @@
 	}
 	.page-head__lede {
 		margin-top: var(--space-4);
-		max-width: var(--measure);
+		max-width: 44ch;
 		font-size: 19px;
 		line-height: 31px;
 		color: var(--ink-muted);
@@ -180,7 +231,9 @@
 		align-items: center;
 	}
 	.intro__lede {
-		font: 400 19px/31px var(--font-sans);
+		font-family: var(--font-sans);
+		font-size: 19px;
+		line-height: 31px;
 		font-stretch: 96%;
 		max-width: 44ch;
 		text-wrap: pretty;
@@ -264,26 +317,23 @@
 		margin: var(--space-2) 0 var(--space-6);
 		color: var(--ink-muted);
 	}
-	/* Home shows four chosen posts, two by two at every width. From 768px up each card lays its
-	   plate beside the meta and title, so both rows fit the first screen. */
-	.post-grid--home {
+	/* The pair grid (home's four chosen posts, a post's read next): two by two at every width. From
+	   768px up each card lays its plate beside the meta and title, so home's rows fit the first screen. */
+	.post-grid--pair {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 	@media (min-width: 768px) {
-		.post-grid--home .post-card {
+		.post-grid--pair .post-card {
 			display: grid;
 			grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
 			grid-template-rows: auto 1fr;
 			column-gap: var(--space-4);
 		}
-		.post-grid--home .post-card__plate {
+		.post-grid--pair .post-card__plate {
 			grid-row: 1 / span 2;
 		}
-		.post-grid--home .post-card__meta {
+		.post-grid--pair .post-card__meta {
 			margin-top: 0;
-		}
-		.post-grid--home .post-card__title {
-			--title-lines: 3;
 		}
 	}
 	.post-card {
@@ -293,6 +343,10 @@
 	.post-card__plate {
 		aspect-ratio: 5 / 2;
 	}
+	/* Posts without an image: a plain plate in the post's domain wash. */
+	.post-card__plate--plain {
+		background: var(--domain-wash);
+	}
 	.post-card:hover .ne-photo img,
 	.post-card:focus-visible .ne-photo img {
 		opacity: 1;
@@ -301,15 +355,15 @@
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
 	}
-	/* Titles wrap in full on /blog; home clamps them (2 lines, 3 beside a plate) to stay one screen. */
-	.post-grid--home .post-card__title {
+	/* Titles wrap in full on /blog; the pair grid clamps them at 3 lines so home stays one screen. */
+	.post-grid--pair .post-card__title {
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
-		-webkit-line-clamp: var(--title-lines, 2);
+		-webkit-line-clamp: 3;
 		overflow: hidden;
 	}
 	.post-card__title {
-		font-size: 15px;
+		font-size: 16px;
 		line-height: 24px;
 		font-weight: 600;
 		text-wrap: pretty;
@@ -322,7 +376,7 @@
 		text-decoration-thickness: 1px;
 	}
 	.post-card__title .star {
-		font: 400 15px/24px var(--font-mono);
+		font: 400 16px/24px var(--font-mono);
 		color: var(--ember-ink);
 	}
 	.row-title {
@@ -347,6 +401,14 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-8) var(--space-6);
 	}
+	/* Captions are the photo's name in Commit Mono (Departure Mono is for tables, figures, numerals). */
+	.ne-fig figcaption {
+		font: 400 13px/20px var(--font-mono);
+	}
+	/* A tap focuses the plate, so colour shows on touch as on hover. */
+	.photo-grid .ne-photo[data-drawn]:focus img {
+		opacity: 1;
+	}
 	.ne-fig figcaption a {
 		text-decoration: underline;
 		text-decoration-color: var(--ink-faint);
@@ -368,6 +430,10 @@
 	.project-list .row-title {
 		margin: var(--space-1) 0;
 	}
+	.row-stat {
+		font-weight: 600;
+		color: var(--ink);
+	}
 	.row-arrow {
 		display: inline-block;
 		margin-left: var(--space-2);
@@ -385,65 +451,48 @@
 		color: var(--ember-ink);
 	}
 
-	/* Post: workbench mode */
+	/* Post: title, lede, one date line, then the prose. */
 	.post-head {
 		padding-bottom: var(--space-6);
 		margin-bottom: var(--space-8);
 		border-bottom: var(--hairline) solid var(--rule);
 	}
-	.post-head__kicker {
-		color: var(--ink-muted);
-	}
-	.post-head__kicker a {
-		text-decoration: underline;
-		text-decoration-color: var(--ink-faint);
-		text-underline-offset: 3px;
-	}
 	.post-head__title {
-		margin-top: var(--space-2);
-		font: 600 44px/44px var(--font-sans);
+		font: 600 44px/48px var(--font-sans);
 		font-stretch: 90%;
 		letter-spacing: -0.025em;
 		text-wrap: balance;
 	}
 	.post-head__summary {
 		margin-top: var(--space-4);
-		max-width: var(--measure);
+		max-width: 44ch;
 		font-size: 19px;
 		line-height: 31px;
 		color: var(--ink-muted);
 	}
-	.workbench-page {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		gap: var(--space-8);
+	.post-head__meta {
+		margin-top: var(--space-4);
+		color: var(--ink-muted);
 	}
-	.rail {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2) var(--space-6);
-	}
-	.rail .ne-meta-list--stack {
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: var(--space-1) var(--space-4);
-	}
-	.rail .ne-status {
-		font: inherit;
-	}
-	.rail__tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2);
+	/* The prose's container spans the column, so wide tables can take its full width. */
+	.post-body {
+		container-type: inline-size;
 	}
 	.post-foot {
 		margin-top: var(--space-16);
 	}
+	.read-next {
+		margin-top: var(--space-12);
+	}
+	.read-next > .ne-sh {
+		margin-bottom: var(--space-6);
+	}
 
-	/* Prose: body 17/28 at 96% width, 66ch measure, every color a token. */
+	/* Prose: body 17/28 at 96% width, about 70 characters a line, every color a token. Instrument
+	   Sans's zero is wide for its letters, so 50ch here is roughly 70 characters of running text. */
 	.ne-prose {
 		min-width: 0;
-		max-width: var(--measure);
+		max-width: 50ch;
 		font-size: 17px;
 		line-height: 28px;
 		overflow-wrap: break-word;
@@ -470,15 +519,16 @@
 	}
 	.ne-prose h3 {
 		margin-top: var(--space-8);
-		font-size: 19px;
+		font-size: 21px;
 		line-height: 28px;
 		letter-spacing: -0.01em;
 	}
+	/* h4 and below change face rather than shrink, so they never pass for a bold paragraph. */
 	.ne-prose h4,
 	.ne-prose h5,
 	.ne-prose h6 {
 		margin-top: var(--space-8);
-		font-size: 17px;
+		font: 600 15px/24px var(--font-mono);
 	}
 	.ne-prose h2 + *,
 	.ne-prose h3 + *,
@@ -527,6 +577,9 @@
 	.ne-prose li > ul,
 	.ne-prose li > ol {
 		margin-top: var(--space-2);
+	}
+	.ne-prose li {
+		text-wrap: pretty;
 	}
 	.ne-prose li::marker {
 		color: var(--ink-muted);
@@ -804,31 +857,11 @@
 		font-weight: 600;
 	}
 
-	/* 1024px and up: the workbench rail appears on the left. */
-	@media (min-width: 1024px) {
-		.workbench-page {
-			grid-template-columns: var(--rail) minmax(0, 1fr);
-			gap: var(--space-6);
-		}
-		.rail {
-			position: sticky;
-			top: calc(var(--header-bar) + var(--space-8));
-			align-self: start;
-			flex-direction: column;
-		}
-		.rail .ne-meta-list--stack {
-			flex-direction: column;
-			gap: var(--space-2);
-		}
-		/* Wide tables (6+ columns) take the full column, extending left under the rail. They sit
-		   above the sticky rail on the page ground, so the rail hides behind them as they pass. */
+	/* 768px and up: wide tables (6+ columns) run past the prose measure to the column's edge. */
+	@media (min-width: 768px) {
 		.ne-prose .table-wrap--wide {
-			position: relative;
-			z-index: 1;
-			width: calc(100% + var(--rail) + var(--space-6));
+			width: 100cqi;
 			max-width: none;
-			margin-left: calc(-1 * (var(--rail) + var(--space-6)));
-			background: var(--ground);
 		}
 	}
 
@@ -866,7 +899,7 @@
 		.page-head h1,
 		.post-head__title {
 			font-size: 33px;
-			line-height: 36px;
+			line-height: 38px;
 		}
 		.site-footer {
 			margin-top: var(--space-24);

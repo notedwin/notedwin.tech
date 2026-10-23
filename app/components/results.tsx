@@ -86,7 +86,7 @@ export function Results({ n, caption, metrics, rows, features = [], highlight = 
 				<span>ember = {rows[highlight].label ?? "chosen features"} · scale 0–1</span>
 			</figcaption>
 			<details className="results__table">
-				<summary className="t-label">table</summary>
+				<summary className="t-meta">table</summary>
 				<div className="table-wrap table-wrap--wide" tabIndex={0} role="region" aria-label={`table: ${caption}`}>
 					<table>
 						<thead>

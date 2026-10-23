@@ -82,7 +82,7 @@ function Strikethrough(props) {
 function Callout({ children }) {
 	return (
 		<aside className="callout">
-			<span className="t-label callout__label">note</span>
+			<span className="t-meta callout__label">note</span>
 			<div>{children}</div>
 		</aside>
 	);

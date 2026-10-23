@@ -9,7 +9,7 @@ export function PageHead({ title, note, children }: { title: string; note?: Reac
 		<div className="page-head">
 			<div className="page-head__row">
 				<h1>{title}</h1>
-				{note && <span className="t-label page-head__note">{note}</span>}
+				{note && <span className="t-meta page-head__note">{note}</span>}
 			</div>
 			{children}
 		</div>
