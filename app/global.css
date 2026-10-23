@@ -283,7 +283,7 @@
 			margin-top: 0;
 		}
 		.post-grid--home .post-card__title {
-			-webkit-line-clamp: 3;
+			--title-lines: 3;
 		}
 	}
 	.post-card {
@@ -301,11 +301,14 @@
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
 	}
-	.post-card__title {
+	/* Titles wrap in full on /blog; home clamps them (2 lines, 3 beside a plate) to stay one screen. */
+	.post-grid--home .post-card__title {
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
+		-webkit-line-clamp: var(--title-lines, 2);
 		overflow: hidden;
+	}
+	.post-card__title {
 		font-size: 15px;
 		line-height: 24px;
 		font-weight: 600;
@@ -564,10 +567,13 @@
 		max-width: 100%;
 		background: var(--ground-sunk);
 	}
+	/* Post captions are prose: Commit Mono (meta), sentence case. The pixel face is for short
+	   technical labels, never sentences. */
 	.caption {
 		display: block;
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
+		text-wrap: pretty;
 	}
 	.table-wrap,
 	.ne-prose > table {
@@ -750,20 +756,11 @@
 		justify-content: center;
 	}
 
-	/* Photo dither ink and strength: sage on graphite, subdued ember on smoke. */
+	/* Photo dither ink and strength: ash (flame-body) in both themes. Ember stays a signal: the
+	   commit square, the ★ and a figure's highlighted series. */
 	:root {
 		--dither-ink: var(--flame-body);
 		--dither-opacity: 0.9;
-	}
-	@media (prefers-color-scheme: light) {
-		:root:not([data-theme="dark"]) {
-			--dither-ink: var(--ember);
-			--dither-opacity: 0.65;
-		}
-	}
-	:root[data-theme="light"] {
-		--dither-ink: var(--ember);
-		--dither-opacity: 0.65;
 	}
 
 	/* Code colors: shiki's css-variables theme on the sunk ground. Graphite highlights in sage, like

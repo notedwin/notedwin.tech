@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-// Figure caption in the label face.
+// A photo's caption: a sentence, so meta type (Commit Mono) and its own capitals.
 export function CaptionComponent({ children }: { children: ReactNode }) {
-	return <span className="caption t-label">{children}</span>;
+	return <span className="caption t-meta">{children}</span>;
 }
