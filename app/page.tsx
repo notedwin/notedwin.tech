@@ -47,7 +47,7 @@ export default function Page() {
 				<div>
 					<h1 className="intro__lede">
 						Hey, I’m Edwin, currently doing data and ML things at{" "}
-						<a className="ne-link" href="https://mcdonalds.com" rel="noopener noreferrer">
+						<a className="ne-link" href="https://www.mcdonalds.co.jp/" rel="noopener noreferrer">
 							McD
 						</a>{" "}
 						🍟

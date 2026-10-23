@@ -15,9 +15,9 @@ export interface Project {
 export const projects: Project[] = [
 	{
 		title: "Homelab",
-		year: 2020,
+		year: 2026,
 		description: "The servers in my apartment, written up once a year.",
-		url: "/blog/homelab-2026",
+		url: "https://lab.notedwin.com/",
 		domain: "infra",
 		status: "growing",
 		image: "/photos/10.webp",
@@ -34,14 +34,6 @@ export const projects: Project[] = [
 		imageAlt: "Shot cone from a player to the goal posts on a HaxBall pitch",
 	},
 	{
-		title: "measurements",
-		year: 2024,
-		description: "A collection of measurements on myself.",
-		url: "https://how.notedwin.com/",
-		domain: "data",
-		status: "live",
-	},
-	{
 		title: "chicago",
 		year: 2024,
 		description: "An attempt at a Google Maps alternative.",
@@ -50,12 +42,12 @@ export const projects: Project[] = [
 		status: "live",
 	},
 	{
-		title: "tiny-spider",
+		title: "measurements",
 		year: 2024,
-		description: "Scheduled tasks that collect my personal data.",
-		url: "https://github.com/notedwin/tiny_spider",
+		description: "A collection of measurements on myself.",
+		url: "https://how.notedwin.com/",
 		domain: "data",
-		status: "settled",
+		status: "live",
 	},
 ];
 

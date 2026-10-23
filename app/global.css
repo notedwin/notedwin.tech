@@ -48,8 +48,19 @@
 		flex: 1;
 	}
 
+	/* The header stays pinned to the top. Only its slim bar sticks; the space around it is margin,
+	   so it scrolls away. Above wide tables (z-index 1), on the page ground. */
+	:root {
+		--header-bar: calc(2 * var(--space-4) + var(--space-8));
+		scroll-padding-top: var(--header-bar);
+	}
 	.site-header {
-		padding: var(--space-12) 0 var(--space-16);
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		padding: var(--space-4) 0;
+		margin: var(--space-8) 0 var(--space-12);
+		background: var(--ground);
 	}
 	.ne-commit a:hover {
 		color: var(--link);
@@ -188,7 +199,7 @@
 	}
 	/* Home is one screen: header, intro, the blog grid. Tighter rhythm than inner pages. */
 	.site:has(> .home) .site-header {
-		padding-bottom: var(--space-8);
+		margin-bottom: var(--space-4);
 	}
 	.home-section {
 		margin-top: var(--space-8);
@@ -760,7 +771,7 @@
 		}
 		.rail {
 			position: sticky;
-			top: var(--space-8);
+			top: calc(var(--header-bar) + var(--space-8));
 			align-self: start;
 			flex-direction: column;
 		}
@@ -783,7 +794,7 @@
 	/* Below 768px: intro and photos stack; sections tighten. */
 	@media (max-width: 767px) {
 		.site-header {
-			padding: var(--space-8) 0 var(--space-12);
+			margin: var(--space-4) 0 var(--space-8);
 		}
 		.intro {
 			grid-template-columns: minmax(0, 1fr);
@@ -793,7 +804,7 @@
 			display: none;
 		}
 		.site:has(> .home) .site-header {
-			padding: var(--space-8) 0;
+			margin: var(--space-4) 0;
 		}
 		.home-section {
 			margin-top: var(--space-12);
