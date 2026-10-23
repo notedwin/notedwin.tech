@@ -49,7 +49,12 @@ scratchpad/
 # TypeScript incremental build info
 tsconfig.tsbuildinfo
 
-# Local writing skill (voice and interview-derived material)
-.claude/skills/notedwin-writing/
-
 .lighthouseci/
+
+# Local agent setup and Playwright checks (kept on disk, not in the repo)
+.claude/
+CLAUDE.md
+AGENTS.md
+playwright-cli.json
+playwright.config.ts
+tests/
