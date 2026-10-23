@@ -32,7 +32,7 @@
 		padding: var(--space-2) var(--space-3);
 		background: var(--ink);
 		color: var(--on-ink);
-		font: 500 14px/20px var(--font-mono);
+		font: 400 14px/20px var(--font-mono);
 	}
 	.skip-link:focus-visible {
 		top: var(--space-4);
@@ -128,21 +128,12 @@
 		min-width: 12ch;
 	}
 
-	/* Light on graphite reads thin: sans text in the dark theme sits a touch heavier (420, from the
-	   variable axis). Only sans elements: Commit Mono would round 420 up to its SemiBold file. */
+	/* The site's sans text takes the system's --sans-weight (420 in graphite, 400 in smoke). */
 	.ne-prose,
 	.intro__lede,
 	.post-head__summary,
 	.page-head__lede {
-		font-weight: 420;
-	}
-	@media (prefers-color-scheme: light) {
-		:root:not([data-theme="dark"]) :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede) {
-			font-weight: 400;
-		}
-	}
-	:root[data-theme="light"] :is(.ne-prose, .intro__lede, .post-head__summary, .page-head__lede) {
-		font-weight: 400;
+		font-weight: var(--sans-weight);
 	}
 
 	/* Shared bits */
@@ -155,7 +146,7 @@
 	.more-link {
 		display: inline-block;
 		margin-top: var(--space-4);
-		font: 500 14px/20px var(--font-mono);
+		font: 400 14px/20px var(--font-mono);
 		color: var(--ink-muted);
 		text-decoration: none;
 		transition: color 150ms var(--flick);
@@ -744,7 +735,7 @@
 	.results__label {
 		padding-right: var(--space-2);
 		font-size: 15px;
-		line-height: 32px;
+		line-height: 24px;
 		white-space: nowrap;
 	}
 	.is-hi .results__label {
@@ -816,43 +807,7 @@
 		--dither-opacity: 0.9;
 	}
 
-	/* Code colors: shiki's css-variables theme on the sunk ground. Graphite highlights in sage, like
-	   Nord: keywords in flame-body, functions in infra-ink, strings in signal-live. Smoke highlights
-	   in orange: keywords and functions in ember-ink, strings in signal-warn's amber. Comments are
-	   ink-muted in both (ink-faint is under 4.5:1 on ground-sunk). Keywords at 600. */
-	:root {
-		--shiki-foreground: var(--ink);
-		--shiki-background: var(--ground-sunk);
-		--shiki-token-keyword: var(--flame-body);
-		--shiki-token-function: var(--infra-ink);
-		--shiki-token-string: var(--signal-live);
-		--shiki-token-string-expression: var(--signal-live);
-		--shiki-token-constant: var(--ash-100);
-		--shiki-token-parameter: var(--ink);
-		--shiki-token-punctuation: var(--ink-muted);
-		--shiki-token-comment: var(--ink-muted);
-		--shiki-token-link: var(--link);
-		--shiki-token-inserted: var(--signal-live);
-		--shiki-token-deleted: var(--signal-error);
-		--shiki-token-changed: var(--signal-warn);
-	}
-	@media (prefers-color-scheme: light) {
-		:root:not([data-theme="dark"]) {
-			--shiki-token-keyword: var(--ember-ink);
-			--shiki-token-function: var(--ember-ink);
-			--shiki-token-string: var(--signal-warn);
-			--shiki-token-string-expression: var(--signal-warn);
-			--shiki-token-constant: var(--signal-warn);
-		}
-	}
-	:root[data-theme="light"] {
-		--shiki-token-keyword: var(--ember-ink);
-		--shiki-token-function: var(--ember-ink);
-		--shiki-token-string: var(--signal-warn);
-		--shiki-token-string-expression: var(--signal-warn);
-		--shiki-token-constant: var(--signal-warn);
-	}
-
+	/* Code colours come from the system (code-* tokens); keywords sit at 600. */
 	.ne-prose pre [style*="--shiki-token-keyword"] {
 		font-weight: 600;
 	}
