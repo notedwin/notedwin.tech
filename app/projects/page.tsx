@@ -13,9 +13,9 @@ export default function Projects() {
 	let sorted = [...projects].sort((a, b) => b.year - a.year);
 	return (
 		<main id="main" data-mode="workbench">
-			<PageHead title="Projects" note={`${projects.length} projects · newest first`} />
+			<PageHead title="Projects" note={`${projects.length} projects`} />
 			<ul className="ne-rows project-list">
-				{sorted.map((p) => {
+				{projects.map((p) => {
 					let external = p.url.startsWith("http");
 					return (
 						<li key={p.title}>
