@@ -157,9 +157,6 @@
 	.home-section {
 		margin-top: var(--space-8);
 	}
-	.home-section > .ne-sh {
-		margin-bottom: var(--space-6);
-	}
 	.sh-link {
 		text-decoration: none;
 		transition: color 150ms var(--flick);
@@ -358,9 +355,6 @@
 	}
 	.read-next {
 		margin-top: var(--space-12);
-	}
-	.read-next > .ne-sh {
-		margin-bottom: var(--space-6);
 	}
 
 	.prose-plate {
