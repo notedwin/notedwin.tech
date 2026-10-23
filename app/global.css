@@ -78,7 +78,8 @@
 
 	/* The site's own sans text takes the system's --sans-weight (420 in graphite, 400 in smoke). */
 	.intro__lede,
-	.post-head__summary {
+	.post-head__summary,
+	.post-card__snippet {
 		font-weight: var(--sans-weight);
 	}
 
@@ -263,6 +264,22 @@
 		text-decoration: underline;
 		text-underline-offset: 4px;
 		text-decoration-thickness: 1px;
+	}
+	/* While searching, the line that matched sits under the card: muted, matches in ink as the
+	   system marks words inside muted text, three lines at most. */
+	.post-card__snippet {
+		margin-top: var(--space-1);
+		color: var(--ink-muted);
+		overflow-wrap: anywhere;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
+	.post-card__snippet mark {
+		background: none;
+		color: var(--ink);
+		font-weight: 500;
 	}
 	.post-card__title .star {
 		font: 400 16px/24px var(--font-mono);

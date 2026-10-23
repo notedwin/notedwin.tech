@@ -1,21 +1,25 @@
 "use client";
 
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import type { SearchIndex, search as searchFn } from "app/lib/search";
+import type { SearchIndex, Snippet, search as searchFn, snippet as snippetFn } from "app/lib/search";
 
 type Entry = { slug: string; card: ReactNode };
 type Sort = "newest" | "oldest";
-type Engine = { index: SearchIndex; search: typeof searchFn };
+type Engine = { index: SearchIndex; search: typeof searchFn; snippet: typeof snippetFn };
 
 // A search box and newest/oldest sort over the server-rendered post cards (passed newest first).
 // The index and the scoring code load the first time someone reaches for the box, so a plain
 // visit to /blog downloads neither. Query and sort live in the URL (?q=, ?sort=oldest).
+// While searching, each card shows the line that matched. `/` focuses the box; Enter moves to the
+// first result, which also closes a phone's keyboard.
 export function BlogSearch({ entries }: { entries: Entry[] }) {
 	let id = useId();
 	let [query, setQuery] = useState("");
 	let [sort, setSort] = useState<Sort>("newest");
 	let [engine, setEngine] = useState<Engine | "loading" | "error" | null>(null);
 	let pending = useRef<Promise<void> | null>(null);
+	let input = useRef<HTMLInputElement>(null);
+	let list = useRef<HTMLUListElement>(null);
 
 	function load() {
 		if (pending.current) return;
@@ -27,7 +31,7 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 				return r.json() as Promise<SearchIndex>;
 			}),
 		])
-			.then(([lib, index]) => setEngine({ index, search: lib.search }))
+			.then(([lib, index]) => setEngine({ index, search: lib.search, snippet: lib.snippet }))
 			.catch(() => {
 				// Try again on the next focus.
 				pending.current = null;
@@ -54,13 +58,28 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 		if (q) load();
 	}, []);
 
+	useEffect(() => {
+		function onKey(e: KeyboardEvent) {
+			if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
+			let el = e.target as HTMLElement;
+			if (el.closest("input, textarea, select, [contenteditable]")) return;
+			e.preventDefault();
+			input.current?.focus();
+		}
+		document.addEventListener("keydown", onKey);
+		return () => document.removeEventListener("keydown", onKey);
+	}, []);
+
 	let q = query.trim();
 	let ready = typeof engine === "object" ? engine : null;
 	let searching = q !== "" && ready !== null;
-	let shown = entries;
+	let shown: (Entry & { snippet?: Snippet | null })[] = entries;
 	if (q && ready) {
 		let bySlug = new Map(entries.map((e) => [e.slug, e]));
-		shown = ready.search(ready.index, q).flatMap((r) => bySlug.get(r.slug) ?? []);
+		shown = ready.search(ready.index, q).flatMap((r) => {
+			let entry = bySlug.get(r.slug);
+			return entry ? [{ ...entry, snippet: ready.snippet(ready.index, r.doc, q) }] : [];
+		});
 	} else if (sort === "oldest") {
 		shown = [...entries].reverse();
 	}
@@ -78,6 +97,7 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 					search posts
 				</label>
 				<input
+					ref={input}
 					id={id}
 					className="blog-search__input"
 					type="search"
@@ -85,6 +105,7 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 					autoComplete="off"
 					spellCheck={false}
 					enterKeyHint="search"
+					aria-keyshortcuts="/"
 					value={query}
 					onFocus={load}
 					onPointerEnter={load}
@@ -96,6 +117,10 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 						if (e.key === "Escape" && query) {
 							e.preventDefault();
 							update("", sort);
+						}
+						if (e.key === "Enter" && searching) {
+							e.preventDefault();
+							list.current?.querySelector("a")?.focus();
 						}
 					}}
 				/>
@@ -116,9 +141,16 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 					clear search
 				</button>
 			) : (
-				<ul className="post-grid">
+				<ul className="post-grid" ref={list}>
 					{shown.map((e) => (
-						<li key={e.slug}>{e.card}</li>
+						<li key={e.slug}>
+							{e.card}
+							{e.snippet && (
+								<p className="t-body-sm post-card__snippet">
+									{e.snippet.map(([text, match], i) => (match ? <mark key={i}>{text}</mark> : text))}
+								</p>
+							)}
+						</li>
 					))}
 				</ul>
 			)}

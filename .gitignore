@@ -56,3 +56,7 @@ AGENTS.md
 playwright-cli.json
 playwright.config.ts
 tests/
+
+# Post backlog: local only
+/docs/
+/.impeccable/
