@@ -27,7 +27,7 @@ const plainImage = (props: DitherImageProps) => <img {...props} loading="lazy" d
 // A photo printed in the pixel language: a two-ink 8×8 ordered dither, one image pixel per 2
 // device pixels, with the original fading in on hover or focus. The plate is focusable so
 // keyboard readers get the color too. The dither is drawn from the color layer's own source,
-// so each photo downloads once.
+// so each photo downloads once. The original shows until the dither has drawn (`data-drawn`).
 export function DitherPhoto({ src, alt, className = "", renderImage = plainImage }: Props) {
 	let canvas = useRef<HTMLCanvasElement>(null);
 	let img = useRef<HTMLImageElement>(null);
@@ -58,6 +58,15 @@ export function DitherPhoto({ src, alt, className = "", renderImage = plainImage
 		c.width = w;
 		c.height = h;
 		ditherImage(source, source.naturalWidth, source.naturalHeight, c);
+		// Until now the original shows (greyscale), so the plate is never blank before or without
+		// JS. The swap is instant: reading the style applies it before the hover fade turns on (a
+		// requestAnimationFrame runs before the frame's style pass, so both would land together).
+		let plate = c.parentElement!;
+		if (!("drawn" in plate.dataset)) {
+			plate.dataset.drawn = "";
+			if (img.current) getComputedStyle(img.current).opacity;
+			plate.dataset.settled = "";
+		}
 	}, []);
 
 	useEffect(() => {

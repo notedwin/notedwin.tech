@@ -38,7 +38,7 @@
   "scripts": {
     "generate": "node build/generate.mjs",
     "build": "node build/generate.mjs && tsup",
-    "check": "node build/generate.mjs --check && node checks/contrast.mjs",
+    "check": "node build/generate.mjs --check && node checks/contrast.mjs && node checks/scale.mjs",
     "check:perspective": "node checks/perspective.mjs",
     "prepack": "pnpm build"
   },

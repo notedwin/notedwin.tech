@@ -55,10 +55,10 @@ body {
 .ne-meta-list { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
 .ne-meta-list--stack { flex-direction: column; gap: var(--space-2); }
 
-.ne-tag { display: inline-flex; align-items: center; gap: 6px; padding: 2px var(--space-2); border-radius: var(--radius-sm); background: var(--domain-wash); color: var(--domain-ink); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; }
+.ne-tag { display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-2); border-radius: var(--radius-sm); background: var(--domain-wash); color: var(--domain-ink); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; }
 .ne-tag::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
 
-.ne-status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; color: var(--ink-muted); }
+.ne-status { display: inline-flex; align-items: center; gap: var(--space-1); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; color: var(--ink-muted); }
 .ne-status::before { content: ""; width: 7px; height: 7px; border-radius: var(--radius-pill); background: var(--ink-faint); }
 .ne-status[data-state="live"] { color: var(--signal-live); }
 .ne-status[data-state="live"]::before { background: var(--signal-live); }
@@ -165,7 +165,7 @@ body {
 .ne-conseq .is-gain { color: var(--signal-live); }
 .ne-conseq .is-cost { color: var(--ember-ink); }
 .ne-seg { display: inline-flex; width: fit-content; border: var(--hairline) solid var(--rule); }
-.ne-seg button { font: 400 11px/22px var(--font-pixel); padding: 6px 10px; background: transparent; color: var(--ink-muted); border: 0; border-left: var(--hairline) solid var(--rule); cursor: pointer; }
+.ne-seg button { font: 400 11px/22px var(--font-pixel); padding: var(--space-1) var(--space-3); background: transparent; color: var(--ink-muted); border: 0; border-left: var(--hairline) solid var(--rule); cursor: pointer; }
 .ne-seg button:first-child { border-left: 0; }
 .ne-seg button[aria-pressed="true"] { color: var(--ink); background: var(--ground-raised); }
 .ne-seg button[aria-pressed="true"][data-a="allow"] { color: var(--signal-live); }
@@ -215,7 +215,7 @@ body {
 .ne-nav a { font: 500 14px/20px var(--font-mono); color: var(--ink-muted); text-decoration: none; }
 .ne-nav a:hover { color: var(--ink); }
 .ne-nav a[aria-current] { color: var(--ink); font-weight: 600; }
-.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: 3px 10px; cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
+.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: var(--space-1) var(--space-3); cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
 .ne-theme:hover { color: var(--ink); border-color: var(--ink); }
 .ne-theme i { width: 10px; height: 10px; border: var(--hairline) solid currentColor; background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); }
 .ne-commit { flex-basis: 100%; min-width: 0; margin: 0; padding-top: var(--space-4); border-top: var(--hairline) solid var(--rule); display: flex; gap: var(--space-2); align-items: center; white-space: nowrap; font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
@@ -225,7 +225,7 @@ body {
 @media (max-width: 480px) {
   .ne-header__right { width: 100%; justify-content: space-between; gap: var(--space-4); }
   .ne-nav { gap: var(--space-4); }
-  .ne-theme { padding: 5px 7px; }
+  .ne-theme { padding: var(--space-1) var(--space-2); }
   .ne-theme span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .ne-commit .lead, .ne-commit .lead + span { display: none; }
 }

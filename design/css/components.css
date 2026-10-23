@@ -56,10 +56,10 @@ body {
 .ne-meta-list { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
 .ne-meta-list--stack { flex-direction: column; gap: var(--space-2); }
 
-.ne-tag { display: inline-flex; align-items: center; gap: 6px; padding: 2px var(--space-2); border-radius: var(--radius-sm); background: var(--domain-wash); color: var(--domain-ink); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; }
+.ne-tag { display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-2); border-radius: var(--radius-sm); background: var(--domain-wash); color: var(--domain-ink); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; }
 .ne-tag::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
 
-.ne-status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; color: var(--ink-muted); }
+.ne-status { display: inline-flex; align-items: center; gap: var(--space-1); font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; text-transform: lowercase; color: var(--ink-muted); }
 .ne-status::before { content: ""; width: 7px; height: 7px; border-radius: var(--radius-pill); background: var(--ink-faint); }
 .ne-status[data-state="live"] { color: var(--signal-live); }
 .ne-status[data-state="live"]::before { background: var(--signal-live); }
@@ -166,7 +166,7 @@ body {
 .ne-conseq .is-gain { color: var(--signal-live); }
 .ne-conseq .is-cost { color: var(--ember-ink); }
 .ne-seg { display: inline-flex; width: fit-content; border: var(--hairline) solid var(--rule); }
-.ne-seg button { font: 400 11px/22px var(--font-pixel); padding: 6px 10px; background: transparent; color: var(--ink-muted); border: 0; border-left: var(--hairline) solid var(--rule); cursor: pointer; }
+.ne-seg button { font: 400 11px/22px var(--font-pixel); padding: var(--space-1) var(--space-3); background: transparent; color: var(--ink-muted); border: 0; border-left: var(--hairline) solid var(--rule); cursor: pointer; }
 .ne-seg button:first-child { border-left: 0; }
 .ne-seg button[aria-pressed="true"] { color: var(--ink); background: var(--ground-raised); }
 .ne-seg button[aria-pressed="true"][data-a="allow"] { color: var(--signal-live); }
@@ -216,7 +216,7 @@ body {
 .ne-nav a { font: 500 14px/20px var(--font-mono); color: var(--ink-muted); text-decoration: none; }
 .ne-nav a:hover { color: var(--ink); }
 .ne-nav a[aria-current] { color: var(--ink); font-weight: 600; }
-.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: 3px 10px; cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
+.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: var(--space-1) var(--space-3); cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
 .ne-theme:hover { color: var(--ink); border-color: var(--ink); }
 .ne-theme i { width: 10px; height: 10px; border: var(--hairline) solid currentColor; background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); }
 .ne-commit { flex-basis: 100%; min-width: 0; margin: 0; padding-top: var(--space-4); border-top: var(--hairline) solid var(--rule); display: flex; gap: var(--space-2); align-items: center; white-space: nowrap; font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
@@ -226,7 +226,7 @@ body {
 @media (max-width: 480px) {
   .ne-header__right { width: 100%; justify-content: space-between; gap: var(--space-4); }
   .ne-nav { gap: var(--space-4); }
-  .ne-theme { padding: 5px 7px; }
+  .ne-theme { padding: var(--space-1) var(--space-2); }
   .ne-theme span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .ne-commit .lead, .ne-commit .lead + span { display: none; }
 }
@@ -268,11 +268,22 @@ body {
 .ne-photo::before, .ne-photo::after { content: none; }
 .ne-photo canvas, .ne-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .ne-photo canvas { image-rendering: pixelated; opacity: var(--dither-opacity); }
-.ne-photo img { object-fit: cover; opacity: 0; transition: opacity var(--dur-base) var(--ease-out); }
-.ne-photo:hover img, .ne-photo:focus-visible img { opacity: 1; }
+/* Until the dither has drawn (before or without JS) the original shows in greyscale, so a plate is
+   never blank and colour still waits for a closer look. The swap is instant; the fade only turns on
+   a frame later (data-settled), so it applies to hover alone. */
+.ne-photo img { object-fit: cover; filter: grayscale(1); opacity: var(--dither-opacity); }
+.ne-photo[data-drawn] img { filter: none; opacity: 0; }
+.ne-photo[data-settled] img { transition: opacity var(--dur-base) var(--ease-out); }
+.ne-photo[data-drawn]:hover img, .ne-photo[data-drawn]:focus-visible img { opacity: 1; }
+
+/* Flame: frame 1 as SVG under the canvas until the canvas draws (before or without JS). */
+.ne-mark { position: relative; display: inline-block; line-height: 0; }
+.ne-mark svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ne-mark[data-drawn] svg { display: none; }
+.ne-mark canvas { position: relative; }
 
 /* DomainMark: the domain word after its square swatch. */
-.ne-dom { display: inline-flex; align-items: center; gap: 6px; }
+.ne-dom { display: inline-flex; align-items: center; gap: var(--space-1); }
 .ne-dom::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
 
 /* ThemeToggle renders both labels; show the one naming the theme it switches to. */
