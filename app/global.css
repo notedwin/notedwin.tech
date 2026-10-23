@@ -16,10 +16,6 @@
 		font-size: 17px;
 		line-height: 28px;
 	}
-	::selection {
-		background: var(--infra-wash);
-		color: var(--ink);
-	}
 	a {
 		color: inherit;
 	}
@@ -62,12 +58,6 @@
 		margin: var(--space-8) 0 var(--space-12);
 		background: var(--ground);
 	}
-	.ne-commit a:hover {
-		color: var(--link);
-	}
-	.ne-commit code a {
-		text-decoration: none;
-	}
 
 	.site-footer {
 		margin-top: var(--space-32);
@@ -100,34 +90,6 @@
 		color: var(--ink);
 	}
 
-	/* Nav: 28px hit areas. Commit Mono's 500 and 600 share one file, so the current page is
-	   underlined as well as inked. */
-	.ne-nav a {
-		display: inline-block;
-		padding: var(--space-1) 0;
-	}
-	/* The theme button keeps a 28px target when phones hide its label. */
-	.ne-theme {
-		justify-content: center;
-		min-width: var(--space-8);
-		min-height: 28px;
-	}
-	.ne-nav a[aria-current] {
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 6px;
-	}
-
-	/* Departure Mono is for tables, figures and numerals. The commit line and section notes are
-	   meta: Commit Mono 13/20. The message keeps a few characters under zoom instead of collapsing. */
-	.ne-commit,
-	.ne-sh span {
-		font: 400 13px/20px var(--font-mono);
-	}
-	.ne-commit code {
-		min-width: 12ch;
-	}
-
 	/* The site's sans text takes the system's --sans-weight (420 in graphite, 400 in smoke). */
 	.ne-prose,
 	.intro__lede,
@@ -139,9 +101,6 @@
 	/* Shared bits */
 	.muted {
 		color: var(--ink-muted);
-	}
-	.ne-link {
-		text-decoration-color: var(--ink-faint);
 	}
 	.more-link {
 		display: inline-block;
@@ -171,10 +130,6 @@
 		gap: 0 var(--space-2);
 		color: var(--ink-muted);
 	}
-	.row-meta .ne-status {
-		font: inherit;
-	}
-	.ne-plate--clean::before,
 	.prose-plate::before,
 	.prose-plate::after,
 	.video-plate::before,
@@ -391,19 +346,6 @@
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-8) var(--space-6);
-	}
-	/* Captions are the photo's name in Commit Mono (Departure Mono is for tables, figures, numerals). */
-	.ne-fig figcaption {
-		font: 400 13px/20px var(--font-mono);
-	}
-	/* A tap focuses the plate, so colour shows on touch as on hover. */
-	.photo-grid .ne-photo[data-drawn]:focus img {
-		opacity: 1;
-	}
-	.ne-fig figcaption a {
-		text-decoration: underline;
-		text-decoration-color: var(--ink-faint);
-		text-underline-offset: 3px;
 	}
 
 	/* Projects page */
@@ -800,13 +742,6 @@
 		justify-content: center;
 	}
 
-	/* Photo dither ink and strength: ash (flame-body) in both themes. Ember stays a signal: the
-	   commit square, the ★ and a figure's highlighted series. */
-	:root {
-		--dither-ink: var(--flame-body);
-		--dither-opacity: 0.9;
-	}
-
 	/* Code colours come from the system (code-* tokens); keywords sit at 600. */
 	.ne-prose pre [style*="--shiki-token-keyword"] {
 		font-weight: 600;
@@ -862,24 +797,6 @@
 	}
 
 	@media (max-width: 479px) {
-		/* Phones: flame, nav and toggle share one row; nav and toggle sit together on the right at even gaps. */
-		.ne-header {
-			flex-wrap: nowrap;
-			gap: var(--space-3);
-		}
-		.ne-header__right {
-			flex: 1;
-			flex-wrap: nowrap;
-			justify-content: flex-end;
-			width: auto;
-			min-width: 0;
-			gap: var(--space-4);
-		}
-		.ne-nav {
-			flex-wrap: nowrap;
-			gap: var(--space-4);
-			padding-left: 0;
-		}
 		.photo-grid {
 			grid-template-columns: minmax(0, 1fr);
 		}

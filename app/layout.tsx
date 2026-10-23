@@ -92,7 +92,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		// data-theme is set before hydration by themeScript.
-		<html lang="en" className={`${sans.variable} ${mono.variable} ${pixel.variable}`} suppressHydrationWarning>
+		<html lang="en" data-register="reading" className={`${sans.variable} ${mono.variable} ${pixel.variable}`} suppressHydrationWarning>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
