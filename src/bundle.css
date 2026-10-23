@@ -199,6 +199,7 @@ body {
   .ne-header { flex-wrap: nowrap; gap: var(--space-3); }
   .ne-header__right { flex: 1; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: var(--space-4); }
   .ne-nav { flex-wrap: nowrap; gap: var(--space-4); }
+  .ne-nav a[aria-current]::before { left: calc(-7px - var(--space-1)); }
   .ne-theme { padding: var(--space-1) var(--space-2); }
   .ne-theme span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .ne-commit .lead, .ne-commit .lead + span { display: none; }
