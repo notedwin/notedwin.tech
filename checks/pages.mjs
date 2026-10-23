@@ -62,7 +62,7 @@ for (const theme of ["dark", "light"]) {
 				if (s.visibility === "hidden" || s.opacity === "0") continue;
 				const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
 				const before = getComputedStyle(el, "::before");
-				if ((own && inks.has(s.color)) || inks.has(s.backgroundColor) || (before.content !== "none" && inks.has(before.backgroundColor))) {
+				if ((own && (inks.has(s.color) || (s.textDecorationLine.includes("underline") && inks.has(s.textDecorationColor)))) || inks.has(s.backgroundColor) || (before.content !== "none" && inks.has(before.backgroundColor))) {
 					hits.push({ at: Math.floor((r.top + scrollY) / innerHeight), name: el.className ? `.${String(el.className).split(" ")[0]}` : el.tagName.toLowerCase() });
 				}
 			}
