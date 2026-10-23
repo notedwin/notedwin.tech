@@ -1,5 +1,5 @@
 /* notedwin design system: component CSS (ne-*) from the artifact's bundle.css. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
-:root { --dither-ink: var(--flame-body); --dither-opacity: 1; }
+:root { --dither-ink: var(--flame-body); --dither-opacity: 0.9; }
 /* --font-mono is Commit Mono (name, nav, titles, log); --font-pixel is Departure Mono (technical text only, multiples of 11px) */
 
 :root {
@@ -42,7 +42,7 @@ body {
 .ne-link {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--rule);
+  text-decoration-color: var(--ink-faint);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   transition: text-decoration-color var(--dur-fast) var(--ease-out);
@@ -87,22 +87,6 @@ body {
 .ne-tile__unit { font-size: 12px; letter-spacing: 0; color: var(--ink-muted); margin-left: var(--space-1); }
 .ne-tile__spark { stroke: var(--domain); stroke-width: 1.5; fill: none; }
 
-.ne-part { display: grid; grid-template-columns: 48px 1fr; gap: var(--space-4); padding: var(--space-8) 0; border-top: var(--hairline) solid var(--rule); }
-.ne-part__index { font-family: var(--font-mono); font-size: 12px; line-height: 26px; font-weight: 500; color: var(--domain-ink); }
-.ne-part__title { margin: 0 0 var(--space-2); font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
-.ne-part__body { margin: 0; font-size: 15px; line-height: 24px; color: var(--ink); max-width: var(--measure); }
-.ne-part__note { margin-top: var(--space-3); font-family: var(--font-mono); font-size: 12px; line-height: 16px; color: var(--ink-muted); }
-.ne-part__note::before { content: "↳ "; color: var(--domain-ink); }
-
-.ne-trail { position: relative; display: grid; grid-template-columns: 112px 1fr; column-gap: var(--space-6); }
-.ne-trail::before { content: ""; position: absolute; left: calc(112px + var(--space-6) / 2); top: 0; bottom: 0; width: var(--hairline); background: var(--ink-faint); }
-.ne-trail__date { font-family: var(--font-pixel); font-size: 11px; line-height: 26px; font-weight: 400; color: var(--ink-muted); text-align: right; }
-.ne-trail__stop { position: relative; padding-bottom: var(--space-8); }
-.ne-trail__stop::before { content: ""; position: absolute; left: calc(var(--space-6) / -2 - 3px); top: 9px; width: 7px; height: 7px; background: var(--domain); }
-.ne-trail__title { margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
-.ne-trail__body { margin: var(--space-1) 0 var(--space-2); font-size: 15px; line-height: 24px; color: var(--ink-muted); }
-.ne-trail__gap { grid-column: 2; padding-bottom: var(--space-8); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-muted); }
-
 .ne-note { padding: var(--space-6); background: var(--ground-raised); border: var(--hairline) solid var(--rule); }
 .ne-note__stamp { display: flex; gap: var(--space-2); align-items: center; font-family: var(--font-pixel); font-size: 11px; line-height: 22px; font-weight: 400; color: var(--ink-muted); }
 .ne-note__stamp i { font-style: normal; color: var(--domain-ink); }
@@ -138,9 +122,7 @@ body {
 .ne-plate img, .ne-plate canvas, .ne-plate svg { width: 100%; height: auto; display: block; }
 .ne-fig figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: var(--space-2); font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
 .ne-fig figcaption b { color: var(--ink); font-weight: 500; }
-.ne-tone { background: var(--infra); }
-.ne-tone img, .ne-tone canvas { mix-blend-mode: luminosity; opacity: .92; transition: opacity var(--dur-base) var(--ease-out); }
-.ne-tone:hover img, .ne-tone:focus-within img, .ne-tone:hover canvas, .ne-tone:focus-within canvas { mix-blend-mode: normal; opacity: 1; }
+.ne-fig figcaption a { color: inherit; text-decoration: underline; text-decoration-color: var(--ink-faint); text-underline-offset: 3px; }
 .ne-pin { display: inline-grid; place-items: center; width: 16px; height: 16px; background: var(--ink); color: var(--ground); font: 500 11px/1 var(--font-mono); flex: none; }
 .ne-notes { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .ne-notes li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: var(--space-2); font-size: 13px; line-height: 20px; color: var(--ink-muted); }
@@ -182,26 +164,12 @@ body {
 .ne-status[data-state="error"]::before { border-radius: 0; }
 
 :root { --domain-strong: var(--ink); --on-domain-strong: var(--on-ink); }
-[data-domain="data"] { --domain-strong: var(--ember-strong); --on-domain-strong: var(--on-ember); }
+[data-domain="data"] { --domain-strong: var(--data); --on-domain-strong: var(--on-data); }
 [data-domain="infra"], [data-domain="play"] { --domain-strong: var(--ink); --on-domain-strong: var(--on-ink); }
 .ne-btn--domain { background: var(--domain-strong); border-color: var(--domain-strong); color: var(--on-domain-strong); }
 
-:root { --flick: cubic-bezier(0.36, 2.09, 0.07, -1.52); }
+:root { --flick: var(--ease-out); }
 .ne-link, .ne-nav a { transition: color 150ms var(--flick), text-decoration-color 150ms var(--flick); }
-.ne-hl { background: var(--infra-wash); padding: 0 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.ne-hl--signal { background: var(--ember-wash); }
-.ne-printout { position: relative; background: var(--paper); color: var(--paper-ink); padding: 33px 55px 44px; }
-.ne-printout::before, .ne-printout::after { content: ""; position: absolute; top: 0; bottom: 0; width: 33px; background-image: radial-gradient(circle at 16px 16px, var(--ground) 6px, transparent 6.5px); background-size: 33px 44px; }
-.ne-printout::before { left: 0; border-right: 1px dashed var(--paper-rule); }
-.ne-printout::after { right: 0; border-left: 1px dashed var(--paper-rule); }
-.ne-printout pre { margin: 0; font: 400 11px/22px var(--font-pixel); white-space: pre; overflow-x: auto; }
-.ne-printout__hdr { display: flex; justify-content: space-between; font: 400 11px/22px var(--font-pixel); color: var(--paper-muted); border-bottom: 1px solid var(--paper-rule); padding-bottom: 11px; margin-bottom: 11px; }
-.ne-tear { position: absolute; left: 0; right: 0; bottom: -10px; height: 11px; --tc: var(--paper); background: linear-gradient(-45deg, transparent 6px, var(--tc) 6px) 0 0 / 11px 11px repeat-x, linear-gradient(45deg, transparent 6px, var(--tc) 6px) 0 0 / 11px 11px repeat-x; }
-.ne-report { position: relative; background: var(--kraft); color: var(--paper-ink); padding: 33px 33px 44px; transform: rotate(-0.6deg); }
-.ne-report .ne-tear { --tc: var(--kraft); }
-.ne-report__title { margin: 0; font: 400 33px/33px var(--font-pixel); text-transform: uppercase; max-width: 11ch; }
-.ne-report__body { margin: 22px 0 0; font: 400 11px/22px var(--font-pixel); color: var(--kraft-ink); }
-.ne-report__clip { position: absolute; top: -22px; right: 88px; width: 22px; height: 66px; fill: none; stroke: var(--paper-ink); stroke-width: 2; }
 .ne-band--char { background: var(--char); color: var(--ash-50); }
 
 /* site: column, header, section heads, cube, log */
@@ -213,34 +181,37 @@ body {
 .ne-lockup span { font: 600 28px/1 var(--font-mono); letter-spacing: -0.02em; }
 .ne-header__right { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
 .ne-nav { display: flex; gap: var(--space-6); flex-wrap: wrap; }
-.ne-nav a { font: 500 14px/20px var(--font-mono); color: var(--ink-muted); text-decoration: none; }
+.ne-nav a { font: 400 14px/20px var(--font-mono); color: var(--ink-muted); text-decoration: none; }
 .ne-nav a:hover { color: var(--ink); }
-.ne-nav a[aria-current] { color: var(--ink); font-weight: 600; }
-.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: var(--space-1) var(--space-3); cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
+.ne-nav a { display: inline-block; padding: var(--space-1) 0; }
+.ne-nav a[aria-current] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 400 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: var(--space-1) var(--space-3); cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
 .ne-theme:hover { color: var(--ink); border-color: var(--ink); }
+.ne-theme { justify-content: center; min-width: var(--space-8); min-height: 28px; }
 .ne-theme i { width: 10px; height: 10px; border: var(--hairline) solid currentColor; background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); }
 .ne-commit { flex-basis: 100%; min-width: 0; margin: 0; padding-top: var(--space-4); border-top: var(--hairline) solid var(--rule); display: flex; gap: var(--space-2); align-items: center; white-space: nowrap; font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
 .ne-commit::before { content: ""; flex: none; width: 7px; height: 7px; background: var(--ember); }
 .ne-commit > * { flex: none; }
-.ne-commit code { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ne-commit code { flex: 0 1 auto; min-width: 12ch; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 480px) {
-  .ne-header__right { width: 100%; justify-content: space-between; gap: var(--space-4); }
-  .ne-nav { gap: var(--space-4); }
+  .ne-header { flex-wrap: nowrap; gap: var(--space-3); }
+  .ne-header__right { flex: 1; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: var(--space-4); }
+  .ne-nav { flex-wrap: nowrap; gap: var(--space-4); }
   .ne-theme { padding: var(--space-1) var(--space-2); }
   .ne-theme span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .ne-commit .lead, .ne-commit .lead + span { display: none; }
 }
 .ne-commit a { color: var(--ink); text-underline-offset: 3px; }
+.ne-commit a:hover { color: var(--link); }
+.ne-commit code a { text-decoration: none; }
 .ne-commit code { font: inherit; color: var(--ink); }
 .ne-sh { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding-bottom: var(--space-4); border-bottom: var(--hairline) solid var(--rule); }
 .ne-sh h2 { margin: 0; font: 600 15px/20px var(--font-mono); }
 .ne-sh span { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
-.ne-route { font: 400 14px/22px var(--font-mono); color: var(--ink-muted); }
-.ne-route b { font-weight: 500; color: var(--ink); }
-.ne-route .is-now { font-weight: 500; color: var(--ember-ink); }
 .ne-stage { width: 200px; height: 200px; perspective: 700px; display: grid; place-items: center; }
 .ne-cube { width: var(--cube); height: var(--cube); position: relative; transform-style: preserve-3d; transform: rotateX(-24deg) rotateY(38deg); animation: ne-tumble 16s linear infinite; }
 .ne-stage:hover .ne-cube { animation-play-state: paused; }
+@media (max-width: 767px) { .ne-stage { display: none; } }
 .ne-cube > i { position: absolute; inset: 0; background-size: 100% 100%; image-rendering: pixelated; outline: 1px solid rgba(0,0,0,.15); }
 .ne-cube > i:nth-child(1) { transform: translateZ(calc(var(--cube) / 2)); }
 .ne-cube > i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--cube) / 2)); }
@@ -249,20 +220,129 @@ body {
 .ne-cube > i:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--cube) / 2)); }
 .ne-cube > i:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--cube) / 2)); }
 @keyframes ne-tumble { from { transform: rotateX(-24deg) rotateY(38deg) rotate3d(1, 1, 1, 0deg); } to { transform: rotateX(-24deg) rotateY(38deg) rotate3d(1, 1, 1, 360deg); } }
-.ne-loglist { list-style: none; margin: 0; padding: 0; }
-.ne-loglist a { display: grid; grid-template-columns: 96px 16px minmax(0, 1fr) auto; gap: var(--space-2); align-items: baseline; padding: 6px 0; text-decoration: none; color: inherit; }
-.ne-loglist time, .ne-loglist .ne-loglist__d { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
-.ne-loglist__star { font: 400 15px/26px var(--font-mono); color: var(--ember-ink); }
-.ne-loglist__t { font: 400 15px/26px var(--font-mono); transition: color 150ms var(--flick); }
-.ne-loglist a:hover .ne-loglist__t { color: var(--link); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-.ne-loglist__d { display: inline-flex; align-items: center; gap: 6px; }
-.ne-loglist__d::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
-@media (max-width: 768px) { .ne-loglist a { grid-template-columns: 88px 12px minmax(0, 1fr); } .ne-loglist__d { display: none; } }
+
+/* products: strip, title block, tile row, main + side rail, panels, brief */
+.ne-strip { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-6); flex-wrap: wrap; }
+.ne-strip .ne-lockup canvas { width: 16px; height: 16px; }
+.ne-strip .ne-lockup span { font: 500 14px/20px var(--font-mono); letter-spacing: 0; }
+.ne-tabs { display: inline-flex; border: var(--hairline) solid var(--ink-faint); flex-wrap: wrap; }
+.ne-tabs button { font: 500 13px/20px var(--font-mono); padding: 6px 14px; background: transparent; color: var(--ink-muted); border: 0; border-left: var(--hairline) solid var(--rule); cursor: pointer; }
+.ne-tabs button:first-child { border-left: 0; }
+.ne-tabs button:hover { color: var(--ink); }
+.ne-tabs button[aria-selected="true"] { background: var(--ink); color: var(--on-ink); }
+.ne-ptitle { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-6); padding: var(--space-12) var(--space-6) var(--space-6); flex-wrap: wrap; }
+.ne-ptitle__kicker { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
+.ne-ptitle__kicker b { font-weight: 400; color: var(--ink); }
+.ne-ptitle h1 { margin: var(--space-2) 0 0; font: 600 44px/44px var(--font-sans); font-stretch: 90%; letter-spacing: -0.03em; text-wrap: balance; }
+.ne-ptitle p { margin: var(--space-3) 0 0; font: 400 15px/24px var(--font-sans); font-stretch: 96%; color: var(--ink-muted); max-width: 62ch; }
+.ne-stamp { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); border: var(--hairline) dashed var(--ink-faint); padding: 0 var(--space-2); white-space: nowrap; }
+.ne-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--hairline) solid var(--rule); border-bottom: var(--hairline) solid var(--rule); }
+.ne-tiles > .ne-tile { background: transparent; border: 0; padding: var(--space-4) var(--space-6); min-width: 0; }
+.ne-tiles > .ne-tile + .ne-tile { border-left: var(--hairline) solid var(--rule); }
+.ne-tile__value.is-moved { color: var(--ember-ink); }
+.ne-tiles .ne-tile__value { white-space: nowrap; }
+.ne-log li.is-empty { display: block; color: var(--ink-muted); }
+@media (max-width: 480px) { .ne-tiles .ne-tile__value { font-size: 22px; line-height: 22px; } .ne-tiles > .ne-tile { padding: var(--space-4); } }
+.ne-pgrid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+.ne-pgrid > * { min-width: 0; }
+.ne-pside { border-left: var(--hairline) solid var(--rule); display: flex; flex-direction: column; }
+.ne-panel { padding: var(--space-6); border-bottom: var(--hairline) solid var(--rule); }
+.ne-panel:last-child { border-bottom: 0; }
+.ne-panel__h { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap; }
+.ne-panel__h h2 { margin: 0; font: 600 15px/20px var(--font-mono); }
+.ne-readout { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.ne-readout b { font-weight: 400; color: var(--ink); }
+.ne-pfoot { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; padding: var(--space-6); font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
+@media (max-width: 960px) { .ne-pgrid { grid-template-columns: 1fr; } .ne-pside { border-left: 0; border-top: var(--hairline) solid var(--rule); } }
+@media (max-width: 768px) { .ne-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ne-tiles > .ne-tile:nth-child(3) { border-left: 0; } .ne-tiles > .ne-tile:nth-child(n+3) { border-top: var(--hairline) solid var(--rule); } .ne-ptitle h1 { font-size: 33px; line-height: 36px; } }
+.ne-brief { margin: 0; display: grid; grid-template-columns: 120px minmax(0, 1fr); border-top: var(--hairline) solid var(--rule); }
+.ne-brief dt, .ne-brief dd { margin: 0; padding: var(--space-2) 0; border-bottom: var(--hairline) solid var(--rule); }
+.ne-brief dt { font: 400 11px/22px var(--font-pixel); color: var(--ink-muted); }
+.ne-brief dd { font: 400 13px/22px var(--font-mono); color: var(--ink); }
+.ne-brief dd.is-question { font: 600 15px/22px var(--font-sans); font-stretch: 96%; }
+.ne-brief dd i { font-style: normal; color: var(--ink-muted); }
+
+/* Sans text weight: light text on graphite reads thin, so sans text sits at 420 there (the variable
+   axis allows it). Only sans: Commit Mono would round 420 up to its SemiBold file. */
+:root { --sans-weight: 420; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --sans-weight: 400; } }
+:root[data-theme="light"] { --sans-weight: 400; }
+.t-body, .t-body-sm, .t-lede { font-weight: var(--sans-weight); }
+
+/* Code: shiki's css-variables theme, coloured from the code-* tokens (ash, with violet strings). */
+:root { --shiki-foreground: var(--ink); --shiki-background: var(--ground-sunk); --shiki-token-keyword: var(--code-keyword); --shiki-token-string: var(--code-string); --shiki-token-string-expression: var(--code-string); --shiki-token-constant: var(--code-constant); --shiki-token-function: var(--code-function); --shiki-token-parameter: var(--code-function); --shiki-token-comment: var(--code-comment); --shiki-token-punctuation: var(--code-comment); --shiki-token-link: var(--link); --shiki-token-inserted: var(--signal-live); --shiki-token-deleted: var(--signal-error); --shiki-token-changed: var(--signal-warn); }
+
+/* Page defaults: selection in the infra wash; numbers in technical text line up. */
+::selection { background: var(--infra-wash); color: var(--ink); }
+.t-label, .t-metric, .t-metric-sm, .ne-tile__title, .ne-tile__value, .ne-status, .ne-readout, td { font-variant-numeric: tabular-nums; }
+
+/* The reading register (posts, indexes, a personal site): technical text that sits in reading
+   flow is meta in Commit Mono; Departure Mono keeps tables, figures and numerals. Set
+   data-register="reading" on <html> or a surface; without it a surface is the instrument register. */
+[data-register="reading"] :is(.ne-commit, .ne-sh span, .ne-fig figcaption, .ne-status, .ne-tag) { font: 400 13px/20px var(--font-mono); }
+
+/* Prose: long-form text for posts and docs, body 17/28 at the measure, every colour a token. Put it
+   in a .ne-prose-frame (a container spanning the column) so wide tables can take the full width. */
+.ne-prose-frame { container-type: inline-size; }
+.ne-prose { min-width: 0; max-width: var(--measure); font-size: 17px; line-height: 28px; font-weight: var(--sans-weight); overflow-wrap: break-word; }
+.ne-prose > * + * { margin-top: var(--space-6); }
+.ne-prose :is(h2, h3, h4, h5, h6) { position: relative; scroll-margin-top: var(--space-8); font-weight: 600; text-wrap: balance; }
+.ne-prose h2 { margin-top: var(--space-12); font-size: 28px; line-height: 34px; font-stretch: 90%; letter-spacing: -0.02em; }
+.ne-prose h3 { margin-top: var(--space-8); font-size: 21px; line-height: 28px; letter-spacing: -0.01em; }
+/* h4 and below change face rather than shrink, so they never pass for a bold paragraph. */
+.ne-prose :is(h4, h5, h6) { margin-top: var(--space-8); font: 600 15px/24px var(--font-mono); }
+.ne-prose :is(h2, h3, h4) + * { margin-top: var(--space-3); }
+.ne-prose .anchor { margin-left: var(--space-2); color: var(--ink-muted); text-decoration: none; opacity: 0; transition: opacity var(--dur-fast) var(--ease-out); }
+.ne-prose .anchor::after { content: "#"; }
+.ne-prose :is(h2, h3, h4, h5, h6):hover .anchor, .ne-prose .anchor:focus-visible { opacity: 1; }
+.ne-prose a:not(.anchor) { color: var(--link); text-decoration: underline; text-decoration-color: var(--ink-faint); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-color var(--dur-fast) var(--ease-out); }
+.ne-prose a:not(.anchor):hover { text-decoration-color: var(--link); }
+.ne-prose strong { font-weight: 600; }
+.ne-prose :is(ul, ol) { padding-left: var(--space-6); }
+.ne-prose ul { list-style: square; }
+.ne-prose ol { list-style: decimal; }
+.ne-prose :is(li + li, li > ul, li > ol) { margin-top: var(--space-2); }
+.ne-prose li { text-wrap: pretty; }
+.ne-prose li::marker { color: var(--ink-muted); }
+.ne-prose blockquote { padding-left: var(--space-4); border-left: var(--hairline) solid var(--ink-faint); color: var(--ink-muted); }
+.ne-prose hr { border: 0; border-top: var(--hairline) solid var(--rule); margin: var(--space-12) 0; }
+.ne-prose :not(pre) > code { padding: 1px var(--space-1); background: var(--ground-sunk); font: 400 0.82em/1 var(--font-mono); }
+.ne-prose pre { overflow-x: auto; padding: var(--space-4); border: var(--hairline) solid var(--rule); background: var(--ground-sunk) !important; font: 400 13px/20px var(--font-mono); scrollbar-width: thin; }
+.ne-prose pre code { font: inherit; }
+.ne-prose pre [style*="--shiki-token-keyword"] { font-weight: 600; }
+.ne-prose img { max-width: 100%; height: auto; }
+.ne-prose .table-wrap, .ne-prose > table { display: block; max-width: 100%; overflow-x: auto; }
+.ne-prose table { border-collapse: collapse; font-size: 15px; line-height: 24px; font-variant-numeric: tabular-nums; }
+.ne-prose th { padding: 0 var(--space-3); background: var(--ground-sunk); font: 400 11px/22px var(--font-pixel); text-transform: lowercase; text-align: left; color: var(--ink-muted); white-space: nowrap; }
+.ne-prose td { padding: var(--space-2) var(--space-3); border-bottom: var(--hairline) solid var(--rule); vertical-align: top; white-space: nowrap; }
+/* Long text cells wrap (td.wrap) so the numbers stay in view; numbers line up on the right (.num). */
+.ne-prose td.wrap { min-width: 16ch; white-space: normal; }
+.ne-prose :is(th, td).num { text-align: right; }
+.ne-prose .katex-display { overflow-x: auto; overflow-y: hidden; padding: var(--space-2) 0; }
+/* From 768px, wide tables (.table-wrap--wide) run past the measure to the frame's edge. */
+@media (min-width: 768px) { .ne-prose .table-wrap--wide { width: 100cqi; max-width: none; } }
+
+/* Page head (inner pages): one h1, a meta note on the right, an optional lede, a rule under all. */
+.ne-pagehead { padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: var(--hairline) solid var(--rule); }
+.ne-pagehead__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-6); }
+.ne-pagehead h1 { margin: 0; font: 600 44px/48px var(--font-sans); font-stretch: 90%; letter-spacing: -0.025em; text-wrap: balance; }
+.ne-pagehead__note { color: var(--ink-muted); }
+.ne-pagehead__lede { margin-top: var(--space-4); max-width: var(--lede-measure); font-size: 19px; line-height: 31px; font-weight: var(--sans-weight); color: var(--ink-muted); }
+@media (max-width: 767px) { .ne-pagehead h1 { font-size: 33px; line-height: 38px; } }
+
+/* A plate for an item with no image: the domain's wash, no crop marks. */
+.ne-plate--plain { background: var(--domain-wash); }
+.ne-plate--plain::before, .ne-plate--plain::after { content: none; }
+
+/* Skip link: hidden above the page until focused. */
+.ne-skip { position: absolute; left: var(--space-4); top: calc(-1 * var(--space-16)); z-index: 10; padding: var(--space-2) var(--space-3); background: var(--ink); color: var(--on-ink); font: 400 14px/20px var(--font-mono); }
+.ne-skip:focus-visible { top: var(--space-4); }
 
 /* CSS for the package's React parts (DitherPhoto, DomainMark, ThemeToggle), appended to components.css.
    Everything else comes from the artifact's bundle.css above. */
 
-/* DitherPhoto: a plate with the dither canvas over the original, which fades in on hover or focus.
+/* DitherPhoto: a plate with the dither canvas over the original, which fades in on hover or focus
+   (a tap focuses the plate, so colour shows on touch too).
    Size the plate (aspect-ratio or a fixed box) where it's used. */
 .ne-photo { position: relative; overflow: hidden; }
 .ne-photo::before, .ne-photo::after { content: none; }
@@ -274,7 +354,9 @@ body {
 .ne-photo img { object-fit: cover; filter: grayscale(1); opacity: var(--dither-opacity); }
 .ne-photo[data-drawn] img { filter: none; opacity: 0; }
 .ne-photo[data-settled] img { transition: opacity var(--dur-base) var(--ease-out); }
-.ne-photo[data-drawn]:hover img, .ne-photo[data-drawn]:focus-visible img { opacity: 1; }
+.ne-photo[data-drawn]:hover img, .ne-photo[data-drawn]:focus img { opacity: 1; }
+/* A plate inside a link (a card) shows its colour when the link is hovered or focused. */
+a:is(:hover, :focus-visible) .ne-photo[data-drawn] img { opacity: 1; }
 
 /* Flame: frame 1 as SVG under the canvas until the canvas draws (before or without JS). */
 .ne-mark { position: relative; display: inline-block; line-height: 0; }
@@ -282,11 +364,8 @@ body {
 .ne-mark[data-drawn] svg { display: none; }
 .ne-mark canvas { position: relative; }
 
-/* DomainMark: the domain word after its square swatch. */
-.ne-dom { display: inline-flex; align-items: center; gap: var(--space-1); }
-.ne-dom::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
-
-/* ThemeToggle renders both labels; show the one naming the theme it switches to. */
+/* ThemeToggle renders both labels (and their screen-reader text); show the one naming the current
+   theme. Axe and some screen readers ignore CSS-generated text, so the labels stay in markup. */
 .ne-theme [data-when="light"] { display: none; }
 :root[data-theme="light"] .ne-theme [data-when="dark"] { display: none; }
 :root[data-theme="light"] .ne-theme [data-when="light"] { display: inline; }
@@ -294,4 +373,9 @@ body {
   :root:not([data-theme]) .ne-theme [data-when="dark"] { display: none; }
   :root:not([data-theme]) .ne-theme [data-when="light"] { display: inline; }
 }
+
+/* DomainMark: the domain word after its square swatch. */
+.ne-dom { display: inline-flex; align-items: center; gap: var(--space-1); }
+.ne-dom::before { content: ""; width: 7px; height: 7px; background: var(--domain); }
+
 .ne-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

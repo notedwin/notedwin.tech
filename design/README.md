@@ -1,8 +1,8 @@
 # @notedwin/design
 
 The notedwin ash & ember design system as code: one `tokens.json`, generated into every target a
-project needs. The design system artifact is the brand book and the source of the tokens:
-<https://claude.ai/artifact/12mNGtWDgTVCRqkLiALDyB>.
+project needs. This repo is the source of truth. The brand book, the design-system artifact at
+<https://claude.ai/artifact/12mNGtWDgTVCRqkLiALDyB>, is published from its `book` branch and is read-only.
 
 | target | path | for |
 |---|---|---|
@@ -28,14 +28,15 @@ next build.
   `experimental.turbopackAdditionalRoots: { design: { path: "../design" } }` in `next.config.ts`.
 - **Projects that build elsewhere** (notedwin.tech on Vercel, which can't reach the LAN-only
   Gitea) keep a committed copy as a git subtree at `design/`, listed in `pnpm-workspace.yaml` and
-  depended on as `"@notedwin/design": "workspace:*"`. Edit it in place, then send it back:
+  depended on as `"@notedwin/design": "workspace:*"`. Change this repo first, push it, then pull
+  a squashed copy into the site (one commit per pull, none of this repo's history):
 
   ```sh
-  git subtree push --prefix=design https://gitea.notedwin.com/notedwin/design.git main   # site → repo
-  git subtree pull --prefix=design https://gitea.notedwin.com/notedwin/design.git main   # repo → site
+  git subtree pull --squash --prefix=design https://gitea.notedwin.com/notedwin/design.git main
   ```
 
-  Commit `design/` changes on their own; a subtree push carries only commits that touch it.
+  Never edit the site's `design/` first or `subtree push` from it: the site's repo is public and
+  this one is not.
 
 ## Use
 
@@ -117,3 +118,11 @@ Never edit `css/` or `python/src/notedwin_design/data/` by hand: they're generat
 vendor the folder can be served by a tagged `pnpm publish` and `uv publish` to
 `gitea.notedwin.com/api/packages/notedwin/{npm,pypi}` with a `write:package` token. Until then
 nothing is released, and `version` stays at 0.1.0.
+
+## Brand book
+
+The artifact's prose, component guides and previews live on the private `book` branch, never on
+`main`, because `main` is vendored into public repos. Check it out beside this repo with
+`git worktree add ../design-book book`; its `build/book.mjs` stages the book with this checkout's
+tokens, stylesheet and fonts and publishes it to the artifact, and its `checks/book.mjs` warns when
+the artifact is behind.

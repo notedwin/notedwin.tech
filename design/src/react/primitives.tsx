@@ -51,3 +51,16 @@ export function SectionHead({ id, title, note }: { id?: string; title: string; n
 		</div>
 	);
 }
+
+// Page head for inner pages: one h1, an optional meta note on the right, then any lede as children.
+export function PageHead({ title, note, children }: { title: string; note?: ReactNode; children?: ReactNode }) {
+	return (
+		<div className="ne-pagehead">
+			<div className="ne-pagehead__row">
+				<h1>{title}</h1>
+				{note && <span className="t-meta ne-pagehead__note">{note}</span>}
+			</div>
+			{children}
+		</div>
+	);
+}

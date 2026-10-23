@@ -118,7 +118,7 @@ ${tokens.type.groups
 `;
 
 // Dithered plates print in --dither-ink; a site may retune it per theme.
-const componentsCss = `${header("component CSS (ne-*) from the artifact's bundle.css")}:root { --dither-ink: var(--flame-body); --dither-opacity: 1; }
+const componentsCss = `${header("component CSS (ne-*) from the artifact's bundle.css")}:root { --dither-ink: var(--flame-body); --dither-opacity: 0.9; }
 ${fs
 	.readFileSync(path.join(root, "src/bundle.css"), "utf8")
 	.replace(/^@import url\([^)]*fonts\.googleapis[^)]*\);\n/m, "")}

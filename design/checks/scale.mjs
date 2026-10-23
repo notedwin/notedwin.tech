@@ -19,15 +19,7 @@ const KNOWN = new Set([
 	".ne-decide",
 	".ne-conseq > div",
 	".ne-log li",
-	".ne-hl",
-	".ne-loglist a",
-	".ne-loglist__d",
 	".ne-tabs button",
-	// The paper props sit on the pixel face's own 11px grid.
-	".ne-printout",
-	".ne-printout__hdr",
-	".ne-report",
-	".ne-report__body",
 ]);
 
 const SPACING = /^(padding|margin|gap|row-gap|column-gap|inset)(-(top|right|bottom|left|block|inline)(-(start|end))?)?$/;

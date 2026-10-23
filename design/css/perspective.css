@@ -56,9 +56,9 @@ perspective-viewer[theme="notedwin smoke"], perspective-viewer [theme="notedwin 
   --psp-charts--series-1--color: #5b736e;
   --psp-datagrid--series-1--color: #5b736e;
   --psp-openlayers--category-1--color: #5b736e;
-  --psp-charts--series-2--color: #d3451a;
-  --psp-datagrid--series-2--color: #d3451a;
-  --psp-openlayers--category-2--color: #d3451a;
+  --psp-charts--series-2--color: #7642c2;
+  --psp-datagrid--series-2--color: #7642c2;
+  --psp-openlayers--category-2--color: #7642c2;
   --psp-charts--series-3--color: #1f2121;
   --psp-datagrid--series-3--color: #1f2121;
   --psp-openlayers--category-3--color: #1f2121;
@@ -145,9 +145,9 @@ perspective-viewer[theme="notedwin graphite"], perspective-viewer [theme="notedw
   --psp-charts--series-1--color: #7fa098;
   --psp-datagrid--series-1--color: #7fa098;
   --psp-openlayers--category-1--color: #7fa098;
-  --psp-charts--series-2--color: #e7653d;
-  --psp-datagrid--series-2--color: #e7653d;
-  --psp-openlayers--category-2--color: #e7653d;
+  --psp-charts--series-2--color: #ab8ee6;
+  --psp-datagrid--series-2--color: #ab8ee6;
+  --psp-openlayers--category-2--color: #ab8ee6;
   --psp-charts--series-3--color: #eef2f1;
   --psp-datagrid--series-3--color: #eef2f1;
   --psp-openlayers--category-3--color: #eef2f1;

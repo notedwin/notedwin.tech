@@ -30,10 +30,15 @@
   --infra-wash: #3f4a48;
   --on-infra: #0e1010;
   --link: var(--infra-ink);
-  --data: var(--ember);
-  --data-ink: var(--ember-ink);
-  --data-wash: var(--ember-wash);
-  --on-data: var(--on-ember);
+  --code-keyword: var(--ink);
+  --code-string: var(--data-ink);
+  --code-constant: var(--infra-ink);
+  --code-function: var(--ink);
+  --code-comment: var(--ink-muted);
+  --data: #ab8ee6;
+  --data-ink: #d6c6f8;
+  --data-wash: #3c3a45;
+  --on-data: #0e1010;
   --play: var(--ink);
   --play-ink: var(--ink);
   --play-wash: #454d4b;
@@ -79,10 +84,15 @@
     --infra-wash: #c3d1cd;
     --on-infra: #ffffff;
     --link: var(--infra-ink);
-    --data: var(--ember);
-    --data-ink: var(--ember-ink);
-    --data-wash: var(--ember-wash);
-    --on-data: var(--on-ember);
+    --code-keyword: var(--ink);
+    --code-string: var(--data-ink);
+    --code-constant: var(--infra-ink);
+    --code-function: var(--ink);
+    --code-comment: var(--ink-muted);
+    --data: #7642c2;
+    --data-ink: #4f2894;
+    --data-wash: #d2d0de;
+    --on-data: #ffffff;
     --play: var(--ink);
     --play-ink: var(--ink);
     --play-wash: #c3ccc9;
@@ -128,10 +138,15 @@
   --infra-wash: #c3d1cd;
   --on-infra: #ffffff;
   --link: var(--infra-ink);
-  --data: var(--ember);
-  --data-ink: var(--ember-ink);
-  --data-wash: var(--ember-wash);
-  --on-data: var(--on-ember);
+  --code-keyword: var(--ink);
+  --code-string: var(--data-ink);
+  --code-constant: var(--infra-ink);
+  --code-function: var(--ink);
+  --code-comment: var(--ink-muted);
+  --data: #7642c2;
+  --data-ink: #4f2894;
+  --data-wash: #d2d0de;
+  --on-data: #ffffff;
   --play: var(--ink);
   --play-ink: var(--ink);
   --play-wash: #c3ccc9;
@@ -162,7 +177,8 @@
   --radius-0: 0px;
   --radius-sm: 2px;
   --radius-pill: 999px;
-  --measure: 66ch;
+  --measure: 50ch;
+  --lede-measure: 44ch;
   --column: 880px;
   --frame: 1120px;
   --rail: 200px;
@@ -173,15 +189,16 @@
 }
 .t-display-xl { font-family: var(--font-sans); font-size: 64px; line-height: 64px; font-weight: 600; letter-spacing: -0.035em; }
 .t-lede { font-family: var(--font-sans); font-size: 19px; line-height: 31px; font-weight: 400; letter-spacing: 0em; }
-.t-h1 { font-family: var(--font-sans); font-size: 44px; line-height: 44px; font-weight: 600; letter-spacing: -0.025em; }
+.t-h1 { font-family: var(--font-sans); font-size: 44px; line-height: 48px; font-weight: 600; letter-spacing: -0.025em; }
+.t-h1-sm { font-family: var(--font-sans); font-size: 33px; line-height: 38px; font-weight: 600; letter-spacing: -0.025em; }
 .t-h2 { font-family: var(--font-sans); font-size: 28px; line-height: 34px; font-weight: 600; letter-spacing: -0.02em; }
-.t-h3 { font-family: var(--font-sans); font-size: 19px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+.t-h3 { font-family: var(--font-sans); font-size: 21px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
 .t-body { font-family: var(--font-sans); font-size: 17px; line-height: 28px; font-weight: 400; }
+.t-title-sm { font-family: var(--font-sans); font-size: 16px; line-height: 24px; font-weight: 600; }
 .t-body-sm { font-family: var(--font-sans); font-size: 15px; line-height: 24px; font-weight: 400; }
 .t-wordmark { font-family: var(--font-mono); font-size: 28px; line-height: 28px; font-weight: 600; letter-spacing: -0.02em; }
 .t-section { font-family: var(--font-mono); font-size: 15px; line-height: 20px; font-weight: 600; }
-.t-nav { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 500; }
-.t-entry { font-family: var(--font-mono); font-size: 15px; line-height: 26px; font-weight: 400; }
+.t-nav { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 400; }
 .t-meta { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 400; }
 .t-code { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 400; }
 .t-report { font-family: var(--font-pixel); font-size: 33px; line-height: 33px; font-weight: 400; }
