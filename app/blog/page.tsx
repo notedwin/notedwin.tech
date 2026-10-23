@@ -14,12 +14,10 @@ export const metadata: Metadata = pageMetadata({
 // Every post as a card, newest first, in the same grid as the home page, with search and sort above.
 export default function BlogPosts() {
 	let posts = getBlogPosts();
-	let first = posts.at(-1)!.metadata.publishedAt.slice(0, 4);
-	let last = posts[0].metadata.publishedAt.slice(0, 4);
 
 	return (
 		<main id="main">
-			<PageHead title="Blog" note={`${posts.length} posts · ${first} → ${last}`} />
+			<PageHead title="Blog" note={`${posts.length} posts`} />
 			<BlogSearch entries={posts.map((post) => ({ slug: post.slug, card: <PostCard post={post} heading="h2" /> }))} />
 		</main>
 	);
