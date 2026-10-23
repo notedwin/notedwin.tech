@@ -5,14 +5,15 @@
     "dev": "pnpm design build && next dev",
     "build": "pnpm design build && next build",
     "start": "next start",
-    "typecheck": "pnpm design build && tsc --noEmit && node design/checks/scale.mjs app/global.css",
+    "typecheck": "pnpm design build && tsc --noEmit && node design/checks/scale.mjs app/global.css && node design/checks/consumer.mjs",
     "test:ui": "PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
     "ui:open": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli open --config=playwright-cli.json http://localhost:3000",
     "ui:shot": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli screenshot --filename=.playwright-cli/screenshot.png",
     "design": "pnpm -F @notedwin/design",
     "design:push": "git subtree push --prefix=design https://gitea.notedwin.com/notedwin/design.git main",
     "design:pull": "git subtree pull --prefix=design https://gitea.notedwin.com/notedwin/design.git main",
-    "design:status": "git fetch -q https://gitea.notedwin.com/notedwin/design.git main && if [ \"$(git rev-parse FETCH_HEAD^{tree})\" = \"$(git rev-parse HEAD:design)\" ]; then echo \"design/ matches gitea main\"; else echo \"design/ differs from gitea main ($(git rev-parse --short FETCH_HEAD)):\"; git diff --stat HEAD:design FETCH_HEAD; exit 1; fi"
+    "design:status": "git fetch -q https://gitea.notedwin.com/notedwin/design.git main && if [ \"$(git rev-parse FETCH_HEAD^{tree})\" = \"$(git rev-parse HEAD:design)\" ]; then echo \"design/ matches gitea main\"; else echo \"design/ differs from gitea main ($(git rev-parse --short FETCH_HEAD)):\"; git diff --stat HEAD:design FETCH_HEAD; exit 1; fi",
+    "check:pages": "node design/checks/pages.mjs http://localhost:3100"
   },
   "dependencies": {
     "@notedwin/design": "workspace:*",
