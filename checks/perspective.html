@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- Reference render for checks/perspective.mjs: Perspective 5.5 with the notedwin themes.
+     Served from design/ by the check; ?theme=dark|light picks the page and viewer theme. -->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>notedwin · perspective reference</title>
+		<link rel="stylesheet" href="/node_modules/@perspective-dev/viewer/dist/css/pro.css" />
+		<link rel="stylesheet" href="/css/fonts.css" />
+		<link rel="stylesheet" href="/css/tokens.css" />
+		<link rel="stylesheet" href="/css/perspective.css" />
+		<style>
+			body { margin: 0; padding: 24px; background: var(--ground); color: var(--ink); font: 400 11px/22px var(--font-pixel); }
+			.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+			perspective-viewer { height: 420px; border: 1px solid var(--rule); }
+		</style>
+	</head>
+	<body>
+		<p id="caption">fig · perspective 5.5 · y line (5 series) and datagrid (signed values)</p>
+		<div class="grid">
+			<perspective-viewer id="chart"></perspective-viewer>
+			<perspective-viewer id="grid"></perspective-viewer>
+		</div>
+		<script type="module">
+			import "/node_modules/@perspective-dev/viewer/dist/cdn/perspective-viewer.js";
+			import "/node_modules/@perspective-dev/viewer-datagrid/dist/cdn/perspective-viewer-datagrid.js";
+			import "/node_modules/@perspective-dev/viewer-charts/dist/cdn/perspective-viewer-charts.js";
+			import perspective from "/node_modules/@perspective-dev/client/dist/cdn/perspective.js";
+
+			const mode = new URLSearchParams(location.search).get("theme") || "dark";
+			document.documentElement.dataset.theme = mode;
+			const theme = mode === "dark" ? "notedwin graphite" : "notedwin smoke";
+
+			// Deterministic series so renders are comparable run to run.
+			const rows = [];
+			for (let d = 0; d < 30; d++) {
+				rows.push({
+					day: d,
+					infra: 50 + 20 * Math.sin(d / 4),
+					data: 40 + 25 * Math.cos(d / 5),
+					play: 30 + 10 * Math.sin(d / 3 + 1),
+					other_a: 20 + 8 * Math.cos(d / 2),
+					other_b: 10 + 6 * Math.sin(d / 6),
+					delta: Math.round(30 * Math.sin(d / 2.5)),
+				});
+			}
+			const worker = await perspective.worker();
+			await worker.table(rows, { name: "reference" });
+			const chart = document.getElementById("chart");
+			const grid = document.getElementById("grid");
+			await chart.load(worker);
+			await grid.load(worker);
+			await chart.restore({ table: "reference", plugin: "Y Line", columns: ["infra", "data", "play", "other_a", "other_b"], group_by: ["day"], theme });
+			await grid.restore({ table: "reference", plugin: "Datagrid", columns: ["day", "infra", "data", "delta"], theme });
+			window.__ready = true;
+		</script>
+	</body>
+</html>

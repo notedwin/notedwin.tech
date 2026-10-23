@@ -1,0 +1,37 @@
+/* Parked: parts the book designed but no consumer has built (workbench parts, the trail, paper
+   props, the highlighter, the route line, the toned plate). Not in the bundle; the book's Unbuilt page
+   (book branch) says what each was for. Move a rule back into src/bundle.css when a page needs it. */
+.ne-part { display: grid; grid-template-columns: 48px 1fr; gap: var(--space-4); padding: var(--space-8) 0; border-top: var(--hairline) solid var(--rule); }
+.ne-part__index { font-family: var(--font-mono); font-size: 12px; line-height: 26px; font-weight: 500; color: var(--domain-ink); }
+.ne-part__title { margin: 0 0 var(--space-2); font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.ne-part__body { margin: 0; font-size: 15px; line-height: 24px; color: var(--ink); max-width: var(--measure); }
+.ne-part__note { margin-top: var(--space-3); font-family: var(--font-mono); font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.ne-part__note::before { content: "↳ "; color: var(--domain-ink); }
+.ne-trail { position: relative; display: grid; grid-template-columns: 112px 1fr; column-gap: var(--space-6); }
+.ne-trail::before { content: ""; position: absolute; left: calc(112px + var(--space-6) / 2); top: 0; bottom: 0; width: var(--hairline); background: var(--ink-faint); }
+.ne-trail__date { font-family: var(--font-pixel); font-size: 11px; line-height: 26px; font-weight: 400; color: var(--ink-muted); text-align: right; }
+.ne-trail__stop { position: relative; padding-bottom: var(--space-8); }
+.ne-trail__stop::before { content: ""; position: absolute; left: calc(var(--space-6) / -2 - 3px); top: 9px; width: 7px; height: 7px; background: var(--domain); }
+.ne-trail__title { margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.ne-trail__body { margin: var(--space-1) 0 var(--space-2); font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+.ne-trail__gap { grid-column: 2; padding-bottom: var(--space-8); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-muted); }
+.ne-tone { background: var(--infra); }
+.ne-tone img, .ne-tone canvas { mix-blend-mode: luminosity; opacity: .92; transition: opacity var(--dur-base) var(--ease-out); }
+.ne-tone:hover img, .ne-tone:focus-within img, .ne-tone:hover canvas, .ne-tone:focus-within canvas { mix-blend-mode: normal; opacity: 1; }
+.ne-hl { background: var(--infra-wash); padding: 0 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.ne-hl--signal { background: var(--ember-wash); }
+.ne-printout { position: relative; background: var(--paper); color: var(--paper-ink); padding: 33px 55px 44px; }
+.ne-printout::before, .ne-printout::after { content: ""; position: absolute; top: 0; bottom: 0; width: 33px; background-image: radial-gradient(circle at 16px 16px, var(--ground) 6px, transparent 6.5px); background-size: 33px 44px; }
+.ne-printout::before { left: 0; border-right: 1px dashed var(--paper-rule); }
+.ne-printout::after { right: 0; border-left: 1px dashed var(--paper-rule); }
+.ne-printout pre { margin: 0; font: 400 11px/22px var(--font-pixel); white-space: pre; overflow-x: auto; }
+.ne-printout__hdr { display: flex; justify-content: space-between; font: 400 11px/22px var(--font-pixel); color: var(--paper-muted); border-bottom: 1px solid var(--paper-rule); padding-bottom: 11px; margin-bottom: 11px; }
+.ne-tear { position: absolute; left: 0; right: 0; bottom: -10px; height: 11px; --tc: var(--paper); background: linear-gradient(-45deg, transparent 6px, var(--tc) 6px) 0 0 / 11px 11px repeat-x, linear-gradient(45deg, transparent 6px, var(--tc) 6px) 0 0 / 11px 11px repeat-x; }
+.ne-report { position: relative; background: var(--kraft); color: var(--paper-ink); padding: 33px 33px 44px; transform: rotate(-0.6deg); }
+.ne-report .ne-tear { --tc: var(--kraft); }
+.ne-report__title { margin: 0; font: 400 33px/33px var(--font-pixel); text-transform: uppercase; max-width: 11ch; }
+.ne-report__body { margin: 22px 0 0; font: 400 11px/22px var(--font-pixel); color: var(--kraft-ink); }
+.ne-report__clip { position: absolute; top: -22px; right: 88px; width: 22px; height: 66px; fill: none; stroke: var(--paper-ink); stroke-width: 2; }
+.ne-route { font: 400 14px/22px var(--font-mono); color: var(--ink-muted); }
+.ne-route b { font-weight: 500; color: var(--ink); }
+.ne-route .is-now { font-weight: 500; color: var(--ember-ink); }

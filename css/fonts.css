@@ -1,0 +1,5 @@
+/* notedwin design system: font faces. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap");
+@font-face { font-family: "Commit Mono"; src: url("../fonts/CommitMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Commit Mono"; src: url("../fonts/CommitMono-SemiBold.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "Departure Mono"; src: url("../fonts/DepartureMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }

@@ -1,0 +1,19 @@
+[project]
+name = "notedwin-design"
+version = "0.1.0"
+description = "notedwin ash & ember design system for Python: tokens, data-viz palettes and the Perspective theme."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+jupyter = ["ipython>=8"]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/notedwin_design"]
+
+# Install from a checkout: uv add --editable ../design/python
