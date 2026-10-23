@@ -37,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-:focus-visible { outline: var(--focus-width) solid var(--ink); outline-offset: 2px; }
+:focus-visible { outline: var(--focus-width) solid var(--ember); outline-offset: 2px; }
 
 .ne-link {
   color: inherit;
@@ -185,6 +185,9 @@ body {
 .ne-nav a:hover { color: var(--ink); }
 .ne-nav a { display: inline-block; padding: var(--space-1) 0; }
 .ne-nav a[aria-current] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+/* The commit square marks where the reader is: it hangs in the gap before the current label. */
+.ne-nav a[aria-current] { position: relative; }
+.ne-nav a[aria-current]::before { content: ""; position: absolute; left: calc(-7px - var(--space-2)); top: 50%; width: 7px; height: 7px; translate: 0 -50%; background: var(--ember); }
 .ne-theme { display: inline-flex; align-items: center; gap: var(--space-2); font: 400 14px/20px var(--font-mono); color: var(--ink-muted); background: none; border: var(--hairline) solid var(--ink-faint); padding: var(--space-1) var(--space-3); cursor: pointer; transition: color 150ms var(--flick), border-color 150ms var(--flick); }
 .ne-theme:hover { color: var(--ink); border-color: var(--ink); }
 .ne-theme { justify-content: center; min-width: var(--space-8); min-height: 28px; }
@@ -272,14 +275,15 @@ body {
 /* Code: shiki's css-variables theme, coloured from the code-* tokens (ash, with violet strings). */
 :root { --shiki-foreground: var(--ink); --shiki-background: var(--ground-sunk); --shiki-token-keyword: var(--code-keyword); --shiki-token-string: var(--code-string); --shiki-token-string-expression: var(--code-string); --shiki-token-constant: var(--code-constant); --shiki-token-function: var(--code-function); --shiki-token-parameter: var(--code-function); --shiki-token-comment: var(--code-comment); --shiki-token-punctuation: var(--code-comment); --shiki-token-link: var(--link); --shiki-token-inserted: var(--signal-live); --shiki-token-deleted: var(--signal-error); --shiki-token-changed: var(--signal-warn); }
 
-/* Page defaults: selection in the infra wash; numbers in technical text line up. */
-::selection { background: var(--infra-wash); color: var(--ink); }
+/* Page defaults: selection in the ember wash; numbers in technical text line up. */
+::selection { background: var(--ember-wash); color: var(--ink); }
 .t-label, .t-metric, .t-metric-sm, .ne-tile__title, .ne-tile__value, .ne-status, .ne-readout, td { font-variant-numeric: tabular-nums; }
 
 /* The reading register (posts, indexes, a personal site): technical text that sits in reading
    flow is meta in Commit Mono; Departure Mono keeps tables, figures and numerals. Set
    data-register="reading" on <html> or a surface; without it a surface is the instrument register. */
 [data-register="reading"] :is(.ne-commit, .ne-sh span, .ne-fig figcaption, .ne-status, .ne-tag) { font: 400 13px/20px var(--font-mono); }
+[data-register="reading"] .ne-sh { margin-bottom: var(--space-6); }
 
 /* Prose: long-form text for posts and docs, body 17/28 at the measure, every colour a token. Put it
    in a .ne-prose-frame (a container spanning the column) so wide tables can take the full width. */
