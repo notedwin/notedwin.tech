@@ -9,69 +9,9 @@
 	"allow": [
 		{
 			"check": "override",
-			"selector": ".ne-commit a:hover",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-commit code a",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-nav a",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-theme",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-nav a[aria-current]",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-commit, .ne-sh span",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-commit code",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
 			"selector": ".ne-prose, .intro__lede, .post-head__summary, .page-head__lede",
 			"detail": "restyles a system class",
 			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-link",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".row-meta .ne-status",
-			"detail": "restyles a system class",
-			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-plate--clean::before, .prose-plate::before, .prose-plate::after, .video-plate::before, .video-plate::after, .image-grid__cell::before, .image-grid__cell::after",
-			"detail": "restyles a system class",
-			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
 		},
 		{
 			"check": "override",
@@ -82,24 +22,6 @@
 		{
 			"check": "override",
 			"selector": ".post-card:hover .ne-photo img, .post-card:focus-visible .ne-photo img",
-			"detail": "restyles a system class",
-			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-fig figcaption",
-			"detail": "restyles a system class",
-			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
-		},
-		{
-			"check": "override",
-			"selector": ".photo-grid .ne-photo[data-drawn]:focus img",
-			"detail": "restyles a system class",
-			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-fig figcaption a",
 			"detail": "restyles a system class",
 			"reason": "figure captions, photo focus and inline status become system variants (defaults and move-parts phases)"
 		},
@@ -303,18 +225,6 @@
 		},
 		{
 			"check": "override",
-			"selector": ":root",
-			"detail": "redefines --dither-ink",
-			"reason": "dither default becomes 90% in the system (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ":root",
-			"detail": "redefines --dither-opacity",
-			"reason": "dither default becomes 90% in the system (defaults phase)"
-		},
-		{
-			"check": "override",
 			"selector": ".ne-prose pre [style*=\"--shiki-token-keyword\"]",
 			"detail": "restyles a system class",
 			"reason": "Prose moves into design/ as .ne-prose (move-parts phase)"
@@ -330,24 +240,6 @@
 			"selector": ".intro .ne-stage",
 			"detail": "restyles a system class",
 			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-header",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-header__right",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
-		},
-		{
-			"check": "override",
-			"selector": ".ne-nav",
-			"detail": "restyles a system class",
-			"reason": "header, nav, toggle, commit line and section heads get system defaults (defaults phase)"
 		}
 	],
 	"pages": [
@@ -359,6 +251,6 @@
 		"/projects",
 		"/photos"
 	],
-	"emberBudget": 3,
+	"emberBudget": 2,
 	"allowPages": []
 }
