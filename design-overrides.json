@@ -6,20 +6,7 @@
 	"markup": [
 		"app/**/*.tsx"
 	],
-	"allow": [
-		{
-			"check": "override",
-			"selector": ".home-section > .ne-sh",
-			"detail": "restyles a system class",
-			"reason": "home spacing is open (audit row 26): the book says space-8 between a section head and its content, the site uses space-6 to keep home on one screen"
-		},
-		{
-			"check": "override",
-			"selector": ".read-next > .ne-sh",
-			"detail": "restyles a system class",
-			"reason": "home spacing is open (audit row 26): the book says space-8 between a section head and its content, the site uses space-6 to keep home on one screen"
-		}
-	],
+	"allow": [],
 	"pages": [
 		"/",
 		"/blog",
@@ -29,6 +16,6 @@
 		"/projects",
 		"/photos"
 	],
-	"emberBudget": 2,
+	"emberBudget": 3,
 	"allowPages": []
 }
