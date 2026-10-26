@@ -2,15 +2,15 @@
 title: "Strangers tried to log into my server 166,272 times"
 publishedAt: "2022-06-22"
 updated: "2026-10-20"
-summary: "166,272 failed SSH logins from 19,187 IP addresses, and the regex bug that hid every guess at root. The full dataset is queryable on the page."
-figures: "166,272 = failed ssh logins; 19,187 = ip addresses; 271 days = of logging"
+summary: "I put a Raspberry Pi on the internet and drew a map of everyone who tried to guess its password. It was all bots, and my own parser had a blind spot."
+figures: "166,272 = failed ssh logins; 19,187 = ip addresses; 271 = days logged"
 tags: "attack-map, featured"
 cover: "/assets/attack-map/map2.webp"
 domain: infra
 status: settled
 ---
 
-My Raspberry Pi logged **166,272** failed SSH logins from **19,187** IP addresses, about 600 a day over 271 days between January 2022 and February 2023, and the map I drew from them never counted a single guess at `root`. Its regex only matched logins for accounts that didn't exist. From 2020 to 2023 I ran that map of everyone who tried to guess the password. It's still the project I'm most proud of.
+From 2020 to 2023 I ran a map of everyone who tried to guess the password on my Raspberry Pi. Between January 2022 and February 2023 it logged **166,272** failed logins from **19,187** IP addresses, about 600 a day on the 271 days it was running. Its regex only matched logins for accounts that didn't exist, so it never counted a single guess at `root`. It's still the project I'm most proud of.
 
 {/* src: logs.dump → ssh_failed (graveyard/backup), 2022-01-02 to 2023-02-20, 271 days with data; attack-map git log 2020-11-06 to 2023-02-07; proudest: interview round 1 */}
 

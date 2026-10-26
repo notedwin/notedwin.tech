@@ -9,9 +9,9 @@ figures: "75% = precision; 16% = recall; 48% = precision, 2 features"
 start: true
 ---
 
-I built a random forest that predicts expected goals (XG) in the online soccer game [HaxBall](https://www.haxball.com/), and put it on a site that charts XG for real matches. When it called a kick a goal it was right 75% of the time, but it caught only 16% of the goals that were scored. Using only goal distance and goal angle, precision was 48%, so the features I added did most of the work. High school students who played on it told me the scores ran too low.
+I built a random forest that predicts expected goals (XG) in the online soccer game [HaxBall](https://www.haxball.com/). When it called a kick a goal it was right 75% of the time, but it caught only 16% of the goals that were scored. High school students who played on it told me the scores ran too low.
 
-I worked on this for about 2 weeks over the winter holidays, using data recorded from hundreds of goals, thousands of matches and millions of player positions. The hosted site is no longer running (its backend is gone), so the code is on GitHub: [haxclass](https://github.com/vingkan/haxclass) for the data collection and [haxml](https://github.com/vingkan/haxml) for my notebooks and models.
+I worked on this for about 2 weeks over the winter holidays, using data recorded from hundreds of goals, thousands of matches and millions of player positions.
 
 ## What is HaxBall?
 
@@ -248,8 +248,7 @@ AUC ROC only moved from 0.532 to 0.581: the model rarely calls a goal, and when
 it does it is usually right. The feature sets with fewer features had better
 recall (up to 23%) at lower precision.
 
-I deployed the random forest to a website that charts XG for matches. That
-hosted site no longer works.
+I deployed the random forest to a website that charts XG for matches.
 
 ### Why the random forest
 
@@ -273,8 +272,7 @@ by ball_speed's SHAP value.
 ![feature importance](/assets/haxml/importances.webp)
 
 The plot shows SHAP values, which give how much each feature pushed individual
-predictions up or down, averaged over the data. I wanted a model I could explain
-to non-technical readers.
+predictions up or down, averaged over the data.
 
 ### Feedback
 
@@ -322,16 +320,12 @@ advice on the model and overall software engineering.
 
 I liked being able to see my results on a website.
 
-The [ablation test above](#did-my-features-improve-the-model) showed the model
-without my features was clearly worse on precision, though recall stayed low
-either way.
-
 I learned a lot about making interpretable data science results. Also, areas in
 my software engineering skill set that I can improve on!
 
 ## Links and references
 
-The hosted demo (vingkan.github.io/haxclass) is no longer running. The data
+The hosted demo is no longer running (its backend is gone). The data
 collection code is in the [haxclass repository](https://github.com/vingkan/haxclass).
 
 My notebooks and models are in the
