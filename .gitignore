@@ -60,3 +60,5 @@ tests/
 # Post backlog: local only
 /docs/
 /.impeccable/
+# Post drafts: local only
+/content/drafts/
