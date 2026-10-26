@@ -136,6 +136,25 @@ Bots also tried `edwin`, my name, 33 times. That wasn't an account on the server
 
 {/* src: ssh_failed (hour of day: 0h 7,600 and 8h 6,337 over 271 days → 28 and 23 per day; max day, distinct users, top users, user='edwin' → 33); who the scanners were + "scary": interview round 2 */}
 
+The whole table is small enough to query in your browser. It's all 166,272 rows, with each IP address swapped for a number (`ip_id`) and a country looked up from where its dot was drawn.
+
+<QueryLab
+	n={1}
+	caption="every failed login, jan 2022 to feb 2023"
+	src="/data/ssh-failed.parquet"
+	table="ssh_failed"
+	presets={[
+		{ label: "per day", sql: "SELECT time::DATE AS day, count(*) AS attempts\nFROM ssh_failed\nGROUP BY day\nORDER BY day;" },
+		{ label: "by hour", sql: "SELECT hour(time) AS hour, count(*) AS attempts\nFROM ssh_failed\nGROUP BY hour\nORDER BY hour;" },
+		{ label: "users", sql: "SELECT \"user\", count(*) AS attempts\nFROM ssh_failed\nGROUP BY \"user\"\nORDER BY attempts DESC\nLIMIT 15;" },
+		{ label: "countries", sql: "SELECT country, count(*) AS attempts, count(DISTINCT ip_id) AS ips\nFROM ssh_failed\nWHERE country IS NOT NULL\nGROUP BY country\nORDER BY attempts DESC\nLIMIT 15;" },
+		{ label: "top ips", sql: "SELECT ip_id, count(*) AS attempts, count(DISTINCT \"user\") AS usernames,\n  min(time)::DATE AS first_seen, max(time)::DATE AS last_seen\nFROM ssh_failed\nGROUP BY ip_id\nORDER BY attempts DESC\nLIMIT 10;" },
+		{ label: "root", sql: "SELECT count(*) AS root_attempts\nFROM ssh_failed\nWHERE \"user\" = 'root';" },
+	]}
+/>
+
+{/* src: public/data/ssh-failed.parquet, built from graveyard/backup/logs.dump (ssh_failed): IPs replaced by ip_id (numbered by first seen), lat/lon rounded to 0.1°, country from a point-in-polygon join on Natural Earth 1:50m admin-0 (96% of rows located; the rest fall in water or on borders); rebuild: uv run scripts/attack_map_parquet.py */}
+
 ## The blind spot
 
 SSH writes two different lines for a wrong password. If the account doesn't exist, it says "invalid user". If it does exist, it doesn't:

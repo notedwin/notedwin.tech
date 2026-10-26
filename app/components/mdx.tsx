@@ -9,6 +9,7 @@ import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
 import { Results } from "./results";
+import { QueryLab } from "./query-lab";
 import { proseSizes } from "app/lib/image-sizes";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
@@ -145,6 +146,7 @@ let components = {
 	Callout,
 	KatexStyles,
 	Results,
+	QueryLab,
 };
 
 // An <Image> in a post's opening blocks is likely its LCP element: load it eagerly at high

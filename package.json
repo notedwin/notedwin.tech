@@ -15,6 +15,7 @@
     "check:pages": "node design/checks/pages.mjs http://localhost:3100"
   },
   "dependencies": {
+    "@duckdb/duckdb-wasm": "1.33.1-dev57.0",
     "@notedwin/design": "workspace:*",
     "@types/node": "22.19.1",
     "@types/react": "19.3.0",
