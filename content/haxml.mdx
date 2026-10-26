@@ -5,75 +5,26 @@ summary: "I built models that predict expected goals (XG) in the online soccer g
 tags: "ml, featured"
 domain: data
 status: settled
+figures: "75% = precision; 16% = recall; 48% = precision, 2 features"
 start: true
 ---
 
-Most machine learning projects usually go like this:
+I built a random forest that predicts expected goals (XG) in the online soccer game [HaxBall](https://www.haxball.com/), and put it on a site that charts XG for real matches. When it called a kick a goal it was right 75% of the time, but it caught only 16% of the goals that were scored. Using only goal distance and goal angle, precision was 48%, so the features I added did most of the work. High school students who played on it told me the scores ran too low.
 
-- Get a dataset.
-- Create a model trying to predict something.
-- Modify the model until you get good metrics.
-- Profit.
-
-Luckily for you, this project is **unique** compared to most data science
-projects.
-
-I am proud of this project because it shows how I:
-
-- Worked with a large and imperfect data set.
-- Created a model that performed great at the task of predicting XG (expected
-  goals).
-- Deployed the model to a website that creates visualizations of XG (expected
-  goals).
-- Received feedback from new HaxBall players on my model.
-
-<div className="ne-plate video-plate">
-	<embed src="https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12" />
-</div>
-
-Goal: Create and deploy machine learning models to predict “expected goals” (XG)
-in the online game [HaxBall](https://www.haxball.com/).
-
-I'll explain a couple of things before I get into the technical details of what
-I worked on.
+I worked on this for about 2 weeks over the winter holidays, using data recorded from hundreds of goals, thousands of matches and millions of player positions. The hosted site is no longer running (its backend is gone), so the code is on GitHub: [haxclass](https://github.com/vingkan/haxclass) for the data collection and [haxml](https://github.com/vingkan/haxml) for my notebooks and models.
 
 ## What is HaxBall?
 
-[HaxBall](https://www.haxball.com/) is an online physics-based multi-player
-soccer game.
-
-Below is a short animation of the game being played.
+HaxBall is an online physics-based multi-player soccer game. Each player is a circle that can kick and interact with the ball. You move using WASD (or arrows) and space to kick.
 
 ![A game of Haxball](/assets/haxml/output.gif)  
 GIF credit to [GIPHY](https://giphy.com/).
 
-Each player is a circle that can kick and interact with the ball. You can move
-using WASD (or arrows) and space to kick the ball.
-
 ## What is XG (expected goals)?
 
-Below is a short video explaining what expected goals means in the context of
-soccer.
+XG is the probability that a given kick results in a goal. The video below explains it for soccer.
 
-<YouTube videoId="zSaeaFcm1SY" />
-
-Summary of the video:
-
-XG is the probability of a given kick resulting in a goal and can be used to
-create higher-order metrics, for both offense and defense.
-
-XG helps describe the match, but does not attempt to solve soccer or predict the
-results. For example, if a team has a high cumulative XG score through the match
-but doesn’t score any goals, this would mean the team was applying pressure
-through the match and had chances to score but did not score.
-
-XG does not account for who is taking the shot; one definition of elite strikers
-is those who score more than their XG suggests.
-
-Some criticisms of XG in soccer include undermining the value of clinical
-strikers. In other terms, strikers who can stay calm under pressure in positions
-close to the goal but don’t outperform their XG consistently. We know there is
-no such thing as a 100% chance of a goal.
+<YouTube videoId="zSaeaFcm1SY" title="Video explaining expected goals in soccer" />
 
 ## Predicting XG in HaxBall
 
@@ -96,9 +47,6 @@ analysis to understand the types of data we had collected. This was the
 beginning of brainstorming for the feature engineering I would do later. The
 main goal of this data analysis was to see what types of data we had and how the
 data was obtained.
-
-We had collected data on hundreds of goals, thousands of different matches and
-millions of player positions.
 
 Here are two example schemas that I used often.
 
@@ -127,11 +75,6 @@ generating and evaluating features, was a process I repeated a couple of times
 before I picked my final set of features.
 
 ### Feature engineering
-
-> Feature engineering is when you use domain knowledge to extract features from
-> raw data using data mining techniques. The purpose of a feature is to make the
-> problem easier to understand in the context of the problem. - Feature
-> Engineering Wikipedia
 
 I had to draw comparisons between soccer and HaxBall to create features that
 would make the model better at predicting XG. HaxBall is less complex than
@@ -162,67 +105,10 @@ Some ideas for features I wanted to use as input:
 Below is the code for the two features from the cone, defenders_within_cone and
 in_shot.
 
-```python showLineNumbers {1-20} /println/
-def defender_cone(match,stadium,kick):
-    '''
-    To obtain the features we want defenders_within_cone and in_shot,
-    there are some conditions we must check such as does the kicker exist
-    (Diagram will be included)
-    Args:
-        match: Match metadata (dict)
-        stadium: Stadium data (dict)
-        kick: Kick data (dict)
-    Returns:
-        count: count of defenders within the cone (int)
-        in_cone: is there any defenders in the cone (boolean)
-    '''
 
-    count = 0
-    in_cone = True if count>0 else False
+The two shot-cone features, defenders_within_cone and in_shot, count the opponents standing inside the triangle between the ball and the two goalposts. The code is in the [haxml repository](https://github.com/vingkan/haxml).
 
-    # values we use often for each player
-    gp = get_opposing_goalpost(stadium,kick["fromTeam"])
-    goal_high = max([p["y"] for p in gp["posts"]])
-    goal_low = min([p["y"] for p in gp["posts"]])
-    goal_x = gp["posts"][0]["x"]
-    positions = get_positions_at_time(match["positions"], kick["time"])
-
-    # check if a kicker exist, data might be corrupted/lost
-    kicker = None
-    for person in positions:
-        if person["playerId"] == kick["fromId"]:
-            kicker = person
-            break
-    if kicker is None:
-        return 0, False
-
-    for person in positions:
-        # skip the ball and kicker as they SHOULD NOT be included in count
-        if person["type"] == "ball" or person["playerId"] == kicker["playerId"]:
-            continue
-        # if the ball is on x or y position of the goal post the slope would be 0
-
-        slope_1 = 0
-        slope_2 = 0
-
-        # modify the slope when it is not inline(x or y) with goalpost
-        if(kicker['y'] - goal_low != 0 and kicker['x'] - goal_x != 0):
-            slope_1 = (kicker['y']-goal_low)/(kicker['x']-goal_x)
-
-        if(kicker['y'] - goal_high != 0 and kicker['x'] - goal_x != 0):
-            slope_2 = (fromY-goal_high)/(fromX-goal_x)
-
-        # using the person['x'] as input we can check
-        # if the person is above or below this line
-        # this elimates the need to check x and y seperately
-        if(person['x']*slope_1+goal_low <= person['y']
-           and person['x']*slope_2+goal_high >= person['y']):
-            count = count + 1
-
-    return count, in_cone
-```
-
-Diagram of above code:
+Diagram of the cone:
 
 ![Shot cone](/assets/haxml/shot-cone.webp)
 
@@ -356,49 +242,25 @@ original model.
 	]}
 />
 
-The data shows that any model on the original data without any features had no
-chance at predicting XG precisely.
+With only goal distance and goal angle, precision was 48% and recall 7%. The
+full feature set got 75% precision and 16% recall. The recall is still low, and
+AUC ROC only moved from 0.532 to 0.581: the model rarely calls a goal, and when
+it does it is usually right. The feature sets with fewer features had better
+recall (up to 23%) at lower precision.
 
-Once I thought the features created a model that was good at predicting XG, I
-deployed that model to the website,
-[located here](https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12).
+I deployed the random forest to a website that charts XG for matches. That
+hosted site no longer works.
 
-### Why my model is a good model
+### Why the random forest
 
-As we can see above, our model is good based on metrics, but why does the random
-forest classifier perform the best?
-
-Let’s compare Random Forest to Gradient Boost, since these models performed the
-best and worst respectively at the task of predicting XG. These two models were
-both ensemble methods.
-
-Ensemble learning is an approach to machine learning where multiple weaker
-models are used to create a better final model.
-
-**What is the difference between these two ensemble methods?**
-
-Random forest uses bagging, which focuses on learning from the weaker models
-independently and trying to combine them in a deterministic averaging process.
-
-Gradient Boost uses boosting, which focuses on learning from the weaker models
-and trying to create the final best model sequentially.
-
-Roughly speaking, bagging focuses on averaging out the weaker models to create
-the final model, while boosting focuses on learning upon other features
-sequentially.
-
-If you want to learn more,
-[check out this article](https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205)
+Random forest had the highest precision of the six models (75%). K Neighbors had
+the best recall (20%) and AUC ROC (0.594), and Gradient Boosting reached 52%
+precision. None of them found more than 20% of goals.
 
 ## Discussion
 
-We have to contextualize the problem and the results. We know that our model is
-good and some reasons as to why the model performed better than the other
-models, but why did those specific features create a model that was good at
-predicting XG?
-
-I believe these features worked well because certain features are
-necessary conditions for a goal to happen. You have a higher chance of scoring
+Why did these features raise precision from 48% to 75%? I believe they work
+because certain features are necessary conditions for a goal to happen. You have a higher chance of scoring
 if you are closer to the goal, you can’t score if players are between you and
 the goal, if the ball is moving fast you have a higher chance of scoring since
 the ball will catch the opponent off guard and unable to react.
@@ -410,17 +272,9 @@ by ball_speed's SHAP value.
 
 ![feature importance](/assets/haxml/importances.webp)
 
-Feature importance helps us understand how much each feature contributes to the
-model’s prediction. We often want interpretable models as we want to be able to
-explain these models to people from a non-technical background. SHAP (SHapley
-Additive exPlanations) is a game-theoretic approach to explain the output of any
-machine learning model. SHAP is similar to feature importance which shows us how
-the features impact the model. SHAP uniquely allows us to view how features
-impact individual predictions and then averages these impacts on the model’s
-predictions.
-
-If you want to learn more,
-[check out this article.](https://towardsdatascience.com/a-novel-approach-to-feature-importance-shapley-additive-explanations-d18af30fc21b)
+The plot shows SHAP values, which give how much each feature pushed individual
+predictions up or down, averaged over the data. I wanted a model I could explain
+to non-technical readers.
 
 ### Feedback
 
@@ -466,27 +320,21 @@ development and info/system/network security.
 I enjoyed being able to work in a one-on-one environment, receive feedback and
 advice on the model and overall software engineering.
 
-Most of the things I enjoyed were the same things that made this project unique,
-such as being able to see my results on a website.
+I liked being able to see my results on a website.
 
-I was glad to see that my model was good at predicting XG compared to the
-original model and compared to any metric.
-
-When we performed the [ablation test above](#did-my-features-improve-the-model), we saw that the model without our features did not perform nearly as
-well at the task of predicting XG.
+The [ablation test above](#did-my-features-improve-the-model) showed the model
+without my features was clearly worse on precision, though recall stayed low
+either way.
 
 I learned a lot about making interpretable data science results. Also, areas in
 my software engineering skill set that I can improve on!
 
 ## Links and references
 
-If you want to see the website where my model is deployed,
-[you can go here!](https://vingkan.github.io/haxclass/hub/)
+The hosted demo (vingkan.github.io/haxclass) is no longer running. The data
+collection code is in the [haxclass repository](https://github.com/vingkan/haxclass).
 
-If you want to see some examples of my model,
-[here is an example.](https://vingkan.github.io/haxclass/hub/xg.html?m=-MQsAFNKGdFPM9tTfFgv&clf=edwin_rf_12)
-
-If you want to see some of the work I did you can check out the
+My notebooks and models are in the
 [HaxML repository on GitHub.](https://github.com/vingkan/haxml)
 
 Some of the tools I used that you are probably familiar with:
