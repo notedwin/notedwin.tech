@@ -9,16 +9,19 @@ const sizes = "(max-width: 767px) calc((100vw - 50px) / 2), 245px";
 export const pairSizes = "(max-width: 767px) calc((100vw - 50px) / 2), 145px";
 
 // A post as a card: a small dithered header plate (its image, or a plain plate in its domain's
-// wash), date, title.
+// wash), date, title, and with `summary` the post's summary under it (read next, where a reader
+// needs a reason to click).
 // `heading` is the title's level: h2 directly under a page h1, h3 inside a section.
 export function PostCard({
 	post,
 	heading: Title = "h3",
 	sizes: plateSizes = sizes,
+	summary = false,
 }: {
 	post: Post;
 	heading?: "h2" | "h3";
 	sizes?: string;
+	summary?: boolean;
 }) {
 	let image = getCardImage(post);
 	return (
@@ -39,6 +42,7 @@ export function PostCard({
 				)}
 				{post.metadata.title}
 			</Title>
+			{summary && post.metadata.summary && <p className="t-body-sm muted post-card__summary">{post.metadata.summary}</p>}
 		</Link>
 	);
 }

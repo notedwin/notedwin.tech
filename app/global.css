@@ -373,6 +373,130 @@
 	.read-next {
 		margin-top: var(--space-12);
 	}
+	.post-foot__follow a {
+		color: var(--link);
+		text-decoration: underline;
+		text-decoration-color: var(--ink-faint);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 3px;
+		transition: text-decoration-color var(--dur-fast) var(--ease-out);
+	}
+	.post-foot__follow a:hover {
+		text-decoration-color: var(--link);
+	}
+	/* Read next: the summary sits under the title, beside the plate from 768px up. */
+	@media (min-width: 768px) {
+		.post-grid--pair .post-card:has(.post-card__summary) {
+			grid-template-rows: auto auto 1fr;
+		}
+		.post-grid--pair .post-card:has(.post-card__summary) .post-card__plate {
+			grid-row: 1 / span 3;
+		}
+		.post-grid--pair .post-card__summary {
+			grid-column: 2;
+		}
+	}
+	.post-card__summary {
+		margin-top: var(--space-1);
+		font-weight: var(--sans-weight);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
+
+	/* Lead figures: the system's tile row closes the post head, one column per figure from 768px up. */
+	.post-head:has(.post-figures) {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+	.post-figures {
+		margin-top: var(--space-6);
+	}
+	.post-figures dd {
+		margin: 0;
+	}
+	@media (min-width: 769px) {
+		.post-figures {
+			grid-template-columns: repeat(var(--figures), minmax(0, 1fr));
+		}
+	}
+
+	/* Reading progress: a 2px line in the post's domain colour on the top edge, driven by scrolling
+	   through the prose, so it never moves on its own. Browsers without scroll-driven animations skip it. */
+	.read-progress {
+		display: none;
+	}
+	@supports (animation-timeline: view()) {
+		main:has(> .read-progress) {
+			timeline-scope: --prose;
+		}
+		.post-body {
+			view-timeline: --prose block;
+		}
+		.read-progress {
+			display: block;
+			position: fixed;
+			inset: 0 0 auto;
+			z-index: 3;
+			height: 2px;
+			background: var(--domain);
+			transform-origin: 0 50%;
+			transform: scaleX(0);
+			animation: read-progress linear both;
+			animation-timeline: --prose;
+			animation-range: contain 0% contain 100%;
+		}
+	}
+	@keyframes read-progress {
+		to {
+			transform: scaleX(1);
+		}
+	}
+
+	/* Contents: posts with four or more sections list them in the margin outside the column from
+	   1280px, where wide tables never run under it. It stays in view while the post scrolls. */
+	.post-rail {
+		display: none;
+	}
+	@media (min-width: 1280px) {
+		.post-body {
+			position: relative;
+		}
+		.post-rail {
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: calc(100% + var(--space-12) + var(--space-6));
+			width: calc(var(--rail) - var(--space-12));
+		}
+		.post-rail__inner {
+			position: sticky;
+			top: calc(var(--header-bar) + var(--space-8));
+		}
+		.post-rail__head {
+			margin-bottom: var(--space-2);
+			color: var(--ink-muted);
+		}
+		.post-rail ol {
+			display: grid;
+			gap: var(--space-2);
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.post-rail a {
+			display: block;
+			font: 400 13px/20px var(--font-mono);
+			color: var(--ink-muted);
+			text-decoration: none;
+			transition: color var(--dur-fast) var(--ease-out);
+		}
+		.post-rail a:hover {
+			color: var(--ink);
+		}
+	}
 
 	.prose-plate {
 		display: block;
@@ -419,7 +543,8 @@
 		height: 100%;
 	}
 	.video-plate {
-		display: block;
+		display: grid;
+		place-items: center;
 		position: relative;
 		aspect-ratio: 16 / 9;
 	}

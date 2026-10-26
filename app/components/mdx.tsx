@@ -8,6 +8,7 @@ import { TweetComponent } from "./tweet";
 import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
+import { slugify } from "app/lib/posts";
 import { Results } from "./results";
 import { QueryLab } from "./query-lab";
 import { proseSizes } from "app/lib/image-sizes";
@@ -95,17 +96,6 @@ function textOf(node): string {
 	if (typeof node === "string" || typeof node === "number") return String(node);
 	if (Array.isArray(node)) return node.map(textOf).join("");
 	return textOf(node.props?.children);
-}
-
-function slugify(str) {
-	return str
-		.toString()
-		.toLowerCase()
-		.trim()
-		.replace(/\s+/g, "-")
-		.replace(/&/g, "-and-")
-		.replace(/[^\w\-]+/g, "")
-		.replace(/\-\-+/g, "-");
 }
 
 function createHeading(level) {

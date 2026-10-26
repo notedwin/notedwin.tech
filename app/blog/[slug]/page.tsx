@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CustomMDX } from "app/components/mdx";
 import { SectionHead } from "app/components/ne";
 import { PostCard, pairSizes } from "app/components/post-card";
-import { getBlogPosts, getTags, isoDate, readNext, type Post } from "app/lib/posts";
-import { metaData } from "app/config";
+import { ReadingTracker } from "app/components/reading-tracker";
+import { getBlogPosts, getFigures, getSections, getTags, isoDate, readingMinutes, readNext, type Post } from "app/lib/posts";
+import { metaData, socialLinks } from "app/config";
 import { absoluteUrl, feedTypes, jsonLd, ogImageUrl, person, postDescription } from "app/lib/seo";
 
 // Who wrote it, when, and what it is about, so search and AI tools can quote it with attribution.
@@ -84,6 +86,8 @@ export default async function Blog({ params }) {
 
 	let { title, summary, publishedAt, updated, domain } = post.metadata;
 	let next = readNext(post);
+	let figures = getFigures(post);
+	let sections = getSections(post);
 
 	return (
 		<main id="main" data-domain={domain}>
@@ -96,18 +100,50 @@ export default async function Blog({ params }) {
 					{updated && (
 						<>
 							{" "}
-							· updated <time dateTime={updated}>{isoDate(updated)}</time>
+							· <span className="whitespace-nowrap">updated <time dateTime={updated}>{isoDate(updated)}</time></span>
 						</>
 					)}
+					{" "}· <span className="whitespace-nowrap">{readingMinutes(post)} min read</span> · edwin
 				</p>
+				{figures.length > 0 && (
+					<dl className="ne-tiles post-figures" style={{ "--figures": figures.length } as CSSProperties}>
+						{figures.map((f) => (
+							<div className="ne-tile" key={f.label}>
+								<dt className="ne-tile__title">{f.label}</dt>
+								<dd className="ne-tile__value">
+									{f.number}
+									{f.unit && <span className="ne-tile__unit">{f.unit}</span>}
+								</dd>
+							</div>
+						))}
+					</dl>
+				)}
 			</header>
-			<div className="ne-prose-frame">
+			{/* Filled by scrolling the prose (CSS scroll-driven animation); absent where unsupported. */}
+			<div className="read-progress" aria-hidden="true" />
+			<div className="ne-prose-frame post-body">
+				{sections.length >= 4 && (
+					<nav className="post-rail" aria-label="contents">
+						<div className="post-rail__inner">
+							<p className="t-meta post-rail__head">contents</p>
+							<ol>
+								{sections.map((s) => (
+									<li key={s.id}>
+										<a href={`#${s.id}`}>{s.text}</a>
+									</li>
+								))}
+							</ol>
+						</div>
+					</nav>
+				)}
 				<article className="ne-prose">
 					<CustomMDX source={post.content} />
 				</article>
 			</div>
 			<div className="post-foot">
-				<p className="t-body-sm muted">thanks for reading.</p>
+				<p className="t-body-sm muted post-foot__follow">
+					thanks for reading. new posts: <a href={socialLinks.substack}>substack</a> · <a href="/rss.xml">rss</a>
+				</p>
 				<section className="read-next" aria-labelledby="read-next">
 					<SectionHead
 						id="read-next"
@@ -121,12 +157,13 @@ export default async function Blog({ params }) {
 					<ul className="post-grid post-grid--pair">
 						{next.map((p) => (
 							<li key={p.slug}>
-								<PostCard post={p} sizes={pairSizes} />
+								<PostCard post={p} sizes={pairSizes} summary />
 							</li>
 						))}
 					</ul>
 				</section>
 			</div>
+			<ReadingTracker slug={post.slug} />
 		</main>
 	);
 }

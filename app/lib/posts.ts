@@ -17,6 +17,8 @@ type Metadata = {
 	cover?: string;
 	// The one start-here entry, marked ★ on the blog.
 	start?: boolean;
+	// Lead figures under the post's head: "166,272 = failed ssh logins; 0 = guesses at root".
+	figures?: string;
 };
 
 export type Post = { metadata: Metadata; slug: string; content: string };
@@ -84,6 +86,58 @@ export function getTags(post: Post) {
 // The image for a post's card: its `cover`, else the first image the post shows.
 export function getCardImage(post: Post) {
 	return post.metadata.cover || /<Image[\s\S]*?src="([^"]+)"/.exec(post.content)?.[1];
+}
+
+// Up to three lead figures from `figures`. A value's number prints large; a unit after a space prints small.
+export function getFigures(post: Post) {
+	return (post.metadata.figures || "")
+		.split(";")
+		.map((pair) => pair.split("="))
+		.filter((parts) => parts.length === 2 && parts[0].trim() && parts[1].trim())
+		.slice(0, 3)
+		.map(([value, label]) => {
+			let [, number, unit] = /^(\S+)\s*(.*)$/.exec(value.trim())!;
+			return { number, unit, label: label.trim() };
+		});
+}
+
+// Prose only: code, JSX tags, comments and image syntax don't count toward reading time.
+function proseText(content: string) {
+	return content
+		.replace(/^```[\s\S]*?^```/gm, "")
+		.replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
+		.replace(/<[^>]*>/g, "")
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1");
+}
+
+// Minutes at 230 words a minute, never less than one.
+export function readingMinutes(post: Post) {
+	let words = proseText(post.content).split(/\s+/).filter(Boolean).length;
+	return Math.max(1, Math.round(words / 230));
+}
+
+export function slugify(str: string) {
+	return str
+		.toString()
+		.toLowerCase()
+		.trim()
+		.replace(/\s+/g, "-")
+		.replace(/&/g, "-and-")
+		.replace(/[^\w\-]+/g, "")
+		.replace(/\-\-+/g, "-");
+}
+
+// The post's h2s (MDX `#` and `##`, both render as h2) with the ids the MDX headings get.
+export function getSections(post: Post) {
+	let content = post.content.replace(/^```[\s\S]*?^```/gm, "");
+	return [...content.matchAll(/^##? (.+)$/gm)].map(([, heading]) => {
+		let text = heading
+			.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+			.replace(/[`*_]/g, "")
+			.trim();
+		return { id: slugify(text), text };
+	});
 }
 
 // ISO dates everywhere (design system: dates are ISO).
