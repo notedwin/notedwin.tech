@@ -1,19 +1,10 @@
 # notedwin
 
-This is the repository for my personal website.
-
-I maintain my posts as mdx files in the \content directory.
-
-To develop locally, run:
+The source for [notedwin.com](https://notedwin.com). Posts are MDX files in `content/`.
 
 ```bash
-pnpm run dev
+pnpm install
+pnpm dev
 ```
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-![inspo](https://github.com/1msirius/Nextfolio)
+Started from [Nextfolio](https://github.com/1msirius/Nextfolio).

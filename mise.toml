@@ -1,3 +1,0 @@
-# Keep in step with "packageManager" in package.json, which is what Vercel reads.
-[tools]
-pnpm = "10.34.7"

@@ -24,11 +24,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# local env files (none are committed, not even an example)
+.env*
 
 # vercel
 .vercel
@@ -62,3 +59,7 @@ tests/
 /.impeccable/
 # Post drafts: local only
 /content/drafts/
+# Local tool and agent config: kept on disk, not in the repo
+/PRODUCT.md
+/mise.toml
+/.markdownlint.json
