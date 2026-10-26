@@ -1,0 +1,4 @@
+# pnpm-lock.yaml is lockfile v6, which pnpm 8 writes and Vercel installs with.
+# The global mise config pins pnpm 10, which would rewrite the lockfile to v9.
+[tools]
+pnpm = "8.15.9"
