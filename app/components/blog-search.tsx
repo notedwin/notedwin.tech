@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "app/lib/analytics";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import type { SearchIndex, Snippet, search as searchFn, snippet as snippetFn } from "app/lib/search";
 
@@ -120,6 +121,7 @@ export function BlogSearch({ entries }: { entries: Entry[] }) {
 						}
 						if (e.key === "Enter" && searching) {
 							e.preventDefault();
+							track("blog_search_submitted", { result_count: shown.length });
 							list.current?.querySelector("a")?.focus();
 						}
 					}}

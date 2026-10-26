@@ -65,8 +65,14 @@ const nextConfig: NextConfig = {
 			{ source: "/feed", destination: "/feed/rss.xml" },
 			{ source: "/atom", destination: "/feed/atom.xml" },
 			{ source: "/json", destination: "/feed/feed.json" },
+			// PostHog through this domain (US region), so blockers that list posthog.com still count readers.
+			{ source: "/ingest/static/:path*", destination: "https://us-assets.i.posthog.com/static/:path*" },
+			{ source: "/ingest/array/:path*", destination: "https://us-assets.i.posthog.com/array/:path*" },
+			{ source: "/ingest/:path*", destination: "https://us.i.posthog.com/:path*" },
 		];
 	},
+	// PostHog's endpoints end in a slash (/e/); without this Next redirects them and events are lost.
+	skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;

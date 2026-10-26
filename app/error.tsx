@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import { trackError } from "./lib/analytics";
 import { PageHead } from "./components/ne";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
 	useEffect(() => {
+		trackError(error);
 		console.error(error);
 	}, [error]);
 

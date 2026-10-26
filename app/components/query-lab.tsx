@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "app/lib/analytics";
 import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import type { AsyncDuckDBConnection } from "@duckdb/duckdb-wasm";
 
@@ -18,6 +19,7 @@ type Kind = "text" | "number" | "time";
 type Column = { name: string; kind: Kind; unit: number };
 type Result = { columns: Column[]; rows: unknown[][]; total: number; ms: number };
 type Status = "idle" | "loading" | "running" | "done" | "error";
+type QuerySource = "editor" | "preset";
 
 // The table shows this many rows; the status line says when a result has more.
 const MAX_ROWS = 200;
@@ -109,7 +111,7 @@ export function QueryLab({ n, caption, src, table, presets }: Props) {
 	let [error, setError] = useState("");
 	let run = useRef(0);
 
-	async function execute(text = sql) {
+	async function execute(text = sql, source: QuerySource = "editor") {
 		let id = ++run.current;
 		setStatus(connection ? "running" : "loading");
 		try {
@@ -127,10 +129,16 @@ export function QueryLab({ n, caption, src, table, presets }: Props) {
 			}
 			setResult({ columns, rows, total: res.numRows, ms });
 			setStatus("done");
+			track("query_lab_query_completed", {
+				query_source: source,
+				result_count: res.numRows,
+				duration_ms: Math.round(ms),
+			});
 		} catch (e) {
 			if (id !== run.current) return;
 			setError(e instanceof Error ? e.message : String(e));
 			setStatus("error");
+			track("query_lab_query_failed", { query_source: source });
 		}
 	}
 
@@ -154,7 +162,7 @@ export function QueryLab({ n, caption, src, table, presets }: Props) {
 						disabled={busy}
 						onClick={() => {
 							setSql(p.sql);
-							execute(p.sql);
+							execute(p.sql, "preset");
 						}}
 					>
 						{p.label}
