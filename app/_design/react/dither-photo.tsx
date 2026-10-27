@@ -26,8 +26,8 @@ type Props = {
 
 const plainImage = (props: DitherImageProps) => <img {...props} loading="lazy" decoding="async" />;
 
-// A photo printed in the pixel language: a two-ink 8×8 ordered dither, one image pixel per 2
-// device pixels, with the original fading in on hover or focus. The plate is focusable so
+// A photo printed in the pixel language: a two-ink 8×8 ordered dither, one image pixel per
+// device pixel, with the original fading in on hover or focus. The plate is focusable so
 // keyboard readers get the color too. The dither is drawn from the color layer's own source,
 // so each photo downloads once. The original shows until the dither has drawn (`data-drawn`).
 export function DitherPhoto({ src, alt, className = "", renderImage = plainImage }: Props) {
@@ -53,7 +53,7 @@ export function DitherPhoto({ src, alt, className = "", renderImage = plainImage
 			force = true;
 		}
 		let source = bitmap.current!;
-		let density = (window.devicePixelRatio || 1) / 2;
+		let density = window.devicePixelRatio || 1;
 		let w = Math.max(1, Math.round(c.clientWidth * density));
 		let h = Math.max(1, Math.round(c.clientHeight * density));
 		if (!force && c.width === w && c.height === h) return;
