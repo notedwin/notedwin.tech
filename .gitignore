@@ -63,3 +63,6 @@ tests/
 /PRODUCT.md
 /mise.toml
 /.markdownlint.json
+
+# Local link to the design repo checkout (~/notedwin/projects/design); app/_design holds the copies the site uses.
+/design

@@ -2,8 +2,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "sh scripts/design-sync.sh && next dev",
+    "build": "sh scripts/design-sync.sh && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test:ui": "PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
