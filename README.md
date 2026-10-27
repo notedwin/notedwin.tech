@@ -101,6 +101,20 @@ From the artifact's `data-viz.md`, enforced by `pnpm check`:
 - Text 4.5:1 and marks 3:1 on their surface in both themes; the three domain series stay at least
   ΔE2000 20 apart under protan, deutan and tritan simulation.
 
+## Ember by register
+
+Ember marks where attention belongs. A consumer's `design-overrides.json` names its register,
+and `checks/pages.mjs` counts ember-coloured elements in each 1280×800 viewport against its
+`emberBudget`.
+
+- **reading** (notedwin.com): ember is where the reader is (focus, the current page, selection)
+  and nothing else. Budget 3, the default.
+- **instrument** (products: the homelab dashboard): ember also carries state, meaning what moved,
+  the live value, the hot cell, the selected row and the data series. Budget 8. Errors and
+  warnings stay on `signal-error` and `signal-warn`, never ember.
+
+A page over budget has stopped saying what matters. Remove ember before raising the budget.
+
 ## Change it
 
 1. Edit the design system artifact; copy its `tokens.json` (and `components/bundle.css` if
