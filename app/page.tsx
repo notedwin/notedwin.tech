@@ -11,9 +11,25 @@ import { getBlogPosts, type Post } from "./lib/posts";
 // The posts the home grid shows, in this order.
 const homeSlugs = ["homelab-2026", "homelab-2025", "attack-map", "haxml"];
 
-// The title and share card come from the layout.
+// The one page whose title and description carry the full name, so a search for it finds the
+// site without the name on every page. Other pages keep "<title> · notedwin".
+const homeTitle = `${metaData.name}: homelab, data and ML notes`;
+const homeDescription = `${metaData.name}'s notes on running a homelab, data engineering and ML: what I built, what it cost and what broke.`;
+
 export const metadata: Metadata = {
+	title: { absolute: homeTitle },
+	description: homeDescription,
 	alternates: { canonical: "/", types: feedTypes },
+	openGraph: {
+		title: homeTitle,
+		description: homeDescription,
+		url: metaData.baseUrl,
+		siteName: metaData.siteName,
+		locale: "en_US",
+		type: "website",
+		images: metaData.ogImage,
+	},
+	twitter: { card: "summary_large_image", title: homeTitle, description: homeDescription, images: metaData.ogImage },
 };
 
 const siteJsonLd = jsonLd({
@@ -23,11 +39,19 @@ const siteJsonLd = jsonLd({
 			"@id": `${metaData.baseUrl}/#website`,
 			url: metaData.baseUrl,
 			name: metaData.siteName,
-			description: metaData.description,
+			description: homeDescription,
 			inLanguage: "en",
 			author: { "@id": person["@id"] },
 		},
-		{ ...person, jobTitle: "Data and ML engineer", knowsAbout: ["homelab", "data engineering", "machine learning"] },
+		// Given and family name plus employer tell this Edwin Zamudio apart from others in search.
+		{
+			...person,
+			givenName: "Edwin",
+			familyName: "Zamudio",
+			jobTitle: "Data and ML engineer",
+			worksFor: { "@type": "Organization", name: "McDonald's" },
+			knowsAbout: ["homelab", "data engineering", "machine learning"],
+		},
 	],
 });
 
