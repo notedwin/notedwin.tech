@@ -7,7 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "./components/header";
 import Footer from "./components/footer";
 import { metaData } from "./config";
-import { feedTypes } from "./lib/seo";
+import { feedTypes, ogImages, twitterImage } from "./lib/seo";
 import { color } from "./lib/tokens";
 import { themeScript } from "./_design/theme";
 
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 	authors: [{ name: metaData.name, url: metaData.baseUrl }],
 	alternates: { types: feedTypes },
 	openGraph: {
-		images: metaData.ogImage,
+		images: ogImages(metaData.title),
 		title: metaData.title,
 		description: metaData.description,
 		url: metaData.baseUrl,
@@ -75,6 +75,7 @@ export const metadata: Metadata = {
 		description: metaData.description,
 		card: "summary_large_image",
 		site: "@mu0xide",
+		images: twitterImage(metaData.title),
 	},
 	icons: {
 		icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],

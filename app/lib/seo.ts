@@ -27,9 +27,9 @@ export function pageMetadata({ title, description, path }: { title: string; desc
 			siteName: metaData.siteName,
 			locale: "en_US",
 			type: "website",
-			images: metaData.ogImage,
+			images: ogImages(title),
 		},
-		twitter: { card: "summary_large_image", title, description, images: metaData.ogImage },
+		twitter: { card: "summary_large_image", title, description, images: twitterImage(title) },
 	};
 }
 
@@ -50,8 +50,34 @@ export function jsonLd(data: Record<string, unknown>) {
 	return JSON.stringify({ "@context": "https://schema.org", ...data }).replace(/</g, "\\u003c");
 }
 
-export function ogImageUrl(title: string) {
-	return absoluteUrl(`/og?title=${encodeURIComponent(title)}`);
+// Share card sizes, drawn by app/og. Large is the 1.91:1 card LinkedIn, Facebook and X show; medium
+// is the same card at half size; small is a square for apps that crop to a thumbnail (Slack, iMessage).
+export const ogSizes = {
+	large: { width: 1200, height: 630 },
+	medium: { width: 600, height: 315 },
+	small: { width: 400, height: 400 },
+} as const;
+export type OgSize = keyof typeof ogSizes;
+
+export function ogImageUrl(title: string, size: OgSize = "large") {
+	let query = size === "large" ? "" : `&size=${size}`;
+	return absoluteUrl(`/og?title=${encodeURIComponent(title)}${query}`);
+}
+
+// Every size of a title's share card, largest first (most crawlers take the first), with width and
+// height so LinkedIn can render the card on first share without fetching the image to measure it.
+export function ogImages(title: string) {
+	return (Object.keys(ogSizes) as OgSize[]).map((size) => ({
+		url: ogImageUrl(title, size),
+		...ogSizes[size],
+		alt: title,
+		type: "image/png",
+	}));
+}
+
+// X shows one image: the large card.
+export function twitterImage(title: string) {
+	return { url: ogImageUrl(title), alt: title };
 }
 
 // The post's summary, or its first paragraph of prose when the summary is empty.

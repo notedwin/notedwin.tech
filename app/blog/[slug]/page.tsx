@@ -8,7 +8,7 @@ import { PostCard, pairSizes } from "app/components/post-card";
 import { ReadingTracker } from "app/components/reading-tracker";
 import { getBlogPosts, getFigures, getSections, getTags, isoDate, readingMinutes, readNext, type Post } from "app/lib/posts";
 import { metaData, socialLinks } from "app/config";
-import { absoluteUrl, feedTypes, jsonLd, ogImageUrl, person, postDescription } from "app/lib/seo";
+import { absoluteUrl, feedTypes, jsonLd, ogImages, ogImageUrl, person, postDescription, twitterImage } from "app/lib/seo";
 
 // Who wrote it, when, and what it is about, so search and AI tools can quote it with attribution.
 function postJsonLd(post: Post) {
@@ -46,7 +46,6 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 
 	let { title, publishedAt, updated, image } = post.metadata;
 	let description = postDescription(post);
-	let ogImage = image ? absoluteUrl(image) : ogImageUrl(title);
 	let path = `/blog/${post.slug}`;
 
 	return {
@@ -65,13 +64,14 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 			url: path,
 			siteName: metaData.siteName,
 			locale: "en_US",
-			images: [image ? { url: ogImage, alt: title } : { url: ogImage, width: 1200, height: 630, alt: title }],
+			// A post's own cover image, when it has one, is its share card.
+			images: image ? [{ url: absoluteUrl(image), alt: title }] : ogImages(title),
 		},
 		twitter: {
 			card: "summary_large_image",
 			title,
 			description,
-			images: [ogImage],
+			images: image ? { url: absoluteUrl(image), alt: title } : twitterImage(title),
 		},
 	};
 }
