@@ -43,6 +43,15 @@ const siteJsonLd = jsonLd({
 			inLanguage: "en",
 			author: { "@id": person["@id"] },
 		},
+		// Marks the home page as a profile of the person, the markup Google reads for name searches.
+		{
+			"@type": "ProfilePage",
+			"@id": `${metaData.baseUrl}/#profile`,
+			url: metaData.baseUrl,
+			name: homeTitle,
+			isPartOf: { "@id": `${metaData.baseUrl}/#website` },
+			mainEntity: { "@id": person["@id"] },
+		},
 		// Given and family name plus employer tell this Edwin Zamudio apart from others in search.
 		{
 			...person,

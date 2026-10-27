@@ -41,6 +41,7 @@ export const person = {
 	name: metaData.name,
 	alternateName: "notedwin",
 	url: metaData.baseUrl,
+	image: absoluteUrl("/profile.png"),
 	sameAs: Object.values(socialLinks),
 };
 
