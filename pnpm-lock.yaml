@@ -20,9 +20,6 @@ importers:
       '@duckdb/duckdb-wasm':
         specifier: 1.33.1-dev57.0
         version: 1.33.1-dev57.0
-      '@notedwin/design':
-        specifier: workspace:*
-        version: link:design
       '@types/node':
         specifier: 22.19.1
         version: 22.19.1

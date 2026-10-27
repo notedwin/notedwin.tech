@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Flame, ThemeToggle } from "@notedwin/design/client";
+import { Flame } from "../_design/react/flame";
+import { ThemeToggle } from "../_design/react/theme-toggle";
 import { Nav } from "./nav";
 
 // The flame as the home link, then nav and theme toggle.

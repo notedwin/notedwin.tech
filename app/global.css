@@ -1,8 +1,8 @@
 @import "tailwindcss";
-/* The design system package (design/): tokens, Tailwind theme and component CSS. */
-@import "@notedwin/design/css/tokens.css";
-@import "@notedwin/design/css/theme.css";
-@import "@notedwin/design/css/components.css" layer(components);
+/* The design system copy (app/_design): tokens, Tailwind theme and component CSS. */
+@import "./_design/css/tokens.css";
+@import "./_design/css/theme.css";
+@import "./_design/css/components.css" layer(components);
 
 /* Site layer: the notedwin system applied to the blog. Tokens only; no raw colors or sizes
    outside the scale. Breakpoints 480 / 768 / 1024 (design system → Finishing details). */

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { DitherPhoto as Plate } from "@notedwin/design/client";
+import { DitherPhoto as Plate } from "../_design/react/dither-photo";
 
 type Props = {
 	src: string;

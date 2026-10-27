@@ -2,21 +2,18 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm design build && next dev",
-    "build": "pnpm design build && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "typecheck": "pnpm design build && tsc --noEmit && node design/checks/scale.mjs app/global.css && node design/checks/consumer.mjs",
+    "typecheck": "tsc --noEmit",
     "test:ui": "PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
     "ui:open": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli open --config=playwright-cli.json http://localhost:3000",
     "ui:shot": "PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec playwright-cli screenshot --filename=.playwright-cli/screenshot.png",
-    "design": "pnpm -F @notedwin/design",
-    "design:pull": "git subtree pull --squash --prefix=design https://gitea.notedwin.com/notedwin/design.git main",
-    "design:status": "git fetch -q https://gitea.notedwin.com/notedwin/design.git main && if [ \"$(git rev-parse FETCH_HEAD^{tree})\" = \"$(git rev-parse HEAD:design)\" ]; then echo \"design/ matches gitea main\"; else echo \"design/ differs from gitea main ($(git rev-parse --short FETCH_HEAD)):\"; git diff --stat HEAD:design FETCH_HEAD; exit 1; fi",
-    "check:pages": "node design/checks/pages.mjs http://localhost:3100"
+    "design:status": "sh scripts/design-sync.sh --check",
+    "design:sync": "sh scripts/design-sync.sh"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "1.33.1-dev57.0",
-    "@notedwin/design": "workspace:*",
     "@types/node": "22.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

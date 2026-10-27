@@ -1,4 +1,4 @@
-import tokens from "@notedwin/design/tokens.json";
+import tokens from "../_design/tokens.json";
 
 type Theme = "dark" | "light";
 
