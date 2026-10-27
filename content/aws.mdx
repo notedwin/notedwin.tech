@@ -16,11 +16,7 @@ status: settled
 	height="600"
 />
 
-## Self-hosting
-
-Are you tired of relying on 3rd party providers to host your applications who can pull the plug on your application at any time? Then self-hosting is for you!
-
-Not only do you gain full control over your website, but it is also a great way to dive into technology such as Linux, bash scripting, web servers, etc.
+## Two years on a Raspberry Pi
 
 After 2 years of self-hosting a low-traffic website on a Raspberry Pi, I can confidently say I know a little more about web servers, automation and Linux. Maybe not enough to scale a 3-5 user application! (sarcasm, my website can probably handle 10,000 concurrent users but I don't think I will ever see that)
 
@@ -32,7 +28,7 @@ Self-hosting does come with many challenges. Most of the challenges are related 
 
 These issues, although solvable, require a great amount of time and knowledge to debug, so it is not feasible for everyone.
 
-### The reason for the meme above!
+### 30 hours on one rsyslog error (the reason for the meme above!)
 
 One of my favorite issues I ran into was when I initially created my [Attack Map project](/blog/attack-map), I wanted to send logs via HTTP.
 I found that the standard way on Linux to send logs was using rsyslog. I was able to find documentation on how to send logs via HTTP; however, I kept getting missing module errors. I was confused and kept trying different combinations of arguments, but nothing worked.
@@ -78,8 +74,6 @@ resource "cloudflare_record" "domain" {
 ```
 
 Once I set up Cloudflare, I needed to get an ACM certificate for the domain name. This domain would point to the front end of the application which was served as static content on CloudFront.
-
-The flow of the application looks like this:
 
 ### Single page application
 

@@ -1,13 +1,14 @@
 ---
 title: "Thunderbolt instead of 10GbE: 20 Gb networking without a $400 motherboard"
-summary: "The cheapest AM4 motherboard with 10GbE cost $400. An $80 board, a $100 Thunderbolt card and a $15 cable gave my server a 20 Gb link instead, after I turned off Thunderbolt security so Linux would accept the connection."
+summary: "The cheapest AM4 motherboard with 10GbE cost $400. An $80 board, a $100 Thunderbolt card and a $15 cable gave my server a 20 Gb link."
 publishedAt: "2025-04-04"
 tags: "homelab, thunderbolt"
 domain: infra
 status: growing
 ---
 
-I recently spent a bunch of time messing with Thunderbolt. Here are some notes I took.
+I wanted to build my server on AM4, and the cheapest motherboard with 10GbE was 400 dollars(!!). So I spent a bunch of time messing with Thunderbolt instead. Here are some notes I took.
+{/* src: moved up from "Hardware" below */}
 
 <Image
 	src="/assets/thunderbolt/thunderbolt_market.webp"
@@ -22,19 +23,18 @@ There are a couple of things that are confusing!
 ## Platform-specific issues
 
 On Linux, devices are not authorized when connected.
-To "authorize" the connection, you have to set up udev rules.
+To "authorize" the connection, you have to set up udev rules. udev is the part of Linux that reacts when you plug a device in, and a udev rule can tell it to mark every new Thunderbolt device as authorized.
 
 However, I found it easier to disable Thunderbolt security in the BIOS.
 This only leaves you vulnerable to physical attacks, where someone can plug something into your device.
 
-Another thing is that hot plugging might not work; this issue turns out to be a firmware issue, so always update your Thunderbolt controller using either
-`sudo fwupdmgr get-devices` or by going to your manufacturer's website and looking for firmware updates.
+Hot plugging did not work with my Mac. I fixed it by updating the firmware on the Thunderbolt controller chip with `fwupdmgr` (`sudo fwupdmgr get-devices` lists it, `sudo fwupdmgr update` installs the update); your manufacturer's website may have the update too.
 
-On Mac, it just works™.
+After that, on Mac, it just works™.
 
 ## What's the big deal with Thunderbolt networking?
 
-20 GB!
+20 Gb!
 
 <Image
 	src="/assets/thunderbolt/20gbe.webp"
@@ -48,15 +48,12 @@ On Mac, it just works™.
 > Opinion: Why are people not considering Thunderbolt as an alternative to 10GbE?
 > 10GbE is still an unusually expensive/premium add-on for desktop computers/Macs, despite its age.
 
-10 GB can be cheap if you only work off a desktop with 10GbE or SFP+.
+10 Gb can be cheap if you only work off a desktop with 10GbE or SFP+.
 
 If not, you will have to buy a dongle to connect your server.
 A 10GbE dongle is around 200 dollars: [ubiquiti usb-c 10gbe](https://store.ui.com/us/en/category/accessories-installations/products/uacc-adapter-rj45-usbc-10ge)
 
-For my specific scenario, I wanted to build on AM4, as the cost/price performance made the most sense for me.
-The cheapest motherboard with 10GbE was 400 dollars(!!).
-
-My alternative was a cost-effective AM4 microATX motherboard compatible with a Thunderbolt add-in card!
+For my specific scenario, I wanted to build on AM4, as the cost/price performance made the most sense for me. Here's what I bought instead of the $400 board:
 
 - [asus pro b550m](https://shop.asus.com/us/90mb15q0-m0aayc-pro-b550m-c-csm.html) - 80 USD
 - [thunderboltex4 add-in](https://www.amazon.com/gp/product/B08ZS3D6JY?smid=A2L77EE7U53NWQ&psc=1) - 100 USD
@@ -77,7 +74,7 @@ Debugging tools:
 - bolt
 - [tbtools](https://github.com/intel/tbtools)
 
-I am aware that 10GB (refers to gigabit) networking is **1,250** megabytes, which most HDDs can only write at 150 MB/s.<br/>
+I am aware that 10 Gb (gigabit) networking is **1,250** megabytes per second, while most HDDs can only write at 150 MB/s.<br/>
 On TrueNAS, I was not able to install tbtools. I was in developer mode and I ran the installation script from a data drive. Oh well, I figured it out.
 
 > generic TrueNAS is an appliance comment<br/>

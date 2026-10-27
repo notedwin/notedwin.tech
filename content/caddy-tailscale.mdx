@@ -1,5 +1,5 @@
 ---
-title: "Tailscale SSH and Caddy: pulling laptop data without opening port 22"
+title: "You don't need port 22 open to SSH into your laptop"
 summary: "Tailscale SSH let me pull screen time data from my laptop into Postgres without opening port 22, and Caddy serves my private dashboards on a domain only reachable over Tailscale."
 publishedAt: "2023-06-20"
 tags: "caddy, tailscale"
@@ -8,13 +8,9 @@ status: settled
 cover: "/photos/10.webp"
 ---
 
-I previously decided I wanted to transfer data from a SQLite database on my laptop to my server's PostgreSQL database as part of some data exploration I was doing on screen time. In my [previous post](/blog/health-data), I briefly discussed the reasoning behind this data transfer.
+I wanted to transfer data from a SQLite database on my laptop to my server's PostgreSQL database as part of some data exploration I was doing on screen time. In my [previous post](/blog/health-data), I briefly discussed the reasoning behind this data transfer. Tailscale (a VPN between my devices) got the file off the laptop, and Caddy (a web server that sets up HTTPS for you) serves the dashboards it feeds.
 
-## Quick background
-
-Before diving into the integration of Caddy and Tailscale, let's quickly understand what each component does. Caddy is a web server with a simple configuration syntax that prioritizes ease of use and security through automatic HTTPS. Tailscale is a VPN solution that allows you to establish secure connections between different devices and networks easily.
-
-## SQLite and SSH
+## Why not just SFTP the file?
 
 There is a common pattern in data engineering to SFTP a file from a remote server and do the processing needed. This approach works when the data is stored on a server that stays on the same network and enabling SSH is not an issue.
 
@@ -28,7 +24,7 @@ I did run into one issue related to the App Store installation of Tailscale. I h
 
 After following the uninstallation steps, I installed the standalone version of Tailscale, which can be found on [GitHub](https://github.com/tailscale/tailscale/wiki/Tailscaled-on-macOS).
 
-Now, Tailscale hijacks SSH connections, and it automatically verifies that my device is logged into Tailscale and connects accordingly. Tailscale handles the provisioning of SSH keys behind the scenes. Additionally, finer controls can be set up with SSH, such as limiting access to specific machines!
+Now, Tailscale hijacks SSH connections, and it automatically verifies that my device is logged into Tailscale and connects accordingly. Tailscale handles the provisioning of SSH keys behind the scenes. Finer controls can be set up with SSH, such as limiting access to specific machines!
 
 Awesome! I wrote a pipeline to pull the data from my Mac to PostgreSQL using [Dagster](https://github.com/notedwin/log-screen/blob/b9409186fa17854b6fddcee663d8f4152240a431/data_cow/assets.py#L122).
 
@@ -68,7 +64,7 @@ Awesome! I wrote a pipeline to pull the data from my Mac to PostgreSQL using [Da
 
 ## Caddy and Tailscale
 
-The majority of this post was on Tailscale, but I wanted to plug Caddy since I have found it to be an amazing piece of software!
+The majority of this post was on Tailscale, but I wanted to plug Caddy too.
 
 Connecting both of the components, we can access certain domains only when connected to the Tailscale network, without having to rely on remembering IP and port combinations. Also, Tailscale allows you to share your network with other users with fine-grained access control logic.
 

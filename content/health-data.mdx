@@ -1,5 +1,5 @@
 ---
-title: "Getting screen time and Health data off an iPhone"
+title: "Apple keeps only 2 weeks of screen time, so I keep my own copy"
 publishedAt: "2023-05-25"
 summary: "Apple keeps screen time in a SQLite file, knowledgeC.db, for only 2 weeks, so I copy it to Postgres for Grafana. Health data sits in an encrypted phone backup whose schema changed, and that's where I stopped."
 tags: "iOS, Health, Screen Time"
@@ -9,7 +9,9 @@ updated: "2024-02-10"
 cover: "/assets/health.webp"
 ---
 
-# Update: 2024-02-10
+I set up personal health dashboards to make better decisions about my screen time and overall health.
+
+## Update: 2024-02-10
 
 I have 2 small libraries to extract health and screen time data.
 [health-data](https://github.com/notedwin/manzana-health)
@@ -20,12 +22,6 @@ https://gist.github.com/0xdevalias/38cfc92278f85ae89a46f0c156208fd5
 
 > TLDR: This presentation sums up my findings:
 > [https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf](https://www.elcomsoft.com/presentations/20200129_health_and_activity_evidence_en.pdf)
-
-I use my smartphone every day, and I can guess that you also use your smartphone every day. The importance of digital health and privacy cannot be overstated. Our smartphones have become an important part of our lives. However, spending all your time doom scrolling on social media or playing video games is probably not the most productive way to spend your time.
-
-The best way to maintain a healthy balance is to become aware of your usage and make conscious decisions.
-
-My goal with this blog post is to show you the ways I set up personal health dashboards to make better decisions about my screen time and overall health.
 
 ## Accessing screen time
 
