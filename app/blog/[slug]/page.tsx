@@ -8,13 +8,13 @@ import { PostCard, pairSizes } from "app/components/post-card";
 import { ReadingTracker } from "app/components/reading-tracker";
 import { getBlogPosts, getFigures, getSections, getTags, isoDate, readingMinutes, readNext, type Post } from "app/lib/posts";
 import { metaData, socialLinks } from "app/config";
-import { absoluteUrl, feedTypes, jsonLd, ogImages, ogImageUrl, person, postDescription, twitterImage } from "app/lib/seo";
+import { absoluteUrl, feedTypes, jsonLd, ogImages, ogImageUrl, person, postDescription, twitterHandle, twitterImage } from "app/lib/seo";
 
 // Who wrote it, when, and what it is about, so search and AI tools can quote it with attribution.
 function postJsonLd(post: Post) {
 	let { title, publishedAt, updated, image } = post.metadata;
 	let url = absoluteUrl(`/blog/${post.slug}`);
-	return jsonLd({
+	let posting = {
 		"@type": "BlogPosting",
 		"@id": `${url}#post`,
 		headline: title,
@@ -30,7 +30,17 @@ function postJsonLd(post: Post) {
 		author: person,
 		publisher: { "@id": person["@id"] },
 		isPartOf: { "@type": "Blog", "@id": absoluteUrl("/blog#blog"), name: metaData.siteName, url: absoluteUrl("/blog") },
-	});
+	};
+	// Search shows this trail (notedwin › Blog › title) in place of the raw URL.
+	let breadcrumb = {
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: metaData.siteName, item: metaData.baseUrl },
+			{ "@type": "ListItem", position: 2, name: "Blog", item: absoluteUrl("/blog") },
+			{ "@type": "ListItem", position: 3, name: title, item: url },
+		],
+	};
+	return jsonLd({ "@graph": [posting, breadcrumb] });
 }
 
 export async function generateStaticParams() {
@@ -44,7 +54,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 		return;
 	}
 
-	let { title, publishedAt, updated, image } = post.metadata;
+	let { title, publishedAt, updated, image, domain } = post.metadata;
 	let description = postDescription(post);
 	let path = `/blog/${post.slug}`;
 
@@ -60,6 +70,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 			publishedTime: publishedAt,
 			modifiedTime: updated || publishedAt,
 			authors: [metaData.baseUrl],
+			section: domain,
 			tags: getTags(post),
 			url: path,
 			siteName: metaData.siteName,
@@ -69,6 +80,8 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 		},
 		twitter: {
 			card: "summary_large_image",
+			site: twitterHandle,
+			creator: twitterHandle,
 			title,
 			description,
 			images: image ? { url: absoluteUrl(image), alt: title } : twitterImage(title),

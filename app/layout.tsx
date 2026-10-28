@@ -7,7 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "./components/header";
 import Footer from "./components/footer";
 import { metaData } from "./config";
-import { feedTypes, ogImages, twitterImage } from "./lib/seo";
+import { feedTypes, ogImages, twitterHandle, twitterImage } from "./lib/seo";
 import { color } from "./lib/tokens";
 import { themeScript } from "./_design/theme";
 
@@ -74,11 +74,14 @@ export const metadata: Metadata = {
 		title: metaData.title,
 		description: metaData.description,
 		card: "summary_large_image",
-		site: "@mu0xide",
+		site: twitterHandle,
+		creator: twitterHandle,
 		images: twitterImage(metaData.title),
 	},
 	icons: {
 		icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],
+		// The flame on the dark ground, for iOS home screens and iMessage link previews.
+		apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
 	},
 };
 

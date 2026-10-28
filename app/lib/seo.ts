@@ -13,6 +13,9 @@ export const feedTypes = {
 	"application/feed+json": "/feed.json",
 };
 
+// Edwin's X handle, as both the site and the author of every card.
+export const twitterHandle = "@mu0xide";
+
 // One page's title, description, canonical URL and share card. Next merges `openGraph` shallowly,
 // so a page that sets none inherits the home page's url and title; this sets all of them.
 export function pageMetadata({ title, description, path }: { title: string; description: string; path: string }): Metadata {
@@ -29,7 +32,14 @@ export function pageMetadata({ title, description, path }: { title: string; desc
 			type: "website",
 			images: ogImages(title),
 		},
-		twitter: { card: "summary_large_image", title, description, images: twitterImage(title) },
+		twitter: {
+			card: "summary_large_image",
+			site: twitterHandle,
+			creator: twitterHandle,
+			title,
+			description,
+			images: twitterImage(title),
+		},
 	};
 }
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { metaData } from "./config";
-import { feedTypes, jsonLd, ogImages, person, twitterImage } from "./lib/seo";
+import { feedTypes, jsonLd, ogImages, person, twitterHandle, twitterImage } from "./lib/seo";
 import { Cube } from "./components/cube";
 import { CommitLine } from "./components/commit-line";
 import { SectionHead } from "./components/ne";
@@ -26,11 +26,16 @@ export const metadata: Metadata = {
 		url: metaData.baseUrl,
 		siteName: metaData.siteName,
 		locale: "en_US",
-		type: "website",
+		type: "profile",
+		firstName: "Edwin",
+		lastName: "Zamudio",
+		username: "notedwin",
 		images: ogImages(homeTitle),
 	},
 	twitter: {
 		card: "summary_large_image",
+		site: twitterHandle,
+		creator: twitterHandle,
 		title: homeTitle,
 		description: homeDescription,
 		images: twitterImage(homeTitle),
