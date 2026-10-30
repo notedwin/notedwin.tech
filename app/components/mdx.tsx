@@ -15,8 +15,8 @@ import { proseSizes } from "app/lib/image-sizes";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
-// Code colors come from --shiki-* variables mapped to tokens in global.css: sage on graphite,
-// orange on smoke.
+// Code colors come from --shiki-* variables mapped to code-* tokens in the design system's components.css
+// (violet strings, sage constants on ash; darker inks on mist).
 const codeTheme = createCssVariablesTheme({ name: "notedwin", variablePrefix: "--shiki-" });
 
 function CustomLink(props) {

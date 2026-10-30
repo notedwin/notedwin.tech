@@ -7,7 +7,7 @@ import { color } from "app/lib/tokens";
 // than a straight third of the large card would give it.
 const scale: Record<OgSize, number> = { large: 1, medium: 0.5, small: 0.45 };
 
-// Graphite ground, ink title, the ember square from the commit line as the one signal.
+// Ash ground, ink title, the ember square from the commit line as the one signal.
 // `?size=medium|small` draws the smaller cards; anything else draws the large one.
 export function GET(request: Request) {
 	let url = new URL(request.url);
