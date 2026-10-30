@@ -1,7 +1,7 @@
 import { socialLinks } from "app/config";
 
 // Bump on every redesign (design system: README → Name and header). Kept in source, not shown.
-export const SITE_VERSION = { v: 8, date: "2026-10-23" };
+export const SITE_VERSION = { v: 9, date: "2026-10-30" };
 
 const links = [
 	{ href: socialLinks.github, name: "github" },
