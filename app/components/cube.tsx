@@ -8,12 +8,13 @@ import { ditherField, mix, onThemeChange, tok } from "./ink";
 // opposite sides (front/back, right/left, top/bottom), so every corner shows all three: sage, an
 // ember mixed 60% toward the base (a glow, not a signal), and the page's own ground, which follows
 // the theme.
-const BASE = "#2b302f"; // v1 graphite ground-sunk, fixed by the Cube spec
+// The base is the fixed brand char, the same in both themes, so the cube stays a dark object.
+const base = () => tok("--char");
 const FACES: [(x: number, y: number) => number, () => string][] = [
 	[(x, y) => 0.25 + 0.6 * (1 - y), () => tok("--ash-300")],
 	[(x) => 0.3 + 0.5 * x, () => tok("--ash-300")],
-	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), () => mix(tok("--flame-shadow"), BASE, 0.6)],
-	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), () => mix(tok("--flame-shadow"), BASE, 0.6)],
+	[(x, y) => 0.15 + 0.75 * Math.hypot(x - 0.3, y - 0.3), () => mix(tok("--flame-shadow"), base(), 0.6)],
+	[(x, y) => 0.5 + 0.4 * Math.sin(x * 6) * Math.cos(y * 6), () => mix(tok("--flame-shadow"), base(), 0.6)],
 	[(x, y) => 0.85 - 0.6 * y, () => tok("--ground")],
 	[(x, y) => 0.45 + 0.35 * Math.cos(x * 4 + y * 3), () => tok("--ground")],
 ];
@@ -26,7 +27,7 @@ export function Cube() {
 			FACES.forEach(([field, ink], i) => {
 				let c = document.createElement("canvas");
 				c.width = c.height = 52;
-				ditherField(c.getContext("2d")!, 52, 52, (x, y) => field(x / 52, y / 52), BASE, ink());
+				ditherField(c.getContext("2d")!, 52, 52, (x, y) => field(x / 52, y / 52), base(), ink());
 				(faces[i] as HTMLElement).style.backgroundImage = `url(${c.toDataURL()})`;
 			});
 		};
