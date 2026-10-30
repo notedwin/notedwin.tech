@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import { ditherField, mix, onThemeChange, tok } from "./ink";
 
 // The home page's eye-grabber, from the design system's Cube component. Each face is a
-// 52px value field in the photo dither on a fixed ash base. Three inks, two faces each, on
+// 52px value field in the photo dither on a fixed dark base. Three inks, two faces each, on
 // opposite sides (front/back, right/left, top/bottom), so every corner shows all three: sage, an
 // ember mixed 60% toward the base (a glow, not a signal), and the page's own ground, which follows
 // the theme.
-const BASE = "#2b302f"; // ash ground-sunk, fixed by the Cube spec
+const BASE = "#2b302f"; // v1 graphite ground-sunk, fixed by the Cube spec
 const FACES: [(x: number, y: number) => number, () => string][] = [
 	[(x, y) => 0.25 + 0.6 * (1 - y), () => tok("--ash-300")],
 	[(x) => 0.3 + 0.5 * x, () => tok("--ash-300")],
