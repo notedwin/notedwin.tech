@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CustomMDX } from "app/components/mdx";
 import { SectionHead } from "app/components/ne";
 import { PostCard, pairSizes } from "app/components/post-card";
 import { ReadingTracker } from "app/components/reading-tracker";
-import { getBlogPosts, getFigures, getSections, getTags, isoDate, readingMinutes, readNext, type Post } from "app/lib/posts";
+import { getBlogPosts, getSections, getTags, isoDate, readingMinutes, readNext, type Post } from "app/lib/posts";
 import { metaData, socialLinks } from "app/config";
 import { absoluteUrl, feedTypes, jsonLd, ogImages, ogImageUrl, person, postDescription, twitterHandle, twitterImage } from "app/lib/seo";
 
@@ -99,7 +98,6 @@ export default async function Blog({ params }) {
 
 	let { title, summary, publishedAt, updated, domain } = post.metadata;
 	let next = readNext(post);
-	let figures = getFigures(post);
 	let sections = getSections(post);
 
 	return (
@@ -116,20 +114,29 @@ export default async function Blog({ params }) {
 							· <span className="whitespace-nowrap">updated <time dateTime={updated}>{isoDate(updated)}</time></span>
 						</>
 					)}
-					{" "}· <span className="whitespace-nowrap">{readingMinutes(post)} min read</span> · edwin
+					{" "}· <span className="whitespace-nowrap">{readingMinutes(post)} min read</span> ·{" "}
+					<Link className="post-head__author" href="/">
+						edwin
+					</Link>
 				</p>
-				{figures.length > 0 && (
-					<dl className="ne-tiles post-figures" style={{ "--figures": figures.length } as CSSProperties}>
-						{figures.map((f) => (
-							<div className="ne-tile" key={f.label}>
-								<dt className="ne-tile__title">{f.label}</dt>
-								<dd className="ne-tile__value">
-									{f.number}
-									{f.unit && <span className="ne-tile__unit">{f.unit}</span>}
-								</dd>
-							</div>
-						))}
-					</dl>
+				{/* Below 1280px there is no margin rail, so the contents fold under the head: a reader from
+				    search can jump to the part they came for. */}
+				{sections.length >= 4 && (
+					<details className="post-toc">
+						<summary>
+							<span className="post-toc__chevron" aria-hidden="true">
+								›
+							</span>
+							contents · {sections.length} sections
+						</summary>
+						<ol>
+							{sections.map((s) => (
+								<li key={s.id}>
+									<a href={`#${s.id}`}>{s.text}</a>
+								</li>
+							))}
+						</ol>
+					</details>
 				)}
 			</header>
 			{/* Filled by scrolling the prose (CSS scroll-driven animation); absent where unsupported. */}

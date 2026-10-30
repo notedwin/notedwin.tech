@@ -17,8 +17,6 @@ type Metadata = {
 	cover?: string;
 	// The one start-here entry, marked ★ on the blog.
 	start?: boolean;
-	// Lead figures under the post's head: "166,272 = failed ssh logins; 0 = guesses at root".
-	figures?: string;
 };
 
 export type Post = { metadata: Metadata; slug: string; content: string };
@@ -86,19 +84,6 @@ export function getTags(post: Post) {
 // The image for a post's card: its `cover`, else the first image the post shows.
 export function getCardImage(post: Post) {
 	return post.metadata.cover || /<Image[\s\S]*?src="([^"]+)"/.exec(post.content)?.[1];
-}
-
-// Up to three lead figures from `figures`. A value's number prints large; a unit after a space prints small.
-export function getFigures(post: Post) {
-	return (post.metadata.figures || "")
-		.split(";")
-		.map((pair) => pair.split("="))
-		.filter((parts) => parts.length === 2 && parts[0].trim() && parts[1].trim())
-		.slice(0, 3)
-		.map(([value, label]) => {
-			let [, number, unit] = /^(\S+)\s*(.*)$/.exec(value.trim())!;
-			return { number, unit, label: label.trim() };
-		});
 }
 
 // Prose only: code, JSX tags, comments and image syntax don't count toward reading time.

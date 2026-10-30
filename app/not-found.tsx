@@ -1,26 +1,34 @@
-import Link from "next/link";
 import type { Metadata } from "next";
-import { PageHead } from "./components/ne";
+import { PageHead, SectionHead } from "./components/ne";
+import { PostCard } from "./components/post-card";
+import { getBlogPosts } from "./lib/posts";
 
 export const metadata: Metadata = {
 	title: "Page not found",
 	description: "This page doesn't exist, or it moved.",
 };
 
+// A dead link should still lead somewhere: the three newest posts, under the header's nav.
 export default function NotFound() {
+	let recent = getBlogPosts().slice(0, 3);
+
 	return (
-		<main id="main">
+		<main id="main" className="not-found">
 			<PageHead title="Page not found" note="status:404">
-				<p className="ne-pagehead__lede">This page doesn’t exist, or it moved. Older posts now live under /blog.</p>
+				<p className="ne-pagehead__lede">This page doesn’t exist, or it moved.</p>
 			</PageHead>
-			<p className="stack-links">
-				<Link className="more-link" href="/blog">
-					› read the blog
-				</Link>
-				<Link className="more-link" href="/">
-					› go home
-				</Link>
-			</p>
+			{recent.length > 0 && (
+				<section className="home-section" aria-labelledby="recent">
+					<SectionHead id="recent" title="newest posts" />
+					<ul className="post-grid">
+						{recent.map((post) => (
+							<li key={post.slug}>
+								<PostCard post={post} />
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
 		</main>
 	);
 }

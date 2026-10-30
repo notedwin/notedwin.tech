@@ -5,11 +5,11 @@ import { feedTypes, jsonLd, ogImages, person, twitterHandle, twitterImage } from
 import { Cube } from "./components/cube";
 import { CommitLine } from "./components/commit-line";
 import { SectionHead } from "./components/ne";
-import { PostCard, pairSizes } from "./components/post-card";
+import { PostCard } from "./components/post-card";
 import { getBlogPosts, type Post } from "./lib/posts";
 
-// The posts the home grid shows, in this order.
-const homeSlugs = ["homelab-2026", "homelab-2025", "attack-map", "haxml"];
+// The posts the home grid shows, in this order: two rows of three, the same cards as /blog.
+const homeSlugs = ["homelab-2026", "homelab-2025", "thunderbolt", "attack-map", "health-data", "haxml"];
 
 // The one page whose title and description carry the full name, so a search for it finds the
 // site without the name on every page. Other pages keep "<title> · notedwin".
@@ -76,7 +76,6 @@ const siteJsonLd = jsonLd({
 
 export default function Page() {
 	let posts = getBlogPosts();
-	let start = posts.find((post) => post.metadata.start);
 	let picked = homeSlugs
 		.map((slug) => posts.find((post) => post.slug === slug))
 		.filter((post): post is Post => post !== undefined);
@@ -101,9 +100,6 @@ export default function Page() {
 						.
 					</p>
 					<CommitLine className="intro__commit" />
-					<Link className="more-link" href="/projects">
-						projects →
-					</Link>
 				</div>
 				<Cube />
 			</section>
@@ -113,25 +109,15 @@ export default function Page() {
 					id="blog"
 					title="blog"
 					note={
-						<>
-							{start && (
-								<>
-									<Link className="sh-link" href={`/blog/${start.slug}`}>
-										★ start here
-									</Link>
-									{" · "}
-								</>
-							)}
-							<Link className="sh-link" href="/blog">
-								all posts →
-							</Link>
-						</>
+						<Link className="sh-link" href="/blog">
+							all posts →
+						</Link>
 					}
 				/>
-				<ul className="post-grid post-grid--pair">
+				<ul className="post-grid">
 					{picked.map((post) => (
 						<li key={post.slug}>
-							<PostCard post={post} sizes={pairSizes} />
+							<PostCard post={post} />
 						</li>
 					))}
 				</ul>

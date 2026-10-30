@@ -151,12 +151,9 @@
 		padding-top: 0;
 		border-top: 0;
 	}
-	/* Home is one screen: header, intro, the blog grid. Tighter rhythm than inner pages. */
-	.site:has(> .home) .site-header {
-		margin-bottom: var(--space-4);
-	}
+	/* Home: header, intro, then six posts in the /blog grid. */
 	.home-section {
-		margin-top: var(--space-8);
+		margin-top: var(--space-16);
 	}
 	.sh-link {
 		text-decoration: none;
@@ -215,8 +212,8 @@
 		margin: var(--space-2) 0 var(--space-6);
 		color: var(--ink-muted);
 	}
-	/* The pair grid (home's four chosen posts, a post's read next): two by two at every width. From
-	   768px up each card lays its plate beside the meta and title, so home's rows fit the first screen. */
+	/* The pair grid (a post's read next): two by two at every width. From 768px up each card lays its
+	   plate beside the meta and title. */
 	.post-grid--pair {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
@@ -245,7 +242,7 @@
 		margin-top: var(--space-2);
 		color: var(--ink-muted);
 	}
-	/* Titles wrap in full on /blog; the pair grid clamps them at 3 lines so home stays one screen. */
+	/* Titles wrap in full in the grid; the pair grid clamps them at 3 lines. */
 	.post-grid--pair .post-card__title {
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
@@ -367,6 +364,82 @@
 		margin-top: var(--space-4);
 		color: var(--ink-muted);
 	}
+	/* The byline links home: a reader who lands on a post from search can find out whose site it is. */
+	.post-head__author {
+		text-decoration: underline;
+		text-decoration-color: var(--ink-faint);
+		text-underline-offset: 3px;
+		transition: color var(--dur-fast) var(--ease-out);
+	}
+	.post-head__author:hover {
+		color: var(--ink);
+	}
+	/* Contents under the head below 1280px (the margin rail takes over from there). Closed by default,
+	   so the first screen still reaches the prose. */
+	.post-toc {
+		margin-top: var(--space-4);
+	}
+	/* The fold's toggle is an outlined control like the theme toggle, so it reads as clickable;
+	   the chevron turns down while open. */
+	.post-toc summary {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		min-height: 28px;
+		padding: var(--space-1) var(--space-3);
+		font: 400 14px/20px var(--font-mono);
+		color: var(--ink-muted);
+		border: var(--hairline) solid var(--ink-faint);
+		cursor: pointer;
+		list-style: none;
+		transition:
+			color var(--dur-fast) var(--ease-out),
+			border-color var(--dur-fast) var(--ease-out);
+	}
+	.post-toc summary::-webkit-details-marker {
+		display: none;
+	}
+	.post-toc summary:hover,
+	.post-toc[open] summary {
+		color: var(--ink);
+		border-color: var(--ink);
+	}
+	.post-toc__chevron {
+		display: inline-block;
+		transition: transform var(--dur-fast) var(--ease-out);
+	}
+	.post-toc[open] .post-toc__chevron {
+		transform: rotate(90deg);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.post-toc__chevron {
+			transition: none;
+		}
+	}
+	.post-toc ol {
+		display: grid;
+		gap: var(--space-1);
+		margin: var(--space-2) 0 0;
+		padding: 0 0 0 var(--space-4);
+		border-left: var(--hairline) solid var(--rule);
+		list-style: none;
+	}
+	.post-toc a {
+		display: block;
+		padding: var(--space-1) 0;
+		font: 400 14px/20px var(--font-mono);
+		color: var(--ink-muted);
+		text-decoration: none;
+		transition: color var(--dur-fast) var(--ease-out);
+	}
+	.post-toc a:hover {
+		color: var(--link);
+	}
+	@media (min-width: 1280px) {
+		.post-toc {
+			display: none;
+		}
+	}
 	.post-foot {
 		margin-top: var(--space-16);
 	}
@@ -403,23 +476,6 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		overflow: hidden;
-	}
-
-	/* Lead figures: the system's tile row closes the post head, one column per figure from 768px up. */
-	.post-head:has(.post-figures) {
-		padding-bottom: 0;
-		border-bottom: 0;
-	}
-	.post-figures {
-		margin-top: var(--space-6);
-	}
-	.post-figures dd {
-		margin: 0;
-	}
-	@media (min-width: 769px) {
-		.post-figures {
-			grid-template-columns: repeat(var(--figures), minmax(0, 1fr));
-		}
 	}
 
 	/* Reading progress: a 2px line in the post's domain colour on the top edge, driven by scrolling
@@ -831,10 +887,7 @@
 		.intro {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		/* Phones: only the first two posts (the system hides the cube), so home fits one screen. */
-		.site:has(> .home) .site-header {
-			margin: var(--space-4) 0;
-		}
+		/* Phones: only the first two posts on home and the 404 (the system hides the cube on home). */
 		.home-section {
 			margin-top: var(--space-12);
 		}
@@ -845,7 +898,8 @@
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: var(--space-4);
 		}
-		.home .post-grid > li:nth-child(n + 3) {
+		.home .post-grid > li:nth-child(n + 3),
+		.not-found .post-grid > li:nth-child(n + 3) {
 			display: none;
 		}
 		.photo-grid {

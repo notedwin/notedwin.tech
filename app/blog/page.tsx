@@ -32,7 +32,7 @@ export default function BlogPosts() {
 					}),
 				}}
 			/>
-			<PageHead title="Blog" note={`${posts.length} posts`} />
+			<PageHead title="Blog" />
 			<BlogSearch entries={posts.map((post) => ({ slug: post.slug, card: <PostCard post={post} heading="h2" /> }))} />
 		</main>
 	);
