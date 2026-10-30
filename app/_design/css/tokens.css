@@ -1,13 +1,14 @@
-/* notedwin design system: CSS variables and type classes. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
+/* notedwin v2 design system: CSS variables and type classes. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
 :root {
-  --ground: #343a38;
-  --ground-raised: #393f3d;
-  --ground-sunk: #2b302f;
-  --ink: #eef2f1;
-  --ink-muted: #b9c4c1;
-  --ink-faint: #84908d;
-  --rule: #4d5654;
-  --on-ink: #343a38;
+  --ground: #111312;
+  --ground-raised: #181c1b;
+  --ground-sunk: #0d0f0e;
+  --ink: #d4d8d7;
+  --ink-body: #b8c0bd;
+  --ink-muted: #8e9a96;
+  --ink-faint: #677570;
+  --rule: #242827;
+  --on-ink: #111312;
   --char: #1f2121;
   --paper: #e7edeb;
   --paper-ink: #1f2121;
@@ -20,16 +21,16 @@
   --ash-300: #93b4ad;
   --ash-500: #768e89;
   --ash-700: #424b49;
-  --ember: #e7653d;
+  --ember: #d67c5c;
   --ember-strong: #c9400f;
-  --ember-ink: #ffad8c;
-  --ember-wash: #40302a;
+  --ember-ink: #e3a791;
+  --ember-wash: #31241e;
   --on-ember: #ffffff;
   --infra: #7fa098;
   --infra-ink: #b4ccc6;
-  --infra-wash: #3f4a48;
+  --infra-wash: #232a27;
   --on-infra: #0e1010;
-  --link: var(--infra-ink);
+  --link: #a9c9d1;
   --code-keyword: var(--ink);
   --code-string: var(--data-ink);
   --code-constant: var(--infra-ink);
@@ -37,11 +38,11 @@
   --code-comment: var(--ink-muted);
   --data: #ab8ee6;
   --data-ink: #d6c6f8;
-  --data-wash: #3c3a45;
+  --data-wash: #2a2734;
   --on-data: #0e1010;
   --play: var(--ink);
   --play-ink: var(--ink);
-  --play-wash: #454d4b;
+  --play-wash: #303332;
   --on-play: var(--on-ink);
   --signal-live: #76d1bc;
   --signal-warn: #f2c14e;
@@ -54,14 +55,15 @@
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --ground: #d5dcd9;
-    --ground-raised: #e1e7e5;
-    --ground-sunk: #d1d8d5;
-    --ink: #1f2121;
-    --ink-muted: #4a5451;
-    --ink-faint: #6b7a76;
-    --rule: #b4c0bc;
-    --on-ink: #d5dcd9;
+    --ground: #e1e2e2;
+    --ground-raised: #e9eae9;
+    --ground-sunk: #d8dad9;
+    --ink: #1c1d1d;
+    --ink-body: #303131;
+    --ink-muted: #4b4f4d;
+    --ink-faint: #6b6f6e;
+    --rule: #c5c7c7;
+    --on-ink: #e1e2e2;
     --char: #1f2121;
     --paper: #f1f5f4;
     --paper-ink: #1f2121;
@@ -74,7 +76,7 @@
     --ash-300: #93b4ad;
     --ash-500: #768e89;
     --ash-700: #424b49;
-    --ember: #d3451a;
+    --ember: #be532d;
     --ember-strong: #c9400f;
     --ember-ink: #982c0b;
     --ember-wash: #ecd3c8;
@@ -83,7 +85,7 @@
     --infra-ink: #2f4d47;
     --infra-wash: #c3d1cd;
     --on-infra: #ffffff;
-    --link: var(--infra-ink);
+    --link: #375a66;
     --code-keyword: var(--ink);
     --code-string: var(--data-ink);
     --code-constant: var(--infra-ink);
@@ -108,14 +110,15 @@
   }
 }
 :root[data-theme="light"] {
-  --ground: #d5dcd9;
-  --ground-raised: #e1e7e5;
-  --ground-sunk: #d1d8d5;
-  --ink: #1f2121;
-  --ink-muted: #4a5451;
-  --ink-faint: #6b7a76;
-  --rule: #b4c0bc;
-  --on-ink: #d5dcd9;
+  --ground: #e1e2e2;
+  --ground-raised: #e9eae9;
+  --ground-sunk: #d8dad9;
+  --ink: #1c1d1d;
+  --ink-body: #303131;
+  --ink-muted: #4b4f4d;
+  --ink-faint: #6b6f6e;
+  --rule: #c5c7c7;
+  --on-ink: #e1e2e2;
   --char: #1f2121;
   --paper: #f1f5f4;
   --paper-ink: #1f2121;
@@ -128,7 +131,7 @@
   --ash-300: #93b4ad;
   --ash-500: #768e89;
   --ash-700: #424b49;
-  --ember: #d3451a;
+  --ember: #be532d;
   --ember-strong: #c9400f;
   --ember-ink: #982c0b;
   --ember-wash: #ecd3c8;
@@ -137,7 +140,7 @@
   --infra-ink: #2f4d47;
   --infra-wash: #c3d1cd;
   --on-infra: #ffffff;
-  --link: var(--infra-ink);
+  --link: #375a66;
   --code-keyword: var(--ink);
   --code-string: var(--data-ink);
   --code-constant: var(--infra-ink);

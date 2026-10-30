@@ -1,4 +1,4 @@
-/* notedwin design system: component CSS (ne-*) from the artifact's bundle.css. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
+/* notedwin v2 design system: component CSS (ne-*) from the artifact's bundle.css. Generated from src/tokens.json by build/generate.mjs. Don't edit. */
 :root { --dither-ink: var(--flame-body); --dither-opacity: 0.9; }
 /* --font-mono is Commit Mono (name, nav, titles, log); --font-pixel is Departure Mono (technical text only, multiples of 11px) */
 
@@ -37,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-:focus-visible { outline: var(--focus-width) solid var(--ember); outline-offset: 2px; }
+:focus-visible { outline: var(--focus-width) solid var(--link); outline-offset: 2px; }
 
 .ne-link {
   color: inherit;
@@ -262,7 +262,7 @@ body {
 .ne-brief dd.is-question { font: 600 15px/22px var(--font-sans); font-stretch: 96%; }
 .ne-brief dd i { font-style: normal; color: var(--ink-muted); }
 
-/* Sans text weight: light text on graphite reads thin, so sans text sits at 420 there (the variable
+/* Sans text weight: light text on ash black reads thin, so sans text sits at 420 there (the variable
    axis allows it). Only sans: Commit Mono would round 420 up to its SemiBold file. */
 :root { --sans-weight: 420; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --sans-weight: 400; } }
@@ -285,7 +285,8 @@ body {
 /* Prose: long-form text for posts and docs, body 17/28 at the measure, every colour a token. Put it
    in a .ne-prose-frame (a container spanning the column) so wide tables can take the full width. */
 .ne-prose-frame { container-type: inline-size; }
-.ne-prose { min-width: 0; max-width: var(--measure); font-size: 17px; line-height: 28px; font-weight: var(--sans-weight); overflow-wrap: break-word; }
+.ne-prose { min-width: 0; max-width: var(--measure); font-size: 17px; line-height: 28px; font-weight: var(--sans-weight); overflow-wrap: break-word; color: var(--ink-body); }
+.ne-prose :is(h2, h3, h4, h5, h6, strong, th, td) { color: var(--ink); }
 .ne-prose > * + * { margin-top: var(--space-6); }
 .ne-prose :is(h2, h3, h4, h5, h6) { position: relative; scroll-margin-top: var(--space-8); font-weight: 600; text-wrap: balance; }
 .ne-prose h2 { margin-top: var(--space-12); font-size: 28px; line-height: 34px; font-stretch: 90%; letter-spacing: -0.02em; }
@@ -328,7 +329,7 @@ body {
 .ne-pagehead__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-6); }
 .ne-pagehead h1 { margin: 0; font: 600 44px/48px var(--font-sans); font-stretch: 90%; letter-spacing: -0.025em; text-wrap: balance; }
 .ne-pagehead__note { color: var(--ink-muted); }
-.ne-pagehead__lede { margin-top: var(--space-4); max-width: var(--lede-measure); font-size: 19px; line-height: 31px; font-weight: var(--sans-weight); color: var(--ink-muted); }
+.ne-pagehead__lede { margin-top: var(--space-4); max-width: var(--lede-measure); font-size: 19px; line-height: 31px; font-weight: var(--sans-weight); color: var(--ink-body); }
 @media (max-width: 767px) { .ne-pagehead h1 { font-size: 33px; line-height: 38px; } }
 
 /* A plate for an item with no image: the domain's wash, no crop marks. */
